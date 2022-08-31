@@ -46,5 +46,13 @@ class AppColors {
       Color(0xFF8B67CD),
       Color(0xFF663BB6),
     ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+  Gradient gradientNeutral200to300 = const LinearGradient(
+    colors: <Color>[
+      Color(0xFFE5E7EB),
+      Color(0xFFD2D5DA),
+    ],
   );
 }

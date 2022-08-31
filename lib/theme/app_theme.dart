@@ -4,7 +4,7 @@ import 'package:notesgram/theme/resources.dart';
 class AppTheme {
   static ThemeData buildThemeData() {
     return ThemeData(
-      colorScheme: ColorScheme.dark(
+      colorScheme: ColorScheme.light(
         primary: Resources.color.indigo700,
         onPrimary: Resources.color.indigo700,
         secondary: Resources.color.indigo100,
@@ -12,6 +12,7 @@ class AppTheme {
         error: Resources.color.stateNegative,
         onError: Resources.color.stateNegative,
         outline: Resources.color.indigo700,
+        onBackground: Resources.color.neutral50,
       ),
     );
   }

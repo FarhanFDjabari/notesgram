@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/initializer.dart';
 import 'package:notesgram/theme/app_theme.dart';
+import 'package:notesgram/utils/localization/app_translation.dart';
 import 'package:notesgram/utils/routes/app_route.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
+import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,17 +20,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            translations: AppTranslation(),
+            title: 'Notesgram',
+            theme: AppTheme.buildThemeData(),
+            locale: Locale('en'),
+            fallbackLocale: Locale('en'),
+            initialRoute: PageName.splash,
+            getPages: AppRoute.pages,
+            builder: (BuildContext context, child) {
+              return MediaQuery(
+                child: child ?? Container(),
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              );
+            },
+          ),
+        );
       },
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Notesgram',
-        theme: AppTheme.buildThemeData(),
-        initialRoute: PageName.splash,
-        getPages: AppRoute.pages,
-      ),
     );
   }
 }

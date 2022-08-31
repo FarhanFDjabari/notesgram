@@ -7,14 +7,18 @@ environment:
   sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
+  app_settings: ^4.1.4
+  cached_network_image: ^3.1.0
   dio: ^4.0.0
   equatable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_svg: ^1.0.3
   freezed: ^0.14.2
   get: ^4.1.4
   get_storage: ^2.0.2
   google_fonts: 2.2.0
+  intl: ^0.17.0
   pull_to_refresh: ^2.0.0
   retrofit: ^3.0.1+1
   retrofit_generator: any
@@ -23,6 +27,8 @@ dependencies:
   hive_generator: ^1.1.0
   json_annotation: ^4.3.0
   json_serializable: ^6.0.1
+  sizer: ^2.0.15
+  shimmer: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -46,9 +52,16 @@ dev_dependencies:
 #   adaptive_icon_foreground: "assets/images/logo-foreground.png"
 #   adaptive_icon_background: "#DF4759"
   
+flutter_gen:
+  output: lib/theme/resources/gen/
+  line_length: 80 # Optional (default: 80)
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # Optional
+  integrations:
+    flutter_svg: true
+    flare_flutter: true
+    rive: true
+
 
 # The following section is specific to Flutter.
 flutter:
@@ -59,8 +72,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - lib/theme/resources/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
