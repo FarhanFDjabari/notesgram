@@ -26,7 +26,17 @@ class $LibThemeGen {
 class $LibThemeResourcesGen {
   const $LibThemeResourcesGen();
 
+  $LibThemeResourcesAnimationsGen get animations =>
+      const $LibThemeResourcesAnimationsGen();
   $LibThemeResourcesImagesGen get images => const $LibThemeResourcesImagesGen();
+}
+
+class $LibThemeResourcesAnimationsGen {
+  const $LibThemeResourcesAnimationsGen();
+
+  /// File path: lib/theme/resources/animations/custom_loading.json
+  String get customLoading =>
+      'lib/theme/resources/animations/custom_loading.json';
 }
 
 class $LibThemeResourcesImagesGen {
@@ -35,6 +45,10 @@ class $LibThemeResourcesImagesGen {
   /// File path: lib/theme/resources/images/app_logo.png
   AssetGenImage get appLogo =>
       const AssetGenImage('lib/theme/resources/images/app_logo.png');
+
+  /// File path: lib/theme/resources/images/app_logo_4x.png
+  AssetGenImage get appLogo4x =>
+      const AssetGenImage('lib/theme/resources/images/app_logo_4x.png');
 
   /// File path: lib/theme/resources/images/app_logo_monochrome.png
   AssetGenImage get appLogoMonochrome =>

@@ -15,11 +15,9 @@ class SplashPage extends GetView<SplashController> {
       },
       child: Scaffold(
         body: Center(
-          child: Image.asset(
-            Assets.lib.theme.resources.images.appLogo.path,
+          child: Assets.lib.theme.resources.images.appLogo.image(
             width: 88,
             height: 88,
-            fit: BoxFit.cover,
           ),
         ),
       ),
