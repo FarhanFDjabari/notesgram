@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/auth/controllers/login_controller.dart';
-import 'package:notesgram/presentation/features/auth/widgets/outlined_textfield.dart';
+import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/button/custom_outline_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
@@ -151,7 +151,9 @@ class LoginPage extends GetView<LoginController> {
                 SizedBox(height: 24.sp),
                 PrimaryButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                      controller.goToHome();
+                    }
                   },
                   label: 'MASUK',
                   isLoading: controller.isLoading,

@@ -34,17 +34,22 @@ class AppColors {
   Color stateNegative = const Color(0xFFE84C3D);
   Color stateWarning = const Color(0xFFFB9E2E);
 
+  // shadow color
+  Color shadowColor = const Color(0xFF9E80D6);
+
   // gradient color
   Gradient gradient600to800 = const RadialGradient(
     colors: <Color>[
-      Color(0xFF774DC5),
       Color(0xFF59349F),
+      Color(0xFF774DC5),
     ],
+    radius: 0.35,
+    center: Alignment.topCenter,
   );
   Gradient gradient500to700 = const LinearGradient(
     colors: <Color>[
-      Color(0xFF8B67CD),
       Color(0xFF663BB6),
+      Color(0xFF8B67CD),
     ],
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
@@ -54,5 +59,7 @@ class AppColors {
       Color(0xFFE5E7EB),
       Color(0xFFD2D5DA),
     ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
   );
 }

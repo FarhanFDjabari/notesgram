@@ -48,6 +48,7 @@ class TextNunito extends StatelessWidget {
         fontSize: size,
         color: color,
       ),
+      softWrap: true,
       overflow: TextOverflow.ellipsis,
       maxLines: maxLines,
     );

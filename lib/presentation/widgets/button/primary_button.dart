@@ -15,6 +15,8 @@ class PrimaryButton extends StatelessWidget {
     this.label,
     this.width,
     this.height,
+    this.elevation,
+    this.fontSize,
     this.isEnabled = true,
     this.isLoading = false,
   }) : super(key: key);
@@ -26,6 +28,8 @@ class PrimaryButton extends StatelessWidget {
   final String? label;
   final double? width;
   final double? height;
+  final double? elevation;
+  final double? fontSize;
   final bool isEnabled;
   final bool isLoading;
 
@@ -50,14 +54,14 @@ class PrimaryButton extends StatelessWidget {
             if (!isLoading)
               TextNunito(
                 text: label,
-                size: 14.sp,
+                size: fontSize ?? 14.sp,
                 fontWeight: Weightenum.BOLD,
                 color: Resources.color.neutral50,
               ),
             if (isLoading)
               SizedBox(
-                width: 15.sp,
-                height: 15.sp,
+                width: 15,
+                height: 15,
                 child: Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Resources.color.neutral50,
@@ -76,11 +80,11 @@ class PrimaryButton extends StatelessWidget {
           ),
           textStyle: GoogleFonts.nunitoSans(
             fontWeight: FontWeight.w700,
-            fontSize: 14.sp,
+            fontSize: fontSize ?? 14.sp,
             color: Resources.color.neutral50,
           ),
           onPrimary: Resources.color.indigo500,
-          elevation: 1,
+          elevation: elevation,
         ),
       ),
     );

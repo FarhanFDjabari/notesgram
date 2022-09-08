@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/auth/controllers/register_controller.dart';
-import 'package:notesgram/presentation/features/auth/widgets/outlined_textfield.dart';
+import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/features/auth/widgets/terms_of_services_checkbox.dart';
 import 'package:notesgram/presentation/widgets/button/custom_outline_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';

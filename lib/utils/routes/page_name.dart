@@ -5,10 +5,15 @@ class PageName {
   static const forgotPassword = '/forgot-password';
   static const createUsername = '/register/create-username';
   static const home = '/home';
-  static const paymentInfo = '/payment';
+  static const payment = '/payment';
+  static const paymentInfo = '/payment/info/:paymentId';
   static const selectPayment = '/payment/select-payment';
+  static const paymentProcessing = '/payment/payment-processing';
   static const paymentSuccess = '/payment/success';
   static const explore = '/explore';
   static const post = '/post';
   static const profile = '/profile';
+  static const navigation = '/';
+  static const notification = '/notification';
+  static const routeError = '/route-error';
 }

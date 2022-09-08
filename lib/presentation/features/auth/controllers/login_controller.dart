@@ -24,6 +24,10 @@ class LoginController extends BaseObjectController {
     await Get.toNamed(PageName.signUp);
   }
 
+  Future<void> goToHome() async {
+    await Get.toNamed(PageName.navigation);
+  }
+
   Future<void> goToResetPassword() async {
     await Get.toNamed(PageName.forgotPassword);
   }

@@ -19,7 +19,7 @@ class ApiResponse<T> extends BaseResponse {
     Map<String, dynamic> json,
   ) {
     return ApiResponse<T>(
-        status: json["status"] as int,
+        status: json["statusCode"] as int,
         message: json["message"] as String,
         domain: json["domain"] as String,
         errors: json["errors"],
@@ -38,11 +38,11 @@ class ApiResponses<T> extends BaseResponse {
   }) : super(status: status, message: message, domain: domain);
 
   factory ApiResponses.fromJson(Map<String, dynamic> json) => ApiResponses<T>(
-        status: json["status"],
+        status: json["statusCode"],
         message: json["message"],
         domain: json["domain"],
-        data: List<T>.from(
-            json["results"].map((x) => _Converter<T?>().fromJson(x))),
+        data: List<T>.from((json["results"] ?? json["data"])
+            .map((x) => _Converter<T?>().fromJson(x))),
       );
 }
 
@@ -61,13 +61,13 @@ class PaginatedList<T> extends BaseResponse {
   _Meta meta;
 
   factory PaginatedList.fromJson(Map<String, dynamic> json) => PaginatedList<T>(
-        data: json["results"] == null
+        data: json["results"] ?? json['data'] == null
             ? []
-            : List<T>.from(json["results"]
+            : List<T>.from((json["results"] ?? json["data"])
                 .map((x) => _Converter<T>().fromJson(x as Object))),
         links: _Links.fromJson(json["links"] ?? {}),
         meta: _Meta.fromJson(json["meta"] ?? {}),
-        status: json["status"],
+        status: json["statusCode"],
         message: json["message"],
         domain: json["domain"],
       );

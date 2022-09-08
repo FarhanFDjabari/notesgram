@@ -10,13 +10,13 @@ class BaseResponse {
   });
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) => BaseResponse(
-        status: json["status"],
+        status: json["statusCode"],
         message: json["message"],
         domain: json["domain"],
       );
 
   Map<dynamic, dynamic> toJson() => <String, dynamic>{
-        'status': this.status,
+        'statusCode': this.status,
         'message': this.message,
       };
 }

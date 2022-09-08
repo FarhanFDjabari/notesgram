@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/auth/controllers/create_username_controller.dart';
 import 'package:notesgram/presentation/features/auth/controllers/register_controller.dart';
-import 'package:notesgram/presentation/features/auth/widgets/outlined_textfield.dart';
+import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';

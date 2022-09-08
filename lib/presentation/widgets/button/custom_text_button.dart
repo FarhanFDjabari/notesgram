@@ -36,7 +36,8 @@ class CustomTextButton extends StatelessWidget {
         width: width ?? double.infinity,
         height: height ?? 40.sp,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment:
+              isPrefixIcon ? MainAxisAlignment.start : MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (isPrefixIcon) icon!,

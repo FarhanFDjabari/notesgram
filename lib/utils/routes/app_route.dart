@@ -7,12 +7,65 @@ import 'package:notesgram/presentation/features/auth/create_username_page.dart';
 import 'package:notesgram/presentation/features/auth/forgot_password_page.dart';
 import 'package:notesgram/presentation/features/auth/login_page.dart';
 import 'package:notesgram/presentation/features/auth/register_page.dart';
+import 'package:notesgram/presentation/features/error/binding/route_error_binding.dart';
+import 'package:notesgram/presentation/features/error/route_error_page.dart';
+import 'package:notesgram/presentation/features/explore/binding/explore_binding.dart';
+import 'package:notesgram/presentation/features/explore/explore_page.dart';
+import 'package:notesgram/presentation/features/home/binding/home_binding.dart';
+import 'package:notesgram/presentation/features/home/home_page.dart';
+import 'package:notesgram/presentation/features/navigation/binding/navigation_binding.dart';
+import 'package:notesgram/presentation/features/navigation/navigation_page.dart';
+import 'package:notesgram/presentation/features/notification/binding/notification_binding.dart';
+import 'package:notesgram/presentation/features/notification/notification_page.dart';
+import 'package:notesgram/presentation/features/payment/binding/payment_binding.dart';
+import 'package:notesgram/presentation/features/payment/binding/payment_success_binding.dart';
+import 'package:notesgram/presentation/features/payment/payment_page.dart';
+import 'package:notesgram/presentation/features/payment/payment_processing_page.dart';
+import 'package:notesgram/presentation/features/payment/payment_success_page.dart';
+import 'package:notesgram/presentation/features/payment/select_payment_page.dart';
+import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
+import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
+import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
+import 'package:notesgram/presentation/features/profile/profile_page.dart';
 import 'package:notesgram/presentation/features/splash/bindings/splash_binding.dart';
 import 'package:notesgram/presentation/features/splash/splash_page.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 
 class AppRoute {
   static final pages = [
+    // DO NOT EDIT THIS SECTION
+    GetPage(
+      name: PageName.home,
+      page: () => const HomePage(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: PageName.explore,
+      page: () => const ExplorePage(),
+      binding: ExploreBinding(),
+    ),
+    GetPage(
+      name: PageName.post,
+      page: () => PostNotesgramPage(),
+      binding: PostNotesgramBinding(),
+    ),
+    GetPage(
+      name: PageName.notification,
+      page: () => const NotificationPage(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: PageName.profile,
+      page: () => const ProfilePage(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: PageName.routeError,
+      page: () => const RouteErrorPage(),
+      binding: RouteErrorBinding(),
+    ),
+
+    // THIS SECTION CAN EDITED
     GetPage(
       name: PageName.splash,
       page: () => const SplashPage(),
@@ -37,6 +90,31 @@ class AppRoute {
       name: PageName.forgotPassword,
       page: () => ForgotPasswordPage(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: PageName.navigation,
+      page: () => NavigationPage(),
+      binding: NavigationBinding(),
+    ),
+    GetPage(
+      name: PageName.paymentInfo,
+      page: () => PaymentPage(),
+      binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: PageName.selectPayment,
+      page: () => SelectPaymentPage(),
+      binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: PageName.paymentProcessing,
+      page: () => PaymentProcessingPage(),
+      binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: PageName.paymentSuccess,
+      page: () => PaymentSuccessPage(),
+      binding: PaymentSuccessBinding(),
     ),
   ];
 }
