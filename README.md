@@ -1,16 +1,19 @@
-# notesgram
+# Notesgram
 
-A new Flutter project.
+Find studygram you need on notesgram!
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Notesgram is a mobile-based application that will help you to get studygram notes easily.
 
-A few resources to get you started if this is your first Flutter project:
+## BCC - Clueless
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [Jihan Qurrotul 'Aini](https://www.linkedin.com/in/jihanqurrotulaini/)
+- [Tubagus Ghiffari Maulana](https://www.linkedin.com/in/tubagus-ghiffari-maulana/)
+- [Farhan Fadhilah Djabari](https://www.linkedin.com/in/farhanfdjabari/)
+- [Alfonsus Avianto Chandrawan](https://www.linkedin.com/in/alfonsusavianto/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+### Backend Repository
+
+[notesgram-backend](https://github.com/alfonsus20/notesgram-backend), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
