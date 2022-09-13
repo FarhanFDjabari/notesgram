@@ -19,7 +19,7 @@ class PaymentController extends BaseObjectController {
   }
 
   void processPayment() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Get.offNamed(PageName.paymentSuccess);
     });
   }

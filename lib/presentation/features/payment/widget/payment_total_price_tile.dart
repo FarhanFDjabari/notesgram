@@ -53,9 +53,9 @@ class PaymentTotalPriceTile extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           PrimaryButton(
-            width: 180.sp,
+            width: 100.sp,
             height: 35.sp,
-            label: 'PILIH PEMBAYARAN',
+            label: 'BAYAR',
             fontSize: 12.sp,
             elevation: 0,
             onPressed: onSelectPaymentPressed,

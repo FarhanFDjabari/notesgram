@@ -6,7 +6,9 @@ import 'package:notesgram/presentation/features/payment/widget/note_subtotal_inf
 import 'package:notesgram/presentation/features/payment/widget/payment_summary_tile.dart';
 import 'package:notesgram/presentation/features/payment/widget/payment_total_price_tile.dart';
 import 'package:notesgram/presentation/features/payment/widget/promo_code_input.dart';
+import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
+import 'package:notesgram/presentation/widgets/notesgram_dialog.dart';
 import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
@@ -64,7 +66,9 @@ class PaymentPage extends GetView<PaymentController> {
                 color: Resources.color.neutral50,
                 margin: const EdgeInsets.fromLTRB(0, 8, 0, 16),
                 child: HomeTopUpTile(
-                  onTopUpPressed: () {},
+                  onTopUpPressed: () {
+                    controller.goToSelectPayment();
+                  },
                 ),
               ),
             ],
@@ -73,7 +77,21 @@ class PaymentPage extends GetView<PaymentController> {
       ),
       bottomNavigationBar: PaymentTotalPriceTile(
         onSelectPaymentPressed: () {
-          controller.goToSelectPayment();
+          Get.dialog(
+            NotesgramDialog(
+              title: 'Konfirmasi Pembayaran',
+              description:
+                  'Apakah Anda yakin ingin melakukan transaksi pembayaran?',
+              successButtonLabel: 'BAYAR',
+              cancelButtonLabel: 'BATAL',
+              onCancelPressed: () {
+                Get.back();
+              },
+              onSuccessPressed: () {
+                controller.goToProcessingPayment();
+              },
+            ),
+          );
         },
       ),
     );

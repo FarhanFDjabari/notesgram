@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:notesgram/presentation/features/payment/controller/payment_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
-import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 
 class PaymentProcessingPage extends GetView<PaymentController> {
@@ -25,11 +23,15 @@ class PaymentProcessingPage extends GetView<PaymentController> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                LottieBuilder.asset(
-                  Assets.lib.theme.resources.animations.customLoading,
-                  width: 120,
-                  height: 120,
-                  alignment: Alignment.center,
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 10,
+                    backgroundColor:
+                        Resources.color.indigo600.withOpacity(0.15),
+                    color: Resources.color.indigo600,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 TextNunito(
