@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
-import 'package:notesgram/presentation/features/home/widget/description_text_widget.dart';
 import 'package:notesgram/presentation/features/home/widget/home_post_tile.dart';
 import 'package:notesgram/presentation/features/home/widget/home_topup_tile.dart';
-import 'package:notesgram/presentation/features/home/widget/post_price_banner.dart';
-import 'package:notesgram/presentation/widgets/button/primary_button.dart';
-import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
-import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 

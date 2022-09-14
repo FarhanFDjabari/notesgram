@@ -134,12 +134,12 @@ class LoginPage extends GetView<LoginController> {
                       validator: Validator().notEmpty,
                     )),
                 SizedBox(height: 4.sp),
-                InkWell(
-                  onTap: () {
-                    // controller.goToResetPassword();
-                  },
-                  child: Container(
-                    alignment: Alignment.centerRight,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () {
+                      // controller.goToResetPassword();
+                    },
                     child: TextNunito(
                       text: 'Lupa password?',
                       size: 12.sp,

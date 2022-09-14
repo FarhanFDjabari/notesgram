@@ -153,10 +153,18 @@ class RegisterPage extends GetView<RegisterController> {
                 // terms and requirement checkbox
                 Obx(
                   () => TermsOfServiceCheckbox(
-                    isAgree: controller.isUserAgree.value,
-                    onChanged: (value) {
-                      controller.isUserAgree(value);
+                    isAgree: controller.isUserAgree.isTrue,
+                    onAppPolicyTap: (_) {
+                      controller.isReadPolicy(true);
+                      controller.isUserAgree(controller.isReadPolicy.isTrue &&
+                          controller.isReadTerms.isTrue);
                     },
+                    onTermsAndConditionTap: (_) {
+                      controller.isReadTerms(true);
+                      controller.isUserAgree(controller.isReadPolicy.isTrue &&
+                          controller.isReadTerms.isTrue);
+                    },
+                    onChanged: (_) {},
                   ),
                 ),
                 SizedBox(height: 24.sp),
@@ -168,7 +176,7 @@ class RegisterPage extends GetView<RegisterController> {
                       }
                     },
                     label: 'LANJUT',
-                    isEnabled: controller.isUserAgree.value,
+                    isEnabled: controller.isUserAgree.isTrue,
                   ),
                 ),
                 SizedBox(height: 24.sp),

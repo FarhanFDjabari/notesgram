@@ -11,6 +11,8 @@ class RegisterController extends BaseObjectController {
   RxBool isPasswordObscured = true.obs;
   RxBool isUsernameValid = true.obs;
   RxBool isUserAgree = false.obs;
+  RxBool isReadTerms = false.obs;
+  RxBool isReadPolicy = false.obs;
 
   @override
   void dispose() {
