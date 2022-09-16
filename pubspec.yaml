@@ -27,6 +27,7 @@ dependencies:
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   lottie: ^1.4.2
+  modal_bottom_sheet: ^2.1.2
   pull_to_refresh_flutter3: ^2.0.1
   photo_view: ^0.14.0
   retrofit: ^3.0.1+1

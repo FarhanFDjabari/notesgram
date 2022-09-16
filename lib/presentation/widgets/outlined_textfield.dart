@@ -17,6 +17,7 @@ class OutlinedTextfield extends StatelessWidget {
     required this.label,
     this.suffixIcon,
     this.maxLines,
+    this.maxLength,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -29,6 +30,7 @@ class OutlinedTextfield extends StatelessWidget {
   final TextNunito label;
   final IconButton? suffixIcon;
   final int? maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class OutlinedTextfield extends StatelessWidget {
           autofocus: false,
           keyboardType: keyboardType,
           maxLines: maxLines,
+          maxLength: maxLength,
           textInputAction: textInputAction,
           obscureText: isObscured,
           style: GoogleFonts.nunitoSans(
@@ -82,6 +85,7 @@ class OutlinedTextfield extends StatelessWidget {
             ),
             suffixIcon: suffixIcon,
             contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            counterText: "",
           ),
         ),
       ],

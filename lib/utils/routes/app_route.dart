@@ -36,7 +36,7 @@ class AppRoute {
     // DO NOT EDIT THIS SECTION
     GetPage(
       name: PageName.home,
-      page: () => const HomePage(),
+      page: () => HomePage(),
       binding: HomeBinding(),
     ),
     GetPage(

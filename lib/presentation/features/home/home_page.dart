@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
-import 'package:notesgram/presentation/features/home/widget/home_post_tile.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/presentation/features/home/user_post_fragment.dart';
+import 'package:notesgram/presentation/features/home/widget/colored_tab_bar.dart';
 import 'package:notesgram/presentation/features/home/widget/home_topup_tile.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:remixicon/remixicon.dart';
-import 'package:sizer/sizer.dart';
 
-class HomePage extends GetView<HomeController> {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,38 +50,60 @@ class HomePage extends GetView<HomeController> {
             iconSize: 20,
           ),
         ],
+        bottom: ColoredTabBar(
+          color: Resources.color.neutral50,
+          tabBar: TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(
+                key: ValueKey('following_tab'),
+                text: 'Following',
+              ),
+              Tab(
+                key: ValueKey('for_you_tab'),
+                text: 'For You',
+              ),
+            ],
+            labelStyle: GoogleFonts.nunitoSans(
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+            labelColor: Resources.color.indigo900,
+            unselectedLabelColor: Resources.color.neutral400,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Resources.color.indigo700,
+            indicatorWeight: 2,
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            height: 8,
+            color: Resources.color.neutral100,
+          ),
           HomeTopUpTile(
             coinAmount: '100.000',
             onTopUpPressed: () {},
           ),
           Container(
             height: 8,
-            color: Resources.color.indigo50,
+            color: Resources.color.neutral100,
           ),
           Expanded(
-            child: SizedBox(
-              width: SizerUtil.width,
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return HomePostTile();
-                },
-                separatorBuilder: (context, index) {
-                  return Container(
-                    height: 8,
-                    color: Resources.color.indigo50,
-                  );
-                },
-                itemCount: 2,
-              ),
+            child: TabBarView(
+              controller: _tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: const [
+                UserPostFragment(),
+                UserPostFragment(),
+              ],
             ),
           ),
           Container(
             height: 8,
-            color: Resources.color.indigo50,
+            color: Resources.color.neutral100,
           ),
         ],
       ),
