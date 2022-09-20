@@ -55,13 +55,13 @@ dev_dependencies:
   flutter_gen_runner:
   flutter_lints: ^1.0.0
 
-# flutter_icons:
-#   android: true
-#   ios: true
-#   remove_alpha_ios: true
-#   image_path: "assets/images/logo-foreground.png"
-#   adaptive_icon_foreground: "assets/images/logo-foreground.png"
-#   adaptive_icon_background: "#DF4759"
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "lib/theme/resources/images/launcher_icon.png"
+  adaptive_icon_foreground: "lib/theme/resources/images/launcher_icon.png"
+  adaptive_icon_background: "#FFFFFF"
   
 flutter_gen:
   output: lib/theme/resources/gen/
