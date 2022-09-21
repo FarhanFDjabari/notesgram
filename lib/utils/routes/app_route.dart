@@ -7,12 +7,16 @@ import 'package:notesgram/presentation/features/auth/create_username_page.dart';
 import 'package:notesgram/presentation/features/auth/forgot_password_page.dart';
 import 'package:notesgram/presentation/features/auth/login_page.dart';
 import 'package:notesgram/presentation/features/auth/register_page.dart';
+import 'package:notesgram/presentation/features/challenge/binding/challenge_binding.dart';
+import 'package:notesgram/presentation/features/challenge/challenge_page.dart';
 import 'package:notesgram/presentation/features/error/binding/route_error_binding.dart';
 import 'package:notesgram/presentation/features/error/route_error_page.dart';
 import 'package:notesgram/presentation/features/explore/binding/explore_binding.dart';
 import 'package:notesgram/presentation/features/explore/explore_page.dart';
 import 'package:notesgram/presentation/features/home/binding/home_binding.dart';
+import 'package:notesgram/presentation/features/home/binding/post_detail_binding.dart';
 import 'package:notesgram/presentation/features/home/home_page.dart';
+import 'package:notesgram/presentation/features/home/post_detail.dart';
 import 'package:notesgram/presentation/features/navigation/binding/navigation_binding.dart';
 import 'package:notesgram/presentation/features/navigation/navigation_page.dart';
 import 'package:notesgram/presentation/features/notification/binding/notification_binding.dart';
@@ -26,7 +30,9 @@ import 'package:notesgram/presentation/features/payment/select_payment_page.dart
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
+import 'package:notesgram/presentation/features/profile/private_album_page.dart';
 import 'package:notesgram/presentation/features/profile/profile_page.dart';
+import 'package:notesgram/presentation/features/profile/saved_album_page.dart';
 import 'package:notesgram/presentation/features/splash/bindings/splash_binding.dart';
 import 'package:notesgram/presentation/features/splash/splash_page.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
@@ -115,6 +121,26 @@ class AppRoute {
       name: PageName.paymentSuccess,
       page: () => PaymentSuccessPage(),
       binding: PaymentSuccessBinding(),
+    ),
+    GetPage(
+      name: PageName.privateAlbum,
+      page: () => PrivateAlbumPage(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: PageName.savedAlbum,
+      page: () => SavedAlbumPage(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: PageName.noteDetail,
+      page: () => PostDetailPage(),
+      binding: PostDetailBinding(),
+    ),
+    GetPage(
+      name: PageName.challenge,
+      page: () => ChallengePage(),
+      binding: ChallengeBinding(),
     ),
   ];
 }

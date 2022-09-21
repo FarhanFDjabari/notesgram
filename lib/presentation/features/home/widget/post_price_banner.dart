@@ -3,6 +3,7 @@ import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -47,7 +48,9 @@ class PostPriceBanner extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     TextNunito(
-                      text: price,
+                      text: int.parse(price ?? '0') > 999
+                          ? coinFormat.format(int.parse(price ?? '0'))
+                          : price ?? '0',
                       size: 20,
                       fontWeight: Weightenum.BOLD,
                       color: Resources.color.stateWarning,

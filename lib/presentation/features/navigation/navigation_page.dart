@@ -17,7 +17,9 @@ class NavigationPage extends GetView<NavigationController> {
         autoAlign: true,
         floatingWidget: controller.pageIndex.value == 0
             ? FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.goToChallenge();
+                },
               )
             : Container(),
         floatingWidgetHeight: 56,
@@ -32,8 +34,8 @@ class NavigationPage extends GetView<NavigationController> {
                   return AppRoute.pages[0].page();
                 case 1:
                   return AppRoute.pages[1].page();
-                case 2:
-                  return AppRoute.pages[2].page();
+                // case 2:
+                //   return AppRoute.pages[2].page();
                 case 3:
                   return AppRoute.pages[3].page();
                 case 4:
@@ -46,7 +48,7 @@ class NavigationPage extends GetView<NavigationController> {
           bottomNavigationBar: NotesgramBottomNavbar(
             onPressed: (index) {
               if (index == 2) {
-                controller.goToPost();
+                controller.showPostBottomSheet();
               } else {
                 controller.pageIndex(index);
               }

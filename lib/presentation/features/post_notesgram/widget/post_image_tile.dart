@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:remixicon/remixicon.dart';
 
 class PostImageTile extends StatelessWidget {
   const PostImageTile({
+    required this.itemData,
+    required this.onItemDelete,
     Key? key,
   }) : super(key: key);
+
+  final Function(File) onItemDelete;
+  final File itemData;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +27,19 @@ class PostImageTile extends StatelessWidget {
             decoration: BoxDecoration(
               color: Resources.color.indigo500,
               borderRadius: BorderRadius.circular(8),
+              image: DecorationImage(
+                image: FileImage(itemData),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
             top: 5,
             right: 5,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                onItemDelete(itemData);
+              },
               child: Container(
                 width: 16,
                 height: 16,

@@ -25,7 +25,7 @@ class SelectPaymentPage extends GetView<PaymentController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: TextNunito(
-          text: 'Pembayaran',
+          text: 'Top Up',
           size: 15.sp,
           fontWeight: Weightenum.BOLD,
           color: Resources.color.neutral50,

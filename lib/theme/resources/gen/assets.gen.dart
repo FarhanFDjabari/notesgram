@@ -82,6 +82,10 @@ class $LibThemeResourcesImagesGen {
   SvgGenImage get iconsGoogle =>
       const SvgGenImage('lib/theme/resources/images/icons_google.svg');
 
+  /// File path: lib/theme/resources/images/launcher_icon.png
+  AssetGenImage get launcherIcon =>
+      const AssetGenImage('lib/theme/resources/images/launcher_icon.png');
+
   /// File path: lib/theme/resources/images/name_logo.png
   AssetGenImage get nameLogo =>
       const AssetGenImage('lib/theme/resources/images/name_logo.png');
@@ -117,6 +121,10 @@ class $LibThemeResourcesImagesGen {
   /// File path: lib/theme/resources/images/profile_active.svg
   SvgGenImage get profileActive =>
       const SvgGenImage('lib/theme/resources/images/profile_active.svg');
+
+  /// File path: lib/theme/resources/images/profile_coin_layout_bg.png
+  AssetGenImage get profileCoinLayoutBg => const AssetGenImage(
+      'lib/theme/resources/images/profile_coin_layout_bg.png');
 }
 
 class Assets {

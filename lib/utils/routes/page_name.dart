@@ -16,4 +16,8 @@ class PageName {
   static const navigation = '/';
   static const notification = '/notification';
   static const routeError = '/route-error';
+  static const privateAlbum = '/profile/:username/purchased-notes/:albumId';
+  static const savedAlbum = '/profile/:username/bookmarked-notes/:albumId';
+  static const noteDetail = '/post/:username/:noteId';
+  static const challenge = '/challenge';
 }

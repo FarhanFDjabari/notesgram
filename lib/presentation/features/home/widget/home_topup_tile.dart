@@ -3,6 +3,7 @@ import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -51,7 +52,9 @@ class HomeTopUpTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       TextNunito(
-                        text: coinAmount ?? '0',
+                        text: int.parse(coinAmount ?? '0') > 999
+                            ? coinFormat.format(int.parse(coinAmount ?? '0'))
+                            : coinAmount ?? '0',
                         size: 15.sp,
                         fontWeight: Weightenum.BOLD,
                         color: Resources.color.stateWarning,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 
 class NoteSubtotalInfo extends StatelessWidget {
@@ -117,7 +118,9 @@ class NoteSubtotalInfo extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         TextNunito(
-                          text: '10.000',
+                          text: int.parse('10000') > 999
+                              ? coinFormat.format(int.parse('10000'))
+                              : '0',
                           size: 20,
                           fontWeight: Weightenum.BOLD,
                           color: Resources.color.stateWarning,

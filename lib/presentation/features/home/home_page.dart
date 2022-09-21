@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
 import 'package:notesgram/presentation/features/home/user_post_fragment.dart';
 import 'package:notesgram/presentation/features/home/widget/colored_tab_bar.dart';
 import 'package:notesgram/presentation/features/home/widget/home_topup_tile.dart';
@@ -83,9 +85,17 @@ class _HomePageState extends State<HomePage>
             height: 8,
             color: Resources.color.neutral100,
           ),
-          HomeTopUpTile(
-            coinAmount: '100.000',
-            onTopUpPressed: () {},
+          GetX<HomeController>(
+            init: HomeController(),
+            initState: (_) {},
+            builder: (controller) {
+              return HomeTopUpTile(
+                coinAmount: controller.totalCoin.value,
+                onTopUpPressed: () {
+                  controller.goToSelectPayment();
+                },
+              );
+            },
           ),
           Container(
             height: 8,

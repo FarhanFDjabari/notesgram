@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/post_notesgram/controller/post_notesgram_controller.dart';
 import 'package:notesgram/presentation/features/post_notesgram/widget/post_images_collection.dart';
+import 'package:notesgram/presentation/features/post_notesgram/widget/post_rules_dialog.dart';
+import 'package:notesgram/presentation/widgets/notesgram_dialog.dart';
 import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
@@ -44,7 +46,24 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
               initState: (_) {},
               builder: (_) {
                 return ElevatedButton(
-                  onPressed: controller.isLoading ? null : () {},
+                  onPressed: controller.isLoading
+                      ? null
+                      : () {
+                          if (controller.images.length < 2) {
+                            Get.dialog(
+                              NotesgramDialog(
+                                title: "Tidak memenuhi syarat",
+                                description:
+                                    'Jumlah minimal foto yang diupload adalah 2',
+                                successButtonLabel: 'OKE',
+                                onSuccessPressed: () {
+                                  Get.back();
+                                },
+                              ),
+                              barrierDismissible: false,
+                            );
+                          } else {}
+                        },
                   child: Center(
                     child: controller.isLoading
                         ? SizedBox(
@@ -81,7 +100,11 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            PostImagesCollection(),
+            PostImagesCollection(
+              onItemDelete: (image) {
+                controller.removeItemFromList(image);
+              },
+            ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -131,7 +154,18 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
                   maxLines: 1,
                 ),
                 hintText: 'Harga catatan',
-                validator: Validator().notEmpty,
+                validator: (value) {
+                  if (controller.images.length > 10) {
+                    if (int.parse(value ?? "0") < 15000) {
+                      return 'Minimal harga 15.000';
+                    }
+                  } else if (controller.images.length > 4) {
+                    if (int.parse(value ?? "0") < 10000) {
+                      return 'Minimal harga 10.000';
+                    }
+                  }
+                  return '';
+                },
               ),
             ),
             const SizedBox(height: 4),
@@ -142,6 +176,9 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
                 child: InkWell(
                   onTap: () {
                     // controller.goToResetPassword();
+                    Get.dialog(
+                      PostRulesDialog(),
+                    );
                   },
                   child: TextNunito(
                     text: 'Ketentuan harga',

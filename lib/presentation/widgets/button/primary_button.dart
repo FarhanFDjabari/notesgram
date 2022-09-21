@@ -19,6 +19,8 @@ class PrimaryButton extends StatelessWidget {
     this.fontSize,
     this.isEnabled = true,
     this.isLoading = false,
+    this.labelColor,
+    this.primaryColor,
   }) : super(key: key);
 
   final void Function()? onPressed;
@@ -32,6 +34,8 @@ class PrimaryButton extends StatelessWidget {
   final double? fontSize;
   final bool isEnabled;
   final bool isLoading;
+  final Color? labelColor;
+  final Color? primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class PrimaryButton extends StatelessWidget {
                 text: label,
                 size: fontSize ?? 14.sp,
                 fontWeight: Weightenum.BOLD,
-                color: Resources.color.neutral50,
+                color: labelColor ?? Resources.color.neutral50,
               ),
             if (isLoading)
               SizedBox(
@@ -81,10 +85,11 @@ class PrimaryButton extends StatelessWidget {
           textStyle: GoogleFonts.nunitoSans(
             fontWeight: FontWeight.w700,
             fontSize: fontSize ?? 14.sp,
-            color: Resources.color.neutral50,
+            color: labelColor ?? Resources.color.neutral50,
           ),
           onPrimary: Resources.color.indigo500,
           elevation: elevation,
+          primary: primaryColor,
         ),
       ),
     );
