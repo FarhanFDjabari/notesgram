@@ -54,6 +54,10 @@ class $LibThemeResourcesImagesGen {
   AssetGenImage get appLogoMonochrome =>
       const AssetGenImage('lib/theme/resources/images/app_logo_monochrome.png');
 
+  /// File path: lib/theme/resources/images/challenge_tile_layout_bg.png
+  AssetGenImage get challengeTileLayoutBg => const AssetGenImage(
+      'lib/theme/resources/images/challenge_tile_layout_bg.png');
+
   /// File path: lib/theme/resources/images/correct_green.svg
   SvgGenImage get correctGreen =>
       const SvgGenImage('lib/theme/resources/images/correct_green.svg');

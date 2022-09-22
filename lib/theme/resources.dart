@@ -18,6 +18,7 @@ class AppColors {
   Color neutral900 = const Color(0xFF111827);
 
   // indigo color
+  Color indigo10 = const Color(0xFFD9D9D9);
   Color indigo50 = const Color(0xFFECE6F7);
   Color indigo100 = const Color(0xFFD8CCEE);
   Color indigo200 = const Color(0xFFC5B3E6);

@@ -12,8 +12,17 @@ import 'package:sizer/sizer.dart';
 
 class DetailPostTile extends GetView<PostDetailController> {
   const DetailPostTile({
+    this.onLikePressed,
+    this.onCommentPressed,
+    this.onSavePressed,
+    this.onSharePressed,
     Key? key,
   }) : super(key: key);
+
+  final Function()? onLikePressed;
+  final Function()? onCommentPressed;
+  final Function()? onSharePressed;
+  final Function()? onSavePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +152,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: onLikePressed,
                             icon: Icon(
                               Remix.heart_line,
                               color: Resources.color.neutral400,
@@ -162,7 +171,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: onCommentPressed,
                             icon: Icon(
                               Remix.chat_1_line,
                               color: Resources.color.neutral400,
@@ -179,7 +188,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                         ],
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: onSharePressed,
                         icon: Icon(
                           Remix.share_forward_line,
                           color: Resources.color.neutral400,
@@ -191,7 +200,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onSavePressed,
                   icon: Icon(
                     Remix.bookmark_line,
                     color: Resources.color.neutral400,

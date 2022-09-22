@@ -8,8 +8,13 @@ import 'package:remixicon/remixicon.dart';
 
 class ProfileCoinTile extends StatelessWidget {
   const ProfileCoinTile({
+    this.onTopUp,
+    this.onWithdraw,
     Key? key,
   }) : super(key: key);
+
+  final Function()? onTopUp;
+  final Function()? onWithdraw;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,7 @@ class ProfileCoinTile extends StatelessWidget {
               children: [
                 PrimaryButton(
                   elevation: 0,
-                  onPressed: () {},
+                  onPressed: onWithdraw,
                   width: 124,
                   fontSize: 14,
                   height: 40,
@@ -73,7 +78,7 @@ class ProfileCoinTile extends StatelessWidget {
                 const SizedBox(width: 8),
                 PrimaryButton(
                   elevation: 0,
-                  onPressed: () {},
+                  onPressed: onTopUp,
                   width: 90,
                   fontSize: 14,
                   height: 40,

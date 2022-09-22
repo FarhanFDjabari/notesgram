@@ -5,13 +5,16 @@ import 'package:notesgram/utils/routes/page_name.dart';
 
 class PaymentController extends BaseObjectController {
   final promoCodeController = TextEditingController();
+  final topUpAmountController = TextEditingController();
+  final withdrawAmountController = TextEditingController();
+  final recipientNumberController = TextEditingController();
 
   void goBack() {
     Get.back(closeOverlays: true);
   }
 
-  void goToSelectPayment() {
-    Get.toNamed(PageName.selectPayment);
+  void goToTopUp() {
+    Get.toNamed(PageName.topUp);
   }
 
   void goToProcessingPayment() {

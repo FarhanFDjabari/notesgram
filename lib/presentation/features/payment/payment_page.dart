@@ -67,7 +67,7 @@ class PaymentPage extends GetView<PaymentController> {
                 margin: const EdgeInsets.fromLTRB(0, 8, 0, 16),
                 child: HomeTopUpTile(
                   onTopUpPressed: () {
-                    controller.goToSelectPayment();
+                    controller.goToTopUp();
                   },
                 ),
               ),

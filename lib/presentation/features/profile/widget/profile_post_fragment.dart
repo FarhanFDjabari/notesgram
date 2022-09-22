@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class ProfilePostFragment extends StatelessWidget {
+class ProfilePostFragment extends GetView<ProfileController> {
   const ProfilePostFragment({
     Key? key,
   }) : super(key: key);
@@ -24,7 +26,12 @@ class ProfilePostFragment extends StatelessWidget {
         itemCount: 6,
         itemBuilder: (builderContext, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              controller.goToDetail(
+                username: 'username1',
+                noteId: index.toString(),
+              );
+            },
             child: Container(
               width: 118,
               height: 118,

@@ -10,7 +10,7 @@ abstract class BaseListController<T> extends GetxController {
   bool hasNext = false;
   int perPage = 10;
   String message = "";
-  RefresherStatus status = RefresherStatus.loading;
+  RefresherStatus status = RefresherStatus.initial;
 
   bool get isInitial => status == RefresherStatus.initial;
   bool get isLoading => status == RefresherStatus.loading;

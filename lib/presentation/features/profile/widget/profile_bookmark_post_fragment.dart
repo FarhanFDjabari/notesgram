@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
+import 'package:notesgram/presentation/features/profile/widget/add_album_dialog.dart';
+import 'package:notesgram/presentation/widgets/bottom_sheet/bottom_sheet_helper.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -28,7 +30,9 @@ class ProfileBookmarkPostFragment extends GetView<ProfileController> {
         itemBuilder: (builderContext, index) {
           if (index == 2) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                controller.showAddAlbumDialog();
+              },
               child: Card(
                 elevation: 8,
                 shadowColor: Resources.color.shadowColor.withOpacity(0.16),

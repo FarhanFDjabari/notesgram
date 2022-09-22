@@ -26,7 +26,9 @@ import 'package:notesgram/presentation/features/payment/binding/payment_success_
 import 'package:notesgram/presentation/features/payment/payment_page.dart';
 import 'package:notesgram/presentation/features/payment/payment_processing_page.dart';
 import 'package:notesgram/presentation/features/payment/payment_success_page.dart';
+import 'package:notesgram/presentation/features/payment/payment_withdraw_page.dart';
 import 'package:notesgram/presentation/features/payment/select_payment_page.dart';
+import 'package:notesgram/presentation/features/payment/top_up_page.dart';
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
@@ -141,6 +143,16 @@ class AppRoute {
       name: PageName.challenge,
       page: () => ChallengePage(),
       binding: ChallengeBinding(),
+    ),
+    GetPage(
+      name: PageName.topUp,
+      page: () => TopUpPage(),
+      binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: PageName.withdraw,
+      page: () => WithdrawPage(),
+      binding: PaymentBinding(),
     ),
   ];
 }

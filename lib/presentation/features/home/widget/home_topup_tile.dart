@@ -51,13 +51,16 @@ class HomeTopUpTile extends StatelessWidget {
                         color: Resources.color.stateWarning,
                       ),
                       const SizedBox(width: 6),
-                      TextNunito(
-                        text: int.parse(coinAmount ?? '0') > 999
-                            ? coinFormat.format(int.parse(coinAmount ?? '0'))
-                            : coinAmount ?? '0',
-                        size: 15.sp,
-                        fontWeight: Weightenum.BOLD,
-                        color: Resources.color.stateWarning,
+                      Expanded(
+                        child: TextNunito(
+                          text: int.parse(coinAmount ?? '0') > 999
+                              ? coinFormat.format(int.parse(coinAmount ?? '0'))
+                              : coinAmount ?? '0',
+                          size: 15.sp,
+                          maxLines: 2,
+                          fontWeight: Weightenum.BOLD,
+                          color: Resources.color.stateWarning,
+                        ),
                       ),
                     ],
                   ),

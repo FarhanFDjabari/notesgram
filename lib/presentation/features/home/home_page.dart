@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage>
               return HomeTopUpTile(
                 coinAmount: controller.totalCoin.value,
                 onTopUpPressed: () {
-                  controller.goToSelectPayment();
+                  controller.goToTopUp();
                 },
               );
             },

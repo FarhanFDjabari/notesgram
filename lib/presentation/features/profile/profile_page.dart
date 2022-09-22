@@ -64,7 +64,21 @@ class _ProfilePageState extends State<ProfilePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileHeader(),
+            GetBuilder<ProfileController>(
+              init: ProfileController(),
+              initState: (_) {},
+              builder: (controller) {
+                return ProfileHeader(
+                  onEditProfile: () {},
+                  onTopUp: () {
+                    controller.goToTopUp();
+                  },
+                  onWithdraw: () {
+                    controller.goToWithdraw();
+                  },
+                );
+              },
+            ),
             TabBar(
               controller: _tabController,
               tabs: const [
@@ -97,7 +111,6 @@ class _ProfilePageState extends State<ProfilePage>
               height: SizerUtil.height * 0.5,
               child: TabBarView(
                 controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   ProfilePostFragment(),
                   ProfilePurchasedPostFragment(),

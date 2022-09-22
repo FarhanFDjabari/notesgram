@@ -6,10 +6,12 @@ class PostDetailController extends BaseListController {
   final RxString appBarTitle = "".obs;
   final commentController = TextEditingController();
   final RxBool isFieldNotEmpty = false.obs;
+  final RxBool isAutoScrollComment = false.obs;
 
   @override
   void onInit() {
     appBarTitle(Get.parameters['username']);
+    isAutoScrollComment(Get.arguments as bool?);
     super.onInit();
   }
 

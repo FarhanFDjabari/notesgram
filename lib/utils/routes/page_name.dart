@@ -20,4 +20,6 @@ class PageName {
   static const savedAlbum = '/profile/:username/bookmarked-notes/:albumId';
   static const noteDetail = '/post/:username/:noteId';
   static const challenge = '/challenge';
+  static const topUp = '/top-up';
+  static const withdraw = '/withdraw';
 }

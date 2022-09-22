@@ -10,8 +10,8 @@ import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class WithdrawPage extends GetView<PaymentController> {
-  const WithdrawPage({Key? key}) : super(key: key);
+class TopUpPage extends GetView<PaymentController> {
+  const TopUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class WithdrawPage extends GetView<PaymentController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: TextNunito(
-          text: 'Penarikan',
+          text: 'Top Up',
           size: 15.sp,
           fontWeight: Weightenum.BOLD,
           color: Resources.color.neutral50,
@@ -49,22 +49,10 @@ class WithdrawPage extends GetView<PaymentController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              OutlinedTextfield(
-                controller: controller.recipientNumberController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                label: TextNunito(
-                  text: 'Masukkan no. HP atau rekening',
-                  size: 14,
-                  fontWeight: Weightenum.REGULAR,
-                ),
-                hintText: 'e.g. 081234567890',
-              ),
-              const SizedBox(height: 16),
               PaymentCoinInfoTile(),
               const SizedBox(height: 16),
               OutlinedTextfield(
-                controller: controller.withdrawAmountController,
+                controller: controller.topUpAmountController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
                 label: TextNunito(
@@ -72,7 +60,7 @@ class WithdrawPage extends GetView<PaymentController> {
                   size: 14,
                   fontWeight: Weightenum.REGULAR,
                 ),
-                hintText: 'Minimal penarikan 50.000 Koin',
+                hintText: 'Minimal top up Rp15.000',
               ),
               const SizedBox(height: 4),
               Align(
@@ -80,7 +68,7 @@ class WithdrawPage extends GetView<PaymentController> {
                 child: InkWell(
                   onTap: () {},
                   child: TextNunito(
-                    text: 'Ketentuan penarikan',
+                    text: 'Ketentuan top up',
                     size: 14,
                     fontWeight: Weightenum.BOLD,
                     color: Resources.color.indigo700,
@@ -91,7 +79,7 @@ class WithdrawPage extends GetView<PaymentController> {
               PrimaryButton(
                 elevation: 0,
                 isLoading: controller.isLoading,
-                label: 'TARIK SALDO',
+                label: 'TOP UP',
                 onPressed: () {},
               ),
             ],

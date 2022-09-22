@@ -19,11 +19,15 @@ class HomeController extends BaseListController {
     Get.toNamed(PageName.payment + '/info/0');
   }
 
-  void goToSelectPayment() {
-    Get.toNamed(PageName.selectPayment);
+  void goToTopUp() {
+    Get.toNamed(PageName.topUp);
   }
 
-  void goToDetail({required String username, required String noteId}) {
-    Get.toNamed(PageName.post + '/$username/$noteId');
+  void goToDetail({
+    required String username,
+    required String noteId,
+    dynamic arguments,
+  }) {
+    Get.toNamed(PageName.post + '/$username/$noteId', arguments: arguments);
   }
 }

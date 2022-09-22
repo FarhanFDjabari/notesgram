@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/presentation/features/home/controller/post_detail_controller.dart';
 import 'package:notesgram/presentation/features/home/widget/comment_text_field.dart';
 import 'package:notesgram/presentation/features/home/widget/detail_post_tile.dart';
-import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
-import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
+import 'package:notesgram/presentation/widgets/statefull_wrapper.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -13,7 +13,8 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class PostDetailPage extends GetView<PostDetailController> {
-  const PostDetailPage({Key? key}) : super(key: key);
+  PostDetailPage({Key? key}) : super(key: key);
+  final _scrollController = ScrollController();
 
   RichText userNameText(String name, String username) => RichText(
         text: TextSpan(
@@ -40,8 +41,23 @@ class PostDetailPage extends GetView<PostDetailController> {
         ),
       );
 
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (controller.isAutoScrollComment.isTrue &&
+          controller.isLoading == false) {
+        controller.isAutoScrollComment(false);
+        _scrollToBottom();
+      }
+    });
     return Scaffold(
       backgroundColor: Resources.color.neutral100,
       appBar: AppBar(
@@ -71,10 +87,15 @@ class PostDetailPage extends GetView<PostDetailController> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DetailPostTile(),
+            DetailPostTile(
+              onCommentPressed: () {
+                _scrollToBottom();
+              },
+            ),
             SizedBox(
               height: 300,
               child: ListView.builder(

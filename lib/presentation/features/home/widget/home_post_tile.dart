@@ -17,7 +17,7 @@ class HomePostTile extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         controller.goToDetail(username: 'username1', noteId: 0.toString());
       },
@@ -166,7 +166,12 @@ class HomePostTile extends GetView<HomeController> {
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.goToDetail(
+                                    username: 'username1',
+                                    noteId: 0.toString(),
+                                    arguments: true);
+                              },
                               icon: Icon(
                                 Remix.chat_1_line,
                                 color: Resources.color.neutral400,

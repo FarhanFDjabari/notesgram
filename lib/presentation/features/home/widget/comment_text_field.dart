@@ -36,6 +36,7 @@ class CommentTextField extends GetView<PostDetailController> {
                 textInputAction: TextInputAction.newline,
                 minLines: 1,
                 maxLines: 100,
+                maxLength: 2000,
                 onChanged: (_) {
                   controller.checkField();
                 },
@@ -59,6 +60,7 @@ class CommentTextField extends GetView<PostDetailController> {
                   ),
                   filled: true,
                   fillColor: Resources.color.neutral50,
+                  counterText: "",
                 ),
               ),
             ),

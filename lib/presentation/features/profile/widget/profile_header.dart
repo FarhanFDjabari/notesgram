@@ -7,8 +7,15 @@ import 'package:sizer/sizer.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
+    this.onEditProfile,
+    this.onTopUp,
+    this.onWithdraw,
     Key? key,
   }) : super(key: key);
+
+  final Function()? onEditProfile;
+  final Function()? onTopUp;
+  final Function()? onWithdraw;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +49,7 @@ class ProfileHeader extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         InkWell(
-                          onTap: () {},
+                          onTap: onEditProfile,
                           child: TextNunito(
                             text: 'Edit Profile',
                             size: 14,
@@ -113,7 +120,10 @@ class ProfileHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          ProfileCoinTile(),
+          ProfileCoinTile(
+            onTopUp: onTopUp,
+            onWithdraw: onWithdraw,
+          ),
         ],
       ),
     );
