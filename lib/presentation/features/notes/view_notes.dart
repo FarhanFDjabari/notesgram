@@ -1,19 +1,22 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notesgram/presentation/features/home/controller/post_detail_controller.dart';
 import 'package:notesgram/presentation/features/home/widget/comment_text_field.dart';
-import 'package:notesgram/presentation/features/home/widget/detail_post_tile.dart';
+import 'package:notesgram/presentation/features/home/widget/description_text_widget.dart';
+import 'package:notesgram/presentation/features/notes/controller/view_notes_controller.dart';
+import 'package:notesgram/presentation/features/notes/widget/note_caption_tile.dart';
+import 'package:notesgram/presentation/features/notes/widget/view_note_photo_preview.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class PostDetailPage extends GetView<PostDetailController> {
-  PostDetailPage({Key? key}) : super(key: key);
-  final _scrollController = ScrollController();
+class ViewNotes extends GetView<ViewNotesController> {
+  ViewNotes({Key? key}) : super(key: key);
+  final CarouselController _carouselController = CarouselController();
 
   RichText userNameText(String name, String username) => RichText(
         text: TextSpan(
@@ -40,23 +43,8 @@ class PostDetailPage extends GetView<PostDetailController> {
         ),
       );
 
-  void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (controller.isAutoScrollComment.isTrue &&
-          controller.isLoading == false) {
-        controller.isAutoScrollComment(false);
-        _scrollToBottom();
-      }
-    });
     return Scaffold(
       backgroundColor: Resources.color.neutral100,
       appBar: AppBar(
@@ -69,8 +57,9 @@ class PostDetailPage extends GetView<PostDetailController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: TextNunito(
-          text: controller.appBarTitle.value,
+          text: 'Teks Argumentasi Materi UTBK Tahun 2020',
           size: 15.sp,
+          maxLines: 1,
           fontWeight: Weightenum.BOLD,
           color: Resources.color.neutral50,
         ),
@@ -84,17 +73,81 @@ class PostDetailPage extends GetView<PostDetailController> {
           ),
           iconSize: 28,
         ),
+        actions: [
+          Container(
+            width: 24,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            DetailPostTile(
-              onCommentPressed: () {
-                _scrollToBottom();
-              },
+            const SizedBox(height: 82),
+            SizedBox(
+              height: 450,
+              child: ViewNotePhotoPreview(
+                  onImageTap: () {
+                    controller.goToPreview(noteId: '0');
+                  },
+                  carouselController: _carouselController,
+                  currentIndex: controller.imageIndex.value,
+                  onPageChanged: (index) {
+                    controller.imageIndex(index);
+                  }),
             ),
+            const SizedBox(height: 82),
+            Container(
+              height: 88,
+              color: Resources.color.neutral50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: List.generate(
+                  3,
+                  (index) {
+                    return InkWell(
+                      onTap: () {
+                        _carouselController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 150),
+                          curve: Curves.decelerate,
+                        );
+                        controller.imageIndex(index);
+                      },
+                      child: GetX<ViewNotesController>(
+                        init: ViewNotesController(),
+                        initState: (_) {},
+                        builder: (_) {
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 150),
+                            margin: EdgeInsets.only(left: index > 0 ? 3 : 0),
+                            width:
+                                index == controller.imageIndex.value ? 72 : 64,
+                            height:
+                                index == controller.imageIndex.value ? 72 : 64,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              image: DecorationImage(
+                                // image: NetworkImage(url),
+                                image: AssetImage(
+                                  Assets.lib.theme.resources.images
+                                      .profileCoinLayoutBg.path,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            NoteCaptionTile(),
+            CommentTextField(),
             SizedBox(
               height: 300,
               child: ListView.builder(
@@ -148,7 +201,6 @@ class PostDetailPage extends GetView<PostDetailController> {
                 itemCount: 3,
               ),
             ),
-            CommentTextField(),
           ],
         ),
       ),

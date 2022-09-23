@@ -137,6 +137,7 @@ class DetailPostTile extends GetView<PostDetailController> {
             onBuyPressed: () {
               // controller.goToPaymentInfo();
             },
+            onViewPressed: () {},
           ),
           Container(
             padding: const EdgeInsets.symmetric(

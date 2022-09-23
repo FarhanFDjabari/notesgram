@@ -14,7 +14,7 @@ class ChallengeController extends BaseListController {
   }
 
   void goBack() {
-    Get.back();
+    Get.back(closeOverlays: true);
   }
 
   void showSnackbar(String message) {

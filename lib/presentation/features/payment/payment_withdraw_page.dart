@@ -78,7 +78,17 @@ class WithdrawPage extends GetView<PaymentController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    controller.showTermsDialog(
+                      title: 'Ketentuan penarikan',
+                      terms: [
+                        'Setiap top up akan dikenakan biaya layanan sebesar Rp500',
+                        'Jumlah minimal penarikan adalah 15.000 Koin',
+                        'Besaran konversi penarikan senilai 1:1. Jika Anda melakukan penarikan sebesar 50.000 Koin, Anda akan mendapatkan Rp50.000',
+                        'Saldo akan dikirimkan dalam kurun waktu 1x24 jam'
+                      ],
+                    );
+                  },
                   child: TextNunito(
                     text: 'Ketentuan penarikan',
                     size: 14,

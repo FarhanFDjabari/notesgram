@@ -66,7 +66,16 @@ class TopUpPage extends GetView<PaymentController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    controller.showTermsDialog(
+                      title: 'Ketentuan top up',
+                      terms: [
+                        'Setiap top up akan dikenakan biaya layanan sebesar Rp500',
+                        'Jumlah minimal penarikan adalah Rp15.000',
+                        'Besaran konversi penarikan senilai 1:1. Jika Anda melakukan penarikan sebesar Rp15.000 Koin, Anda akan mendapatkan 15.000 koin',
+                      ],
+                    );
+                  },
                   child: TextNunito(
                     text: 'Ketentuan top up',
                     size: 14,

@@ -13,11 +13,13 @@ class PostPriceBanner extends StatelessWidget {
     this.productTitle,
     this.price,
     this.onBuyPressed,
+    this.onViewPressed,
   }) : super(key: key);
 
   final String? productTitle;
   final String? price;
   final Function()? onBuyPressed;
+  final Function()? onViewPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +64,9 @@ class PostPriceBanner extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           PrimaryButton(
-            width: 75.sp,
+            width: 78.sp,
             height: 40.sp,
-            label: 'BELI',
+            label: 'LIHAT',
             fontSize: 11.sp,
             isPrefixIcon: true,
             icon: Container(
@@ -76,7 +78,7 @@ class PostPriceBanner extends StatelessWidget {
               ),
             ),
             elevation: 0,
-            onPressed: onBuyPressed,
+            onPressed: onViewPressed,
           ),
         ],
       ),

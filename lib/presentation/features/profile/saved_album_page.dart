@@ -73,13 +73,25 @@ class SavedAlbumPage extends GetView<ProfileController> {
           ),
           iconSize: 28,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Remix.more_line,
+              color: Resources.color.neutral50,
+            ),
+            iconSize: 28,
+          ),
+        ],
       ),
       body: ListView.separated(
         itemCount: 2,
         padding: const EdgeInsets.all(16),
         itemBuilder: (builderContext, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              controller.goToView(username: 'username1', noteId: 0.toString());
+            },
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(

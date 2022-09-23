@@ -22,4 +22,6 @@ class PageName {
   static const challenge = '/challenge';
   static const topUp = '/top-up';
   static const withdraw = '/withdraw';
+  static const viewNote = '/post/:username/:noteId/view';
+  static const notePreview = '/preview/:noteId';
 }

@@ -4,8 +4,6 @@ import 'package:notesgram/data/sources/remote/base/base_list_controller.dart';
 
 class PostDetailController extends BaseListController {
   final RxString appBarTitle = "".obs;
-  final commentController = TextEditingController();
-  final RxBool isFieldNotEmpty = false.obs;
   final RxBool isAutoScrollComment = false.obs;
 
   @override
@@ -13,10 +11,6 @@ class PostDetailController extends BaseListController {
     appBarTitle(Get.parameters['username']);
     isAutoScrollComment(Get.arguments as bool?);
     super.onInit();
-  }
-
-  void checkField() {
-    isFieldNotEmpty(commentController.text.isNotEmpty);
   }
 
   @override

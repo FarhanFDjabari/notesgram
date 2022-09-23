@@ -32,6 +32,10 @@ class ProfileController extends BaseObjectController {
     Get.toNamed(PageName.topUp);
   }
 
+  void goToView({required String username, required String noteId}) {
+    Get.toNamed(PageName.post + '/$username/$noteId/view');
+  }
+
   void goToWithdraw() {
     Get.toNamed(PageName.withdraw);
   }

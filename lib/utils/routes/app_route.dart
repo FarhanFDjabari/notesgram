@@ -19,6 +19,9 @@ import 'package:notesgram/presentation/features/home/home_page.dart';
 import 'package:notesgram/presentation/features/home/post_detail.dart';
 import 'package:notesgram/presentation/features/navigation/binding/navigation_binding.dart';
 import 'package:notesgram/presentation/features/navigation/navigation_page.dart';
+import 'package:notesgram/presentation/features/notes/binding/view_notes_binding.dart';
+import 'package:notesgram/presentation/features/notes/note_preview.dart';
+import 'package:notesgram/presentation/features/notes/view_notes.dart';
 import 'package:notesgram/presentation/features/notification/binding/notification_binding.dart';
 import 'package:notesgram/presentation/features/notification/notification_page.dart';
 import 'package:notesgram/presentation/features/payment/binding/payment_binding.dart';
@@ -153,6 +156,16 @@ class AppRoute {
       name: PageName.withdraw,
       page: () => WithdrawPage(),
       binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: PageName.viewNote,
+      page: () => ViewNotes(),
+      binding: ViewNotesBinding(),
+    ),
+    GetPage(
+      name: PageName.notePreview,
+      page: () => NotePreview(),
+      binding: ViewNotesBinding(),
     ),
   ];
 }

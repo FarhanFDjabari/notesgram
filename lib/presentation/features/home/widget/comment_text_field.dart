@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notesgram/presentation/features/home/controller/post_detail_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:sizer/sizer.dart';
 
-class CommentTextField extends GetView<PostDetailController> {
-  const CommentTextField({
+class CommentTextField extends StatefulWidget {
+  CommentTextField({
+    this.onSendPressed,
     Key? key,
   }) : super(key: key);
+
+  final Function(String)? onSendPressed;
+
+  @override
+  State<CommentTextField> createState() => _CommentTextFieldState();
+}
+
+class _CommentTextFieldState extends State<CommentTextField> {
+  final _commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class CommentTextField extends GetView<PostDetailController> {
           Expanded(
             child: SizedBox(
               child: TextFormField(
-                controller: controller.commentController,
+                controller: _commentController,
                 autocorrect: true,
                 autofocus: false,
                 keyboardType: TextInputType.multiline,
@@ -38,7 +47,7 @@ class CommentTextField extends GetView<PostDetailController> {
                 maxLines: 100,
                 maxLength: 2000,
                 onChanged: (_) {
-                  controller.checkField();
+                  setState(() {});
                 },
                 style: GoogleFonts.nunitoSans(
                   fontWeight: FontWeight.w400,
@@ -66,26 +75,21 @@ class CommentTextField extends GetView<PostDetailController> {
             ),
           ),
           const SizedBox(width: 8),
-          GetX<PostDetailController>(
-            init: PostDetailController(),
-            initState: (_) {},
-            builder: (_) {
-              if (controller.isFieldNotEmpty.value) {
-                return InkWell(
-                  onTap: () {
-                    // controller.goToResetPassword();
-                  },
-                  child: TextNunito(
-                    text: 'Kirim',
-                    size: 15,
-                    fontWeight: Weightenum.BOLD,
-                    color: Resources.color.indigo700,
-                  ),
-                );
-              }
-              return Container();
-            },
-          ),
+          if (_commentController.text.isEmpty == false)
+            InkWell(
+              onTap: () {
+                // controller.goToResetPassword();
+                if (widget.onSendPressed != null) {
+                  widget.onSendPressed!(_commentController.text);
+                }
+              },
+              child: TextNunito(
+                text: 'Kirim',
+                size: 15,
+                fontWeight: Weightenum.BOLD,
+                color: Resources.color.indigo700,
+              ),
+            ),
         ],
       ),
     );
