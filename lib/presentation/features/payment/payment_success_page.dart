@@ -32,16 +32,6 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
           width: 32,
           height: 32,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Remix.menu_line,
-              color: Resources.color.neutral50,
-            ),
-            iconSize: 20,
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

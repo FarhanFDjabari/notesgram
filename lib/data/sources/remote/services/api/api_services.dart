@@ -1,0 +1,225 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:notesgram/data/model/auth/username_available_model.dart';
+import 'package:notesgram/data/model/explore/explore_post_model.dart';
+import 'package:notesgram/data/model/note/note_model.dart';
+import 'package:notesgram/data/model/note_folder/bookmarked_notes_folder_model.dart';
+import 'package:notesgram/data/model/note_folder/purchased_notes_folder_model.dart';
+import 'package:notesgram/data/model/payment/payment_model.dart';
+import 'package:notesgram/data/model/post/comment_model.dart';
+import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/model/promo/promo_model.dart';
+import 'package:notesgram/data/model/promo/validate_promo_model.dart';
+import 'package:notesgram/data/model/user/user_model.dart';
+import 'package:notesgram/data/sources/remote/environment.dart';
+import 'package:notesgram/data/sources/remote/interceptor/dio.dart';
+import 'package:notesgram/data/sources/remote/wrapper/api_response.dart';
+import 'package:notesgram/utils/helpers/secure_storage_manager.dart';
+import 'package:retrofit/retrofit.dart';
+
+import 'package:http_parser/http_parser.dart';
+
+part 'api_services.g.dart';
+
+@RestApi()
+abstract class RestClient {
+  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+
+  static Future<RestClient> create({
+    Map<String, dynamic> headers = const {},
+    int connectTimeout = 30000,
+    int receiveTimeout = 30000,
+  }) async {
+    final defHeader = Map<String, dynamic>.from(headers);
+    defHeader["Accept"] = "application/json";
+
+    String? token = await SecureStorageManager().getToken();
+    defHeader["Authorization"] =
+        "Bearer " + (token ?? ""); // input auth token here
+
+    return RestClient(
+      await AppDio().getDIO(
+          headers: defHeader,
+          connectTimeout: connectTimeout,
+          receiveTimeout: receiveTimeout),
+      baseUrl: ConfigEnvironments.getEnvironments().toString(),
+    );
+  }
+
+  @GET('/profile')
+  Future<ApiResponse<UserModel>> fetchMyProfile();
+
+  @PUT('/profile')
+  @MultiPart()
+  Future<ApiResponse<UserModel>> editProfile({
+    @Part(name: "name") String? name,
+    @Part(name: "username") String? username,
+    @Part(name: "file", contentType: "image/png") File? file,
+  });
+
+  @POST('/user/username/create')
+  Future<ApiResponse<dynamic>> createUsername({
+    @Part(name: "username") String? username,
+  });
+
+  @GET('/user/{id}/follow')
+  Future<ApiResponse<dynamic>> followUnfollowUser({
+    @Path("id") required String userId,
+  });
+
+  @GET('/user/{id}/profile')
+  Future<ApiResponse<dynamic>> fetchUserProfile({
+    @Path("id") required String userId,
+  });
+
+  @GET('/user/{id}/notes')
+  Future<ApiResponse<dynamic>> fetchUserNote({
+    @Path("id") required String userId,
+  });
+
+  @GET('/user/username/check')
+  Future<ApiResponse<UsernameAvailableModel>> checkUsernameAvailable({
+    @Query("username") String? username,
+  });
+
+  @GET('/user/{id}/followers')
+  Future<ApiResponses<UserModel>> fetchFollowersByUserId({
+    @Path("id") required String userId,
+  });
+
+  @GET('/user/{id}/followings')
+  Future<ApiResponses<UserModel>> fetchFollowingByUserId({
+    @Path("id") required String userId,
+  });
+
+  @POST('/post')
+  @MultiPart()
+  Future<ApiResponse<PostModel>> createNewPost({
+    @Part(name: "title") String? title,
+    @Part(name: "caption") String? caption,
+    @Part(name: "price") String? price,
+    @Part(name: "files[]", contentType: 'image/png') List<File>? files,
+  });
+
+  @GET('/post')
+  Future<ApiResponses<PostModel>> fetchAllPosts();
+
+  @GET('/post/{id}/like')
+  Future<ApiResponse<dynamic>> likeDislikePost({
+    @Path("id") required String postId,
+  });
+
+  @POST('/post/{id}/comment')
+  Future<ApiResponse<CommentModel>> createComment({
+    @Path("id") required String userId,
+    @Field("comment") String? comment,
+  });
+
+  @GET('/post/following')
+  Future<ApiResponses<PostModel>> fetchFollowingUserPosts();
+
+  @GET('/post/explore')
+  Future<ApiResponses<ExplorePostModel>> explorePost({
+    @Query("note_title") String? noteTitle,
+    @Query("username") String? username,
+    @Query("author_name") String? authorName,
+  });
+
+  @GET('/post/{id}/bookmark')
+  Future<ApiResponse<dynamic>> bookmarkPost({
+    @Path("id") required String postId,
+  });
+
+  @GET('/post/my/bookmarked')
+  Future<ApiResponses<PostModel>> fetchBookmarkedPost();
+
+  @POST('/payment/topup-coin')
+  Future<ApiResponse<PaymentModel>> topUpCoins({
+    @Field("amount") String? amount,
+  });
+
+  @POST('/payment/withdraw')
+  Future<ApiResponse<PaymentModel>> withdrawAccount({
+    @Field("amount") String? amount,
+    @Field("account_number") String? accountNumber,
+    @Field("bank_code") String? bankCode,
+  });
+
+  @POST('/note/purchase')
+  Future<ApiResponse<NoteModel>> purchaseNote({
+    @Field("note_id") String? noteId,
+  });
+
+  @GET('/note/{id}')
+  Future<ApiResponse<NoteModel>> fetchNoteById({
+    @Path("id") required String noteId,
+  });
+
+  @GET('/note/my/purchased')
+  Future<ApiResponses<NoteModel>> fetchPurchasedNotes();
+
+  @GET('/promo/validate')
+  Future<ApiResponse<ValidatePromoModel>> validatePromoCode({
+    @Query("code") String? promoCode,
+  });
+
+  @GET('/promo')
+  Future<ApiResponses<PromoModel>> fetchAllPromo();
+
+  @GET('/note-group/my/bookmarked')
+  Future<ApiResponses<BookmarkedNotesFolderModel>> fetchBookmarkedNotesFolder();
+
+  @GET('/note-group/my/purchased')
+  Future<ApiResponses<PurchasedNotesFolderModel>> fetchPurchasedNotesFolder();
+
+  @GET('/note-group/my/purchased/{id}')
+  Future<ApiResponse<PurchasedNotesFolderModel>>
+      fetchPurchasedNotesFolderDetail({
+    @Path("id") required String folderId,
+  });
+
+  @GET('/note-group/my/bookmarked/{id}')
+  Future<ApiResponse<BookmarkedNotesFolderModel>>
+      fetchBookmarkedNotesFolderDetail({
+    @Path("id") required String folderId,
+  });
+
+  @POST('/note-group/purchased')
+  Future<ApiResponse<PurchasedNotesFolderModel>> createPurchasedNotesFolder({
+    @Field("name") String? name,
+  });
+
+  @POST('/note-group/bookmarked')
+  Future<ApiResponse<BookmarkedNotesFolderModel>> createBookmarkedNotesFolder({
+    @Field("name") String? name,
+  });
+
+  @PUT('/note-group/bookmarked/{id}')
+  @MultiPart()
+  Future<ApiResponse<BookmarkedNotesFolderModel>> updateBookmarkedNotesFolder({
+    @Path("id") required String folderId,
+    @Part(name: "name") String? name,
+    @Part(name: "note_ids[]") List<int>? noteIds,
+  });
+
+  @PUT('/note-group/purchased/{id}')
+  @MultiPart()
+  Future<ApiResponse<PurchasedNotesFolderModel>> updatePurchasedNotesFolder({
+    @Path("id") required String folderId,
+    @Part(name: "name") String? name,
+    @Part(name: "note_ids[]") List<int>? noteIds,
+  });
+
+  @DELETE('/note-group/purchased/{id}')
+  Future<ApiResponse<dynamic>> deletePurchasedNoteFolder({
+    @Path("id") required String folderId,
+  });
+
+  @DELETE('/note-group/bookmarked/{id}')
+  Future<ApiResponse<dynamic>> deleteBookmarkedNotesFolder({
+    @Path("id") required String folderId,
+  });
+}
+
+const client = RestClient.create;

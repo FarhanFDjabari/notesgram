@@ -1,6 +1,6 @@
 class Environments {
-  static const String PRODUCTION = 'http://panti.suitdev.com/api';
-  static const String DEV = 'https://rocketmall-back-office.suitdev.com';
+  static const String PRODUCTION = '';
+  static const String DEV = '';
 }
 
 class ConfigEnvironments {
@@ -8,11 +8,11 @@ class ConfigEnvironments {
   static const List<Map<String, String>> _availableEnvironments = [
     {
       'env': Environments.DEV,
-      'url': 'https://rocketmall-back-office.suitdev.com',
+      'url': '',
     },
     {
       'env': Environments.PRODUCTION,
-      'url': 'http://panti.suitdev.com/',
+      'url': '',
     },
   ];
 

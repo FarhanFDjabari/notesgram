@@ -31,16 +31,6 @@ class NotificationPage extends GetView<NotificationController> {
           fontWeight: Weightenum.BOLD,
           color: Resources.color.neutral50,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Remix.menu_line,
-              color: Resources.color.neutral50,
-            ),
-            iconSize: 20,
-          ),
-        ],
       ),
       body: GetBuilder<NotificationController>(
         builder: (_) {

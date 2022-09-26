@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:notesgram/data/sources/remote/wrapper/base_response.dart';
 
 import 'network_exception.dart';
@@ -135,8 +134,8 @@ extension FutureAPIResultExt<T extends BaseResponse> on Future<T> {
       final code = value.status;
       final message = value.message;
       // You can use this if has multiple domain url and separate the error
-      final domain = value.domain;
-      debugPrint("DOMAIN => $domain");
+      // final domain = value.domain;
+      // debugPrint("DOMAIN => $domain");
 
       if (code >= 200 && code <= 299) return value;
       if (code == 401) {}

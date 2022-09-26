@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/navigation/controller/navigation_controller.dart';
 import 'package:notesgram/presentation/features/navigation/widget/notesgram_bottom_navbar.dart';
+import 'package:notesgram/presentation/features/profile/widget/profile_drawer.dart';
 import 'package:notesgram/utils/routes/app_route.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,6 +28,7 @@ class NavigationPage extends GetView<NavigationController> {
         dy: SizerUtil.height * 0.65,
         dx: SizerUtil.width * 0.85,
         mainScreenWidget: Scaffold(
+          endDrawer: ProfileDrawer(),
           body: Builder(
             builder: (_) {
               switch (controller.pageIndex.value) {

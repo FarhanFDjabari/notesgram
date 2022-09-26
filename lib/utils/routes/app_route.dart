@@ -35,9 +35,11 @@ import 'package:notesgram/presentation/features/payment/top_up_page.dart';
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
+import 'package:notesgram/presentation/features/profile/binding/transaction_history_binding.dart';
 import 'package:notesgram/presentation/features/profile/private_album_page.dart';
 import 'package:notesgram/presentation/features/profile/profile_page.dart';
 import 'package:notesgram/presentation/features/profile/saved_album_page.dart';
+import 'package:notesgram/presentation/features/profile/transaction_history_page.dart';
 import 'package:notesgram/presentation/features/splash/bindings/splash_binding.dart';
 import 'package:notesgram/presentation/features/splash/splash_page.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
@@ -166,6 +168,11 @@ class AppRoute {
       name: PageName.notePreview,
       page: () => NotePreview(),
       binding: ViewNotesBinding(),
+    ),
+    GetPage(
+      name: PageName.transactionHistory,
+      page: () => TransactionHistoryPage(),
+      binding: TransactionHistoryBinding(),
     ),
   ];
 }

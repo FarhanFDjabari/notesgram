@@ -42,16 +42,6 @@ class _HomePageState extends State<HomePage>
           width: 32,
           height: 32,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Remix.menu_line,
-              color: Resources.color.neutral50,
-            ),
-            iconSize: 20,
-          ),
-        ],
         bottom: ColoredTabBar(
           color: Resources.color.neutral50,
           tabBar: TabBar(

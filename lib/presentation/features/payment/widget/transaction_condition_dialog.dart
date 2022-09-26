@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
-import 'package:remixicon/remixicon.dart';
-import 'package:sizer/sizer.dart';
 import 'package:collection/collection.dart';
 
 class TransactionConditionDialog extends StatelessWidget {

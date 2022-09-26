@@ -24,4 +24,5 @@ class PageName {
   static const withdraw = '/withdraw';
   static const viewNote = '/post/:username/:noteId/view';
   static const notePreview = '/preview/:noteId';
+  static const transactionHistory = '/transaction-history';
 }

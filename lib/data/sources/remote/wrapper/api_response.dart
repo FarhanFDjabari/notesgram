@@ -13,7 +13,7 @@ class ApiResponse<T> extends BaseResponse {
     required String domain,
     this.result,
     this.errors,
-  }) : super(status: status, message: message, domain: domain);
+  }) : super(status: status, message: message);
 
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
@@ -33,14 +33,12 @@ class ApiResponses<T> extends BaseResponse {
   ApiResponses({
     required int status,
     required String message,
-    required String domain,
     this.data = const [],
-  }) : super(status: status, message: message, domain: domain);
+  }) : super(status: status, message: message);
 
   factory ApiResponses.fromJson(Map<String, dynamic> json) => ApiResponses<T>(
         status: json["statusCode"],
         message: json["message"],
-        domain: json["domain"],
         data: List<T>.from((json["results"] ?? json["data"])
             .map((x) => _Converter<T?>().fromJson(x))),
       );
@@ -52,11 +50,13 @@ class PaginatedList<T> extends BaseResponse {
   PaginatedList({
     required int status,
     required String message,
-    required String domain,
     this.data = const [],
     required this.links,
     required this.meta,
-  }) : super(status: status, message: message, domain: domain);
+  }) : super(
+          status: status,
+          message: message,
+        );
   _Links links;
   _Meta meta;
 
@@ -69,7 +69,6 @@ class PaginatedList<T> extends BaseResponse {
         meta: _Meta.fromJson(json["meta"] ?? {}),
         status: json["statusCode"],
         message: json["message"],
-        domain: json["domain"],
       );
 }
 
@@ -87,10 +86,10 @@ class _Links {
   String? next;
 
   factory _Links.fromJson(Map<String, dynamic> json) => _Links(
-        first: json["first"] == null ? null : json["first"],
-        last: json["last"] == null ? null : json["last"],
-        prev: json["prev"] == null ? null : json["prev"],
-        next: json["next"] == null ? null : json["next"],
+        first: json["first"],
+        last: json["last"],
+        prev: json["prev"],
+        next: json["next"],
       );
 }
 
@@ -116,17 +115,17 @@ class _Meta {
   int? total;
 
   factory _Meta.fromJson(Map<String, dynamic> json) => _Meta(
-        currentPage: json["current_page"] == null ? null : json["current_page"],
-        from: json["from"] == null ? null : json["from"],
-        lastPage: json["last_page"] == null ? null : json["last_page"],
+        currentPage: json["current_page"],
+        from: json["from"],
+        lastPage: json["last_page"],
         links: json["links"] != null
             ? List<_Link>.from(
                 json["links"].map((x) => _Link.fromJson(x ?? {})))
             : [],
-        path: json["path"] == null ? null : json["path"],
-        perPage: json["per_page"] == null ? null : json["per_page"],
-        to: json["to"] == null ? null : json["to"],
-        total: json["total"] == null ? null : json["total"],
+        path: json["path"],
+        perPage: json["per_page"],
+        to: json["to"],
+        total: json["total"],
       );
 }
 
@@ -142,9 +141,9 @@ class _Link {
   bool? active;
 
   factory _Link.fromJson(Map<String, dynamic> json) => _Link(
-        url: json["url"] == null ? null : json["url"],
-        label: json["label"] == null ? null : json["label"],
-        active: json["active"] == null ? null : json["active"],
+        url: json["url"],
+        label: json["label"],
+        active: json["active"],
       );
 }
 

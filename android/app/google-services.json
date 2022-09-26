@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "880759987731",
+    "project_id": "astral-medley-359411",
+    "storage_bucket": "astral-medley-359411.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880759987731:android:2402e82edbc0b0ecc329e6",
+        "android_client_info": {
+          "package_name": "com.example.notesgram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880759987731-3c963649cse1d08il3et1hr9o0namdsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABGsBLZ4f_D5G3fXydwqeCIQGRM3BF6-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880759987731-3c963649cse1d08il3et1hr9o0namdsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

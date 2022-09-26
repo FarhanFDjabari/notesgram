@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_bookmark_post_fragment.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_coin_tile.dart';
+import 'package:notesgram/presentation/features/profile/widget/profile_drawer.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_header.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_post_fragment.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_purchased_post_fragment.dart';
@@ -51,7 +52,9 @@ class _ProfilePageState extends State<ProfilePage>
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
             icon: Icon(
               Remix.menu_line,
               color: Resources.color.neutral50,
