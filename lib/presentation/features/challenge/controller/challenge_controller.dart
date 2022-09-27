@@ -20,7 +20,7 @@ class ChallengeController extends BaseListController {
   void showSnackbar(String message) {
     Get.showSnackbar(
       NotesgramSnackbar(
-        message: 'Kode voucher berhasil disalin',
+        snackbarMessage: 'Kode voucher berhasil disalin',
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class TransactionHistoryPage extends GetView<TransactionHistoryController> {
-  const TransactionHistoryPage({super.key});
+  const TransactionHistoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

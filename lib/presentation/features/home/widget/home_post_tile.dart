@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
 import 'package:notesgram/presentation/features/home/widget/description_text_widget.dart';
 import 'package:notesgram/presentation/features/home/widget/post_photo_preview.dart';
@@ -7,19 +8,26 @@ import 'package:notesgram/presentation/features/home/widget/post_price_banner.da
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePostTile extends GetView<HomeController> {
   const HomePostTile({
+    this.post,
     Key? key,
   }) : super(key: key);
+
+  final PostModel? post;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.goToDetail(username: 'username1', noteId: 0.toString());
+        controller.goToDetail(
+          username: '${post?.user?.username}',
+          postId: '${post?.id}',
+        );
       },
       child: SizedBox(
         height: 680,
@@ -46,7 +54,7 @@ class HomePostTile extends GetView<HomeController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextNunito(
-                              text: 'Nama User',
+                              text: '${post?.user?.name}',
                               size: 12.sp,
                               fontWeight: Weightenum.BOLD,
                             ),
@@ -85,7 +93,7 @@ class HomePostTile extends GetView<HomeController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             TextNunito(
-                              text: '@username1',
+                              text: '@${post?.user?.username}',
                               size: 12.sp,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral500,
@@ -102,7 +110,10 @@ class HomePostTile extends GetView<HomeController> {
                               ),
                             ),
                             TextNunito(
-                              text: '2 jam',
+                              text: DateTimeExtension(
+                                DateTime.tryParse(post?.createdAt ?? "") ??
+                                    DateTime.now(),
+                              ).postTime,
                               size: 12.sp,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral500,
@@ -111,8 +122,7 @@ class HomePostTile extends GetView<HomeController> {
                         ),
                         const SizedBox(height: 8),
                         DescriptionTextWidget(
-                          text:
-                              'Hai haaii, selamat soreee semuanyaaa \nHappy Monday yakss🤗 \n\nKali ini aku upload notes lagi, yey. Materi yang aku catat mengenai "Teks Argumentasi" yaa buat kalian yang nyari materi ini. Bagi ada yang nanya ini untuk kelas berapa aku kurang tau ya teman-teman, jadi yang tau komen aja ya di bawah 😉👍✨\n\nSemangat terusss semuanyaaaa💗💜✨',
+                          text: '${post?.caption}',
                           fontWeight: Weightenum.REGULAR,
                           size: 12.sp,
                           color: Resources.color.neutral900,
@@ -124,13 +134,15 @@ class HomePostTile extends GetView<HomeController> {
               ),
             ),
             Expanded(
-              child: PostPhotoPreview(),
+              child: PostPhotoPreview(
+                images: post?.note?.notePictures,
+              ),
             ),
             PostPriceBanner(
-              productTitle: 'Teks Argumentasi Materi UTBK Tahun 2020',
-              price: '10000',
+              productTitle: '${post?.note?.title}',
+              price: '${post?.note?.price}',
               onBuyPressed: () {
-                controller.goToPaymentInfo();
+                controller.goToPaymentInfo(noteId: '${post?.note?.id}');
               },
             ),
             Container(
@@ -149,14 +161,18 @@ class HomePostTile extends GetView<HomeController> {
                             IconButton(
                               onPressed: () {},
                               icon: Icon(
-                                Remix.heart_line,
-                                color: Resources.color.neutral400,
+                                post?.isLiked == true
+                                    ? Remix.heart_fill
+                                    : Remix.heart_line,
+                                color: post?.isLiked == true
+                                    ? Resources.color.indigo700
+                                    : Resources.color.neutral400,
                                 size: 24,
                               ),
                               visualDensity: VisualDensity.compact,
                             ),
                             TextNunito(
-                              text: '1.234',
+                              text: '${post?.likes?.length}',
                               size: 14,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral400,
@@ -168,8 +184,8 @@ class HomePostTile extends GetView<HomeController> {
                             IconButton(
                               onPressed: () {
                                 controller.goToDetail(
-                                    username: 'username1',
-                                    noteId: 0.toString(),
+                                    username: '${post?.user?.username}',
+                                    postId: '${post?.id}',
                                     arguments: true);
                               },
                               icon: Icon(
@@ -180,7 +196,7 @@ class HomePostTile extends GetView<HomeController> {
                               visualDensity: VisualDensity.compact,
                             ),
                             TextNunito(
-                              text: '987',
+                              text: '${post?.comments?.length}',
                               size: 14,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral400,
@@ -202,8 +218,12 @@ class HomePostTile extends GetView<HomeController> {
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
-                      Remix.bookmark_line,
-                      color: Resources.color.neutral400,
+                      post?.isBookmarked == true
+                          ? Remix.bookmark_fill
+                          : Remix.bookmark_line,
+                      color: post?.isBookmarked == true
+                          ? Resources.color.indigo700
+                          : Resources.color.neutral400,
                       size: 24,
                     ),
                     visualDensity: VisualDensity.compact,

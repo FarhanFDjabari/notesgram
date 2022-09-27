@@ -9,7 +9,7 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileDrawer extends StatelessWidget {
-  const ProfileDrawer({super.key});
+  const ProfileDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

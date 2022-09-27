@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/data/model/user/note_pictures_model.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
@@ -11,8 +12,11 @@ import 'package:remixicon/remixicon.dart';
 
 class PostPhotoPreview extends StatefulWidget {
   const PostPhotoPreview({
+    this.images,
     Key? key,
   }) : super(key: key);
+
+  final List<NotePicturesModel>? images;
 
   @override
   State<PostPhotoPreview> createState() => _PostPhotoPreviewState();
@@ -21,15 +25,13 @@ class PostPhotoPreview extends StatefulWidget {
 class _PostPhotoPreviewState extends State<PostPhotoPreview> {
   final CarouselController _carouselController = CarouselController();
   int _photoIndex = 0;
+  late final List<NotePicturesModel> images;
 
-  List<Widget> items = [
-    Container(
-      color: Resources.color.indigo200,
-    ),
-    Container(
-      color: Resources.color.indigo600,
-    ),
-  ];
+  @override
+  void initState() {
+    images = widget.images ?? [];
+    super.initState();
+  }
 
   final limitedAccessText = RichText(
     text: TextSpan(
@@ -65,8 +67,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
                     decoration: BoxDecoration(
                       color: Resources.color.neutral600,
                       image: DecorationImage(
-                        image: AssetImage(
-                            Assets.lib.theme.resources.images.appLogo.path),
+                        image: NetworkImage(images[index].pictureUrl ?? ""),
                       ),
                     ),
                     child: BackdropFilter(
@@ -84,8 +85,9 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
                       height: 106,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: Resources.color.neutral50,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Resources.color.neutral50,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +106,12 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
               );
             }
             return Container(
-              color: index > 0
-                  ? Resources.color.indigo200
-                  : Resources.color.indigo700,
+              decoration: BoxDecoration(
+                color: Resources.color.indigo700,
+                image: DecorationImage(
+                  image: NetworkImage(images[index].pictureUrl ?? ""),
+                ),
+              ),
             );
           },
           carouselController: _carouselController,
@@ -137,7 +142,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
             ),
             child: Center(
               child: TextNunito(
-                text: '${_photoIndex + 1}/${items.length}',
+                text: '${_photoIndex + 1}/2',
                 maxLines: 1,
                 size: 14,
                 fontWeight: Weightenum.REGULAR,
@@ -146,7 +151,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
             ),
           ),
         ),
-        if (_photoIndex < items.length - 1)
+        if (_photoIndex < images.length - 1)
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(

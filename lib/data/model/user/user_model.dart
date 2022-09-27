@@ -1,19 +1,37 @@
+import 'package:hive/hive.dart';
 import 'package:notesgram/data/model/user/user_count_model.dart';
+import 'package:notesgram/data/sources/local/hive/hive_types.dart';
 import 'package:notesgram/data/sources/remote/wrapper/model_factory.dart';
 
+part 'user_model.g.dart';
+
+@HiveType(typeId: HiveTypes.USER)
 class UserModel implements ModelFactory {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final String? email;
+  @HiveField(2)
   final String? name;
+  @HiveField(3)
   final String? username;
+  @HiveField(4)
   final String? googleId;
+  @HiveField(5)
   final String? firebaseId;
+  @HiveField(6)
   final String? avatarUrl;
+  @HiveField(7)
   final int? coins;
+  @HiveField(8)
   final String? createdAt;
+  @HiveField(9)
   final String? updatedAt;
+  @HiveField(10)
   final UserCountModel? cCount;
+  @HiveField(11)
   final bool? isFollowed;
+  @HiveField(12)
   final bool? isAdmin;
 
   UserModel({

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:notesgram/presentation/widgets/notesgram_snackbar.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'base_refresher_status.dart';
 
@@ -65,7 +66,7 @@ abstract class BaseListController<T> extends GetxController {
   void setErrorStatus(String message) {
     status = RefresherStatus.failed;
     message = (message.isNotEmpty) ? message : "Something when wrong..";
-    Get.snackbar('txt_error_title'.tr, message.toString());
+    Get.showSnackbar(NotesgramSnackbar(snackbarMessage: message));
   }
 
   void finishLoadData({String errorMessage = ""}) {
