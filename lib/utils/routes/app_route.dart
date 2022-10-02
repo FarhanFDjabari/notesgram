@@ -26,6 +26,8 @@ import 'package:notesgram/presentation/features/notification/binding/notificatio
 import 'package:notesgram/presentation/features/notification/notification_page.dart';
 import 'package:notesgram/presentation/features/payment/binding/payment_binding.dart';
 import 'package:notesgram/presentation/features/payment/binding/payment_success_binding.dart';
+import 'package:notesgram/presentation/features/payment/binding/payment_topup_binding.dart';
+import 'package:notesgram/presentation/features/payment/binding/payment_withdraw_binding.dart';
 import 'package:notesgram/presentation/features/payment/payment_page.dart';
 import 'package:notesgram/presentation/features/payment/payment_processing_page.dart';
 import 'package:notesgram/presentation/features/payment/payment_success_page.dart';
@@ -34,8 +36,10 @@ import 'package:notesgram/presentation/features/payment/select_payment_page.dart
 import 'package:notesgram/presentation/features/payment/top_up_page.dart';
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
+import 'package:notesgram/presentation/features/profile/binding/help_center_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/transaction_history_binding.dart';
+import 'package:notesgram/presentation/features/profile/help_center_page.dart';
 import 'package:notesgram/presentation/features/profile/private_album_page.dart';
 import 'package:notesgram/presentation/features/profile/profile_page.dart';
 import 'package:notesgram/presentation/features/profile/saved_album_page.dart';
@@ -152,12 +156,12 @@ class AppRoute {
     GetPage(
       name: PageName.topUp,
       page: () => TopUpPage(),
-      binding: PaymentBinding(),
+      binding: PaymentTopupBinding(),
     ),
     GetPage(
       name: PageName.withdraw,
       page: () => WithdrawPage(),
-      binding: PaymentBinding(),
+      binding: PaymentWithdrawBinding(),
     ),
     GetPage(
       name: PageName.viewNote,
@@ -173,6 +177,11 @@ class AppRoute {
       name: PageName.transactionHistory,
       page: () => TransactionHistoryPage(),
       binding: TransactionHistoryBinding(),
+    ),
+    GetPage(
+      name: PageName.help,
+      page: () => HelpCenterPage(),
+      binding: HelpCenterBinding(),
     ),
   ];
 }

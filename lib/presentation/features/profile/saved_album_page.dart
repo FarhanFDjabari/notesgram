@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_bookmark_controller.dart';
 import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
@@ -8,7 +9,7 @@ import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class SavedAlbumPage extends GetView<ProfileController> {
+class SavedAlbumPage extends GetView<ProfileBookmarkController> {
   const SavedAlbumPage({Key? key}) : super(key: key);
 
   RichText userNameText(String name, String username) => RichText(

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>880759987731-30miiq6bhoqfmusjtu8d2pgb7fkpg0ed.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.880759987731-30miiq6bhoqfmusjtu8d2pgb7fkpg0ed</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDRO-rfuzqVl2jOm9eTN0Zruyb6R_Xxhpk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>880759987731</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.notesgram</string>
+	<key>PROJECT_ID</key>
+	<string>astral-medley-359411</string>
+	<key>STORAGE_BUCKET</key>
+	<string>astral-medley-359411.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:880759987731:ios:8f3f556a63b37767c329e6</string>
+</dict>
+</plist>

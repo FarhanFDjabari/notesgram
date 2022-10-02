@@ -14,7 +14,36 @@
       },
       "oauth_client": [
         {
-          "client_id": "880759987731-3c963649cse1d08il3et1hr9o0namdsc.apps.googleusercontent.com",
+          "client_id": "880759987731-o0oi7hpn8chqaavajbkqc0jfkk9cltqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABGsBLZ4f_D5G3fXydwqeCIQGRM3BF6-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880759987731-3c963649cse1d08il3et1hr9o0namdsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880759987731:android:b8195c1afe96d146c329e6",
+        "android_client_info": {
+          "package_name": "com.notesgram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880759987731-o0oi7hpn8chqaavajbkqc0jfkk9cltqr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

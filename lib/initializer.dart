@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -11,6 +11,7 @@ import 'package:notesgram/data/model/user/user_count_model.dart';
 import 'package:notesgram/data/model/user/user_model.dart';
 import 'package:notesgram/data/sources/local/hive/hive_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
+import 'package:notesgram/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Initializer {
@@ -19,6 +20,9 @@ class Initializer {
       _initScreenPreference();
       await globalLocalData();
       globalController();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
     } catch (err) {
       rethrow;
     }
@@ -37,7 +41,7 @@ class Initializer {
   static globalLocalData() async {
     // Global Local Database
     await Get.putAsync<FlutterSecureStorage>(() async {
-      return FlutterSecureStorage();
+      return const FlutterSecureStorage();
     });
     await Get.putAsync<GetStorage>(() async {
       return GetStorage(StorageName.STORAGE_NAME);

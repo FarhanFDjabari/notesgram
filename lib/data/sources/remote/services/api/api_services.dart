@@ -1,16 +1,21 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:notesgram/data/model/auth/login_info_model.dart';
 import 'package:notesgram/data/model/auth/username_available_model.dart';
+import 'package:notesgram/data/model/challenge/challenge_claim_model.dart';
+import 'package:notesgram/data/model/challenge/challenge_item_model.dart';
 import 'package:notesgram/data/model/explore/explore_post_model.dart';
 import 'package:notesgram/data/model/note/note_model.dart';
 import 'package:notesgram/data/model/note_folder/bookmarked_notes_folder_model.dart';
 import 'package:notesgram/data/model/note_folder/purchased_notes_folder_model.dart';
+import 'package:notesgram/data/model/notification/notification_model.dart';
 import 'package:notesgram/data/model/payment/payment_model.dart';
 import 'package:notesgram/data/model/post/comment_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/model/promo/promo_model.dart';
 import 'package:notesgram/data/model/promo/validate_promo_model.dart';
+import 'package:notesgram/data/model/user/transaction_model.dart';
 import 'package:notesgram/data/model/user/user_model.dart';
 import 'package:notesgram/data/sources/remote/environment.dart';
 import 'package:notesgram/data/sources/remote/interceptor/dio.dart';
@@ -46,6 +51,9 @@ abstract class RestClient {
       baseUrl: ConfigEnvironments.getEnvironments().toString(),
     );
   }
+
+  @GET('/auth/send-notification')
+  Future<ApiResponse<LoginInfoModel>> sendAuthNotification();
 
   @GET('/profile')
   Future<ApiResponse<UserModel>> fetchMyProfile();
@@ -219,6 +227,35 @@ abstract class RestClient {
   @DELETE('/note-group/bookmarked/{id}')
   Future<ApiResponse<dynamic>> deleteBookmarkedNotesFolder({
     @Path("id") required String folderId,
+  });
+
+  @GET('/transaction/history')
+  Future<ApiResponses<TransactionModel>> fetchTransactionHistory();
+
+  @GET('/challenge')
+  Future<ApiResponses<ChallengeItemModel>> fetchAllChallenge();
+
+  @POST('/challenge/create')
+  Future<ApiResponse<ChallengeItemModel>> createChallenge({
+    @Field("title") String? title,
+    @Field("description") String? description,
+    @Field("period") String? period,
+    @Field("category") String? category,
+    @Field("reward") String? reward,
+    @Field("count") int? count,
+  });
+
+  @GET('/challenge/{challengeId}/claim')
+  Future<ApiResponse<ChallengeClaimModel>> challengeRewardClaim({
+    @Path("challengeId") String? challengeId,
+  });
+
+  @GET('/notification')
+  Future<ApiResponses<NotificationModel>> fetchAllNotifications();
+
+  @GET('/notification/{notificationId}/read')
+  Future<ApiResponse<dynamic>> markNotificationAsRead({
+    @Path("notificationId") String? notificationId,
   });
 }
 

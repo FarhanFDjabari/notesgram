@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
-import 'package:notesgram/presentation/features/payment/widget/transaction_condition_dialog.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 
-class PaymentController extends BaseObjectController {
+class PaymentController extends BaseObjectController<PostModel> {
   final promoCodeController = TextEditingController();
-  final topUpAmountController = TextEditingController();
-  final withdrawAmountController = TextEditingController();
-  final recipientNumberController = TextEditingController();
+
+  @override
+  void onInit() {
+    setFinishCallbacks(Get.arguments as PostModel?);
+    super.onInit();
+  }
 
   void goBack() {
     Get.back(closeOverlays: true);
@@ -26,12 +29,5 @@ class PaymentController extends BaseObjectController {
     Future.delayed(const Duration(seconds: 2), () {
       Get.offNamed(PageName.paymentSuccess);
     });
-  }
-
-  void showTermsDialog({required title, required List<String> terms}) {
-    Get.dialog(TransactionConditionDialog(
-      title: title,
-      terms: terms,
-    ));
   }
 }

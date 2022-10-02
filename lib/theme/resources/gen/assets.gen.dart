@@ -74,6 +74,10 @@ class $LibThemeResourcesImagesGen {
   SvgGenImage get exploreActive =>
       const SvgGenImage('lib/theme/resources/images/explore_active.svg');
 
+  /// File path: lib/theme/resources/images/help_center_footer_image.png
+  AssetGenImage get helpCenterFooterImage => const AssetGenImage(
+      'lib/theme/resources/images/help_center_footer_image.png');
+
   /// File path: lib/theme/resources/images/home.svg
   SvgGenImage get home =>
       const SvgGenImage('lib/theme/resources/images/home.svg');

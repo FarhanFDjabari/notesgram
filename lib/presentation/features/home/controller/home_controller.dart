@@ -23,8 +23,8 @@ class HomeController extends BaseListController<PostModel> {
     }
   }
 
-  void goToPaymentInfo({required String noteId}) {
-    Get.toNamed(PageName.payment + '/info/$noteId');
+  void goToPaymentInfo({required String noteId, required PostModel? note}) {
+    Get.toNamed(PageName.payment + '/info/$noteId', arguments: note);
   }
 
   void goToDetail({

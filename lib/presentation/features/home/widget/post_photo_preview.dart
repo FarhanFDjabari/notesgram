@@ -6,17 +6,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/data/model/user/note_pictures_model.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
-import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 
 class PostPhotoPreview extends StatefulWidget {
   const PostPhotoPreview({
     this.images,
+    this.isPurchased,
     Key? key,
   }) : super(key: key);
 
   final List<NotePicturesModel>? images;
+  final bool? isPurchased;
 
   @override
   State<PostPhotoPreview> createState() => _PostPhotoPreviewState();
@@ -26,10 +27,12 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
   final CarouselController _carouselController = CarouselController();
   int _photoIndex = 0;
   late final List<NotePicturesModel> images;
+  late final bool isPurchased;
 
   @override
   void initState() {
     images = widget.images ?? [];
+    isPurchased = widget.isPurchased ?? false;
     super.initState();
   }
 
@@ -59,7 +62,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
         CarouselSlider.builder(
           itemCount: 2,
           itemBuilder: (context, index, realIndex) {
-            if (index > 0) {
+            if (index > 0 && !isPurchased) {
               return Stack(
                 children: [
                   Container(

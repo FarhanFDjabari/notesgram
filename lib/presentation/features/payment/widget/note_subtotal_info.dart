@@ -9,9 +9,17 @@ class NoteSubtotalInfo extends StatelessWidget {
   const NoteSubtotalInfo({
     Key? key,
     this.isPaymentSuccess = false,
+    this.postUser,
+    this.postUsername,
+    this.noteTitle,
+    this.notePrice,
   }) : super(key: key);
 
   final bool? isPaymentSuccess;
+  final String? postUser;
+  final String? postUsername;
+  final String? noteTitle;
+  final String? notePrice;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +44,7 @@ class NoteSubtotalInfo extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   TextNunito(
-                    text: 'Nama user',
+                    text: '$postUser',
                     size: 14,
                     fontWeight: Weightenum.BOLD,
                     color: isPaymentSuccess == true
@@ -45,7 +53,7 @@ class NoteSubtotalInfo extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   TextNunito(
-                    text: '@username1',
+                    text: '@$postUsername',
                     size: 14,
                     fontWeight: Weightenum.REGULAR,
                     color: isPaymentSuccess == true
@@ -79,7 +87,7 @@ class NoteSubtotalInfo extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextNunito(
-                      text: 'Teks Argumentasi Materi UTBK Tahun 2020',
+                      text: '$noteTitle',
                       size: 16,
                       maxLines: 2,
                       fontWeight: Weightenum.BOLD,
@@ -118,9 +126,9 @@ class NoteSubtotalInfo extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         TextNunito(
-                          text: int.parse('10000') > 999
-                              ? coinFormat.format(int.parse('10000'))
-                              : '0',
+                          text: int.parse('$notePrice') > 999
+                              ? coinFormat.format(int.parse('$notePrice'))
+                              : '$notePrice',
                           size: 20,
                           fontWeight: Weightenum.BOLD,
                           color: Resources.color.stateWarning,

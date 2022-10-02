@@ -14,6 +14,22 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
+  Future<ApiResponse<LoginInfoModel>> sendAuthNotification() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<LoginInfoModel>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/auth/send-notification',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<LoginInfoModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ApiResponse<UserModel>> fetchMyProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -672,6 +688,115 @@ class _RestClient implements RestClient {
         _setStreamType<ApiResponse<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/note-group/bookmarked/${folderId}',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponses<TransactionModel>> fetchTransactionHistory() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponses<TransactionModel>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/transaction/history',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponses<TransactionModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponses<ChallengeItemModel>> fetchAllChallenge() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponses<ChallengeItemModel>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/challenge',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponses<ChallengeItemModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<ChallengeItemModel>> createChallenge(
+      {title, description, period, category, reward, count}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'title': title,
+      'description': description,
+      'period': period,
+      'category': category,
+      'reward': reward,
+      'count': count
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<ChallengeItemModel>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/challenge/create',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<ChallengeItemModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<ChallengeClaimModel>> challengeRewardClaim(
+      {challengeId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<ChallengeClaimModel>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/challenge/${challengeId}/claim',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<ChallengeClaimModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponses<NotificationModel>> fetchAllNotifications() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponses<NotificationModel>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/notification',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponses<NotificationModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> markNotificationAsRead({notificationId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/notification/${notificationId}/read',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ApiResponse<dynamic>.fromJson(_result.data!);

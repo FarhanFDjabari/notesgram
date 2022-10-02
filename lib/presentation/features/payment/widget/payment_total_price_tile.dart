@@ -3,6 +3,7 @@ import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,9 +11,11 @@ class PaymentTotalPriceTile extends StatelessWidget {
   const PaymentTotalPriceTile({
     Key? key,
     this.onSelectPaymentPressed,
+    this.totalPrice,
   }) : super(key: key);
 
   final Function()? onSelectPaymentPressed;
+  final String? totalPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,9 @@ class PaymentTotalPriceTile extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     TextNunito(
-                      text: '10.000',
+                      text: int.parse('$totalPrice') > 999
+                          ? coinFormat.format(int.parse('$totalPrice'))
+                          : '$totalPrice',
                       size: 15.sp,
                       fontWeight: Weightenum.BOLD,
                       color: Resources.color.stateWarning,

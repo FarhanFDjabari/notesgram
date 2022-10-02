@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/presentation/features/home/widget/description_text_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
@@ -8,8 +9,11 @@ import 'package:sizer/sizer.dart';
 
 class NoteCaptionTile extends StatelessWidget {
   const NoteCaptionTile({
+    this.post,
     Key? key,
   }) : super(key: key);
+
+  final PostModel? post;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class NoteCaptionTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextNunito(
-                          text: 'Nama User',
+                          text: '${post?.user?.name}',
                           size: 12.sp,
                           fontWeight: Weightenum.BOLD,
                         ),
@@ -49,10 +53,14 @@ class NoteCaptionTile extends StatelessWidget {
                                 // controller.goToResetPassword();
                               },
                               child: TextNunito(
-                                text: '+Follow',
+                                text: post?.user?.isFollowed == true
+                                    ? 'Followed'
+                                    : '+Follow',
                                 size: 14,
                                 fontWeight: Weightenum.BOLD,
-                                color: Resources.color.indigo700,
+                                color: post?.user?.isFollowed == true
+                                    ? Resources.color.neutral500
+                                    : Resources.color.indigo700,
                               ),
                             ),
                             InkWell(
@@ -76,7 +84,7 @@ class NoteCaptionTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextNunito(
-                          text: '@username1',
+                          text: '@${post?.user?.username}',
                           size: 12.sp,
                           fontWeight: Weightenum.REGULAR,
                           color: Resources.color.neutral500,
@@ -93,7 +101,7 @@ class NoteCaptionTile extends StatelessWidget {
                           ),
                         ),
                         TextNunito(
-                          text: '2 jam',
+                          text: '${post?.createdAt}',
                           size: 12.sp,
                           fontWeight: Weightenum.REGULAR,
                           color: Resources.color.neutral500,
@@ -102,8 +110,7 @@ class NoteCaptionTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     DescriptionTextWidget(
-                      text:
-                          'Hai haaii, selamat soreee semuanyaaa \nHappy Monday yakss🤗 \n\nKali ini aku upload notes lagi, yey. Materi yang aku catat mengenai "Teks Argumentasi" yaa buat kalian yang nyari materi ini. Bagi ada yang nanya ini untuk kelas berapa aku kurang tau ya teman-teman, jadi yang tau komen aja ya di bawah 😉👍✨\n\nSemangat terusss semuanyaaaa💗💜✨',
+                      text: '${post?.caption}',
                       fontWeight: Weightenum.REGULAR,
                       size: 12.sp,
                       color: Resources.color.neutral900,
@@ -135,7 +142,7 @@ class NoteCaptionTile extends StatelessWidget {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: '1.234',
+                            text: '${post?.likes?.length}',
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,
@@ -154,7 +161,7 @@ class NoteCaptionTile extends StatelessWidget {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: '987',
+                            text: '${post?.comments}',
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,

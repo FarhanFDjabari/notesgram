@@ -38,7 +38,7 @@ class UserPostFragment extends GetView<HomeController> {
             emptyTitle: 'txt_note_empty_title'.tr,
             emptySubtitle: 'txt_note_empty_description'.tr,
             emptyImage: AssetImage(
-              Assets.lib.theme.resources.images.appLogo.path,
+              Assets.lib.theme.resources.images.appLogoMonochrome.path,
             ),
             emptyEnabled: controller.isEmptyData,
             body: SmartRefresher(

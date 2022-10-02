@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/presentation/features/payment/controller/payment_controller.dart';
+import 'package:notesgram/presentation/features/payment/controller/payment_topup_controller.dart';
 import 'package:notesgram/presentation/features/payment/widget/payment_coin_info_tile.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
@@ -10,7 +10,7 @@ import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class TopUpPage extends GetView<PaymentController> {
+class TopUpPage extends GetView<PaymentTopupController> {
   const TopUpPage({Key? key}) : super(key: key);
 
   @override

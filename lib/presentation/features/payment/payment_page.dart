@@ -6,10 +6,7 @@ import 'package:notesgram/presentation/features/payment/widget/note_subtotal_inf
 import 'package:notesgram/presentation/features/payment/widget/payment_summary_tile.dart';
 import 'package:notesgram/presentation/features/payment/widget/payment_total_price_tile.dart';
 import 'package:notesgram/presentation/features/payment/widget/promo_code_input.dart';
-import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
-import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/notesgram_dialog.dart';
-import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -54,9 +51,17 @@ class PaymentPage extends GetView<PaymentController> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
-              NoteSubtotalInfo(),
+              NoteSubtotalInfo(
+                postUser: controller.mData?.user?.name,
+                postUsername: controller.mData?.user?.username,
+                noteTitle: controller.mData?.note?.title,
+                notePrice: '${controller.mData?.note?.price}',
+              ),
               PromoCodeInput(),
-              PaymentSummaryTile(),
+              PaymentSummaryTile(
+                price: '${controller.mData?.note?.price}',
+                discountPrice: '0',
+              ),
               Card(
                 elevation: 8,
                 shadowColor: Resources.color.shadowColor.withOpacity(0.16),
@@ -66,6 +71,7 @@ class PaymentPage extends GetView<PaymentController> {
                 color: Resources.color.neutral50,
                 margin: const EdgeInsets.fromLTRB(0, 8, 0, 16),
                 child: HomeTopUpTile(
+                  coinAmount: '${controller.mData?.user?.coins}',
                   onTopUpPressed: () {
                     controller.goToTopUp();
                   },
@@ -76,6 +82,7 @@ class PaymentPage extends GetView<PaymentController> {
         ),
       ),
       bottomNavigationBar: PaymentTotalPriceTile(
+        totalPrice: '${controller.mData?.note?.price}',
         onSelectPaymentPressed: () {
           Get.dialog(
             NotesgramDialog(

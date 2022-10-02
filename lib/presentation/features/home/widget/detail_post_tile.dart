@@ -7,6 +7,7 @@ import 'package:notesgram/presentation/features/home/widget/post_price_banner.da
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -41,6 +42,9 @@ class DetailPostTile extends GetView<PostDetailController> {
                 CircleAvatar(
                   backgroundColor: Resources.color.indigo400,
                   radius: 25,
+                  backgroundImage: NetworkImage(
+                    controller.mData?.post?.user?.avatarUrl ?? '',
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -51,7 +55,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextNunito(
-                            text: 'Nama User',
+                            text: '${controller.mData?.post?.user?.name}',
                             size: 12.sp,
                             fontWeight: Weightenum.BOLD,
                           ),
@@ -63,10 +67,18 @@ class DetailPostTile extends GetView<PostDetailController> {
                                   // controller.goToResetPassword();
                                 },
                                 child: TextNunito(
-                                  text: '+Follow',
+                                  text: controller
+                                              .mData?.post?.user?.isFollowed ==
+                                          true
+                                      ? 'Followed'
+                                      : '+Follow',
                                   size: 14,
                                   fontWeight: Weightenum.BOLD,
-                                  color: Resources.color.indigo700,
+                                  color: controller
+                                              .mData?.post?.user?.isFollowed ==
+                                          true
+                                      ? Resources.color.neutral500
+                                      : Resources.color.indigo700,
                                 ),
                               ),
                               InkWell(
@@ -90,7 +102,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextNunito(
-                            text: '@username1',
+                            text: '@${controller.mData?.post?.user?.username}',
                             size: 12.sp,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral500,
@@ -107,7 +119,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                             ),
                           ),
                           TextNunito(
-                            text: '2 jam',
+                            text: '${controller.mData?.post?.user?.createdAt}',
                             size: 12.sp,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral500,
@@ -116,8 +128,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                       ),
                       const SizedBox(height: 8),
                       DescriptionTextWidget(
-                        text:
-                            'Hai haaii, selamat soreee semuanyaaa \nHappy Monday yakss🤗 \n\nKali ini aku upload notes lagi, yey. Materi yang aku catat mengenai "Teks Argumentasi" yaa buat kalian yang nyari materi ini. Bagi ada yang nanya ini untuk kelas berapa aku kurang tau ya teman-teman, jadi yang tau komen aja ya di bawah 😉👍✨\n\nSemangat terusss semuanyaaaa💗💜✨',
+                        text: '${controller.mData?.post?.caption}',
                         fontWeight: Weightenum.REGULAR,
                         size: 12.sp,
                         color: Resources.color.neutral900,
@@ -129,15 +140,21 @@ class DetailPostTile extends GetView<PostDetailController> {
             ),
           ),
           Expanded(
-            child: PostPhotoPreview(),
+            child: PostPhotoPreview(
+              images: controller.mData?.post?.note?.notePictures,
+              isPurchased: controller.mData?.isPurchased,
+            ),
           ),
           PostPriceBanner(
-            productTitle: 'Teks Argumentasi Materi UTBK Tahun 2020',
-            price: '10000',
+            productTitle: '${controller.mData?.post?.note?.title}',
+            price: '${oCcy.parse(controller.mData?.post?.note?.title ?? '0')}',
+            isPurchased: controller.mData?.isPurchased,
             onBuyPressed: () {
               // controller.goToPaymentInfo();
             },
-            onViewPressed: () {},
+            onViewPressed: () {
+              // controller.goToPreviewNote();
+            },
           ),
           Container(
             padding: const EdgeInsets.symmetric(
@@ -162,7 +179,10 @@ class DetailPostTile extends GetView<PostDetailController> {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: '1.234',
+                            text: coinFormat
+                                .parse(
+                                    '${controller.mData?.post?.likes?.length}')
+                                .toString(),
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,
@@ -181,7 +201,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: '987',
+                            text: '${controller.mData?.post?.comments?.length}',
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,

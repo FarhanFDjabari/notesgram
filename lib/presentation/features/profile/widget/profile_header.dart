@@ -10,12 +10,20 @@ class ProfileHeader extends StatelessWidget {
     this.onEditProfile,
     this.onTopUp,
     this.onWithdraw,
+    this.name,
+    this.postCount,
+    this.followersCount,
+    this.followingCount,
     Key? key,
   }) : super(key: key);
 
   final Function()? onEditProfile;
   final Function()? onTopUp;
   final Function()? onWithdraw;
+  final String? name;
+  final String? postCount;
+  final String? followersCount;
+  final String? followingCount;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +50,7 @@ class ProfileHeader extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextNunito(
-                            text: 'Nama user',
+                            text: name,
                             size: 18,
                             fontWeight: Weightenum.BOLD,
                           ),
@@ -68,7 +76,7 @@ class ProfileHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextNunito(
-                              text: '123',
+                              text: postCount,
                               size: 16,
                               fontWeight: Weightenum.BOLD,
                             ),
@@ -84,7 +92,7 @@ class ProfileHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextNunito(
-                              text: '456',
+                              text: followersCount,
                               size: 16,
                               fontWeight: Weightenum.BOLD,
                             ),
@@ -100,7 +108,7 @@ class ProfileHeader extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextNunito(
-                              text: '789',
+                              text: followingCount,
                               size: 16,
                               fontWeight: Weightenum.BOLD,
                             ),

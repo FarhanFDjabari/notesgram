@@ -16,6 +16,9 @@ dependencies:
   dotted_line: ^3.1.0
   equatable: ^2.0.3
   file_picker: ^4.6.1
+  firebase_core: ^1.24.0
+  firebase_auth: ^3.11.0
+  firebase_messaging: ^13.0.4
   floating_draggable_widget: ^2.1.1
   flutter:
     sdk: flutter

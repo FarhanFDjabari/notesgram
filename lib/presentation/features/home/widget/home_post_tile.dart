@@ -66,10 +66,14 @@ class HomePostTile extends GetView<HomeController> {
                                     // controller.goToResetPassword();
                                   },
                                   child: TextNunito(
-                                    text: '+Follow',
+                                    text: post?.user?.isFollowed == true
+                                        ? 'Followed'
+                                        : '+Follow',
                                     size: 14,
                                     fontWeight: Weightenum.BOLD,
-                                    color: Resources.color.indigo700,
+                                    color: post?.user?.isFollowed == true
+                                        ? Resources.color.neutral500
+                                        : Resources.color.indigo700,
                                   ),
                                 ),
                                 InkWell(
@@ -136,14 +140,20 @@ class HomePostTile extends GetView<HomeController> {
             Expanded(
               child: PostPhotoPreview(
                 images: post?.note?.notePictures,
+                isPurchased: post?.note?.isPurchased,
               ),
             ),
             PostPriceBanner(
               productTitle: '${post?.note?.title}',
               price: '${post?.note?.price}',
+              isPurchased: post?.note?.isPurchased,
               onBuyPressed: () {
-                controller.goToPaymentInfo(noteId: '${post?.note?.id}');
+                controller.goToPaymentInfo(
+                  noteId: '${post?.note?.id}',
+                  note: post,
+                );
               },
+              onViewPressed: () {},
             ),
             Container(
               padding: const EdgeInsets.symmetric(

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
-import 'package:notesgram/presentation/features/profile/widget/add_album_dialog.dart';
-import 'package:notesgram/presentation/widgets/bottom_sheet/bottom_sheet_helper.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_bookmark_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class ProfileBookmarkPostFragment extends GetView<ProfileController> {
+class ProfileBookmarkPostFragment extends GetView<ProfileBookmarkController> {
   const ProfileBookmarkPostFragment({
     Key? key,
   }) : super(key: key);

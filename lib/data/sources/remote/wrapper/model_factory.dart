@@ -15,7 +15,10 @@ import 'package:notesgram/data/model/post/like_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/model/promo/promo_model.dart';
 import 'package:notesgram/data/model/promo/validate_promo_model.dart';
+import 'package:notesgram/data/model/user/challenge_transaction_model.dart';
 import 'package:notesgram/data/model/user/note_pictures_model.dart';
+import 'package:notesgram/data/model/user/transaction_info_model.dart';
+import 'package:notesgram/data/model/user/transaction_model.dart';
 import 'package:notesgram/data/model/user/user_count_model.dart';
 import 'package:notesgram/data/model/user/user_model.dart';
 
@@ -62,6 +65,12 @@ abstract class ModelFactory {
       return UserCountModel.fromJson(json);
     } else if (strType == (UserModel).toString()) {
       return UserModel.fromJson(json);
+    } else if (strType == (TransactionModel).toString()) {
+      return TransactionModel.fromJson(json);
+    } else if (strType == (TransactionInfoModel).toString()) {
+      return TransactionInfoModel.fromJson(json);
+    } else if (strType == (ChallengeTransactionModel).toString()) {
+      return ChallengeTransactionModel.fromJson(json);
     }
     // if not implemented
     else {

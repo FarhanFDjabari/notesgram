@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_drawer_tile.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class ProfileDrawer extends StatelessWidget {
+class ProfileDrawer extends GetView<ProfileController> {
   const ProfileDrawer({Key? key}) : super(key: key);
 
   @override
@@ -43,12 +45,12 @@ class ProfileDrawer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextNunito(
-                            text: 'Mbak IU',
+                            text: controller.mData?.name,
                             size: 14,
                             fontWeight: Weightenum.BOLD,
                           ),
                           TextNunito(
-                            text: '@username1',
+                            text: '@${controller.mData?.username}',
                             size: 12,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral500,
@@ -65,7 +67,12 @@ class ProfileDrawer extends StatelessWidget {
                               const SizedBox(width: 6),
                               Expanded(
                                 child: TextNunito(
-                                  text: '100.000',
+                                  text: int.parse(controller.mData?.username ??
+                                              '0') >
+                                          999
+                                      ? coinFormat.format(int.parse(
+                                          controller.mData?.username ?? '0'))
+                                      : controller.mData?.username ?? '0',
                                   size: 14,
                                   fontWeight: Weightenum.BOLD,
                                   color: Resources.color.stateWarning,
@@ -91,7 +98,9 @@ class ProfileDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ProfileDrawerTile(
-                onTileTap: () {},
+                onTileTap: () {
+                  Get.toNamed(PageName.help);
+                },
                 iconColor: Resources.color.indigo700,
                 iconData: Remix.customer_service_2_line,
                 label: 'Bantuan',

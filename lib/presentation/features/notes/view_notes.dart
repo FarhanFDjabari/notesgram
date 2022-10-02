@@ -57,7 +57,7 @@ class ViewNotes extends GetView<ViewNotesController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: TextNunito(
-          text: 'Teks Argumentasi Materi UTBK Tahun 2020',
+          text: '${controller.mData?.note?.title}',
           size: 15.sp,
           maxLines: 1,
           fontWeight: Weightenum.BOLD,
@@ -89,7 +89,8 @@ class ViewNotes extends GetView<ViewNotesController> {
               height: 450,
               child: ViewNotePhotoPreview(
                   onImageTap: () {
-                    controller.goToPreview(noteId: '0');
+                    controller.goToPreview(
+                        noteId: '${controller.mData?.note?.id}');
                   },
                   carouselController: _carouselController,
                   currentIndex: controller.imageIndex.value,
@@ -146,7 +147,9 @@ class ViewNotes extends GetView<ViewNotesController> {
                 ),
               ),
             ),
-            NoteCaptionTile(),
+            NoteCaptionTile(
+              post: controller.mData,
+            ),
             CommentTextField(),
             SizedBox(
               height: 300,
@@ -178,15 +181,19 @@ class ViewNotes extends GetView<ViewNotesController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              userNameText('Nama user', 'username'),
+                              userNameText(
+                                  '${controller.mData?.comments?[index].commenter?.name}',
+                                  '${controller.mData?.comments?[index].commenter?.username}'),
                               TextNunito(
-                                text: 'Cool notes! keep it up!',
+                                text:
+                                    '${controller.mData?.comments?[index].comment}',
                                 size: 14,
                                 fontWeight: Weightenum.REGULAR,
                               ),
                               const SizedBox(height: 16),
                               TextNunito(
-                                text: '19 Sep 2022, 12:48',
+                                text:
+                                    '${controller.mData?.comments?[index].createdAt}',
                                 size: 14,
                                 fontWeight: Weightenum.REGULAR,
                                 color: Resources.color.neutral500,
@@ -198,7 +205,7 @@ class ViewNotes extends GetView<ViewNotesController> {
                     ),
                   );
                 },
-                itemCount: 3,
+                itemCount: controller.mData?.comments?.length ?? 0,
               ),
             ),
           ],

@@ -1,8 +1,13 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/data/sources/remote/base/base_list_controller.dart';
+import 'package:notesgram/data/model/note/note_model.dart';
+import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
+import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
+import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
+import 'package:notesgram/utils/routes/page_name.dart';
 
-class PostDetailController extends BaseListController {
+class PostDetailController extends BaseObjectController<NoteModel> {
   final RxString appBarTitle = "".obs;
   final RxBool isAutoScrollComment = false.obs;
 
@@ -13,14 +18,27 @@ class PostDetailController extends BaseListController {
     super.onInit();
   }
 
-  @override
-  void loadNextPage() {
-    // TODO: implement loadNextPage
+  Future<void> getNoteById({required String noteId}) async {
+    loadingState();
+    await client()
+        .then(
+      (value) =>
+          value.fetchNoteById(noteId: noteId).validateStatus().then((data) {
+        setFinishCallbacks(data.result);
+      }),
+    )
+        .handleError((onError) {
+      debugPrint(onError.toString());
+      finishLoadData(errorMessage: onError);
+    });
   }
 
-  @override
-  void refreshPage() {
-    // TODO: implement refreshPage
+  void goToPreviewNote({
+    required String username,
+    required String noteId,
+    PostModel? note,
+  }) {
+    Get.toNamed(PageName.post + '/$username/$noteId/view', arguments: note);
   }
 
   void goBack() {

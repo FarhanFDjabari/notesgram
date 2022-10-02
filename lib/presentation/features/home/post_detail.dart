@@ -5,9 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/presentation/features/home/controller/post_detail_controller.dart';
 import 'package:notesgram/presentation/features/home/widget/comment_text_field.dart';
 import 'package:notesgram/presentation/features/home/widget/detail_post_tile.dart';
+import 'package:notesgram/presentation/widgets/loading_overlay.dart';
+import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -87,69 +91,98 @@ class PostDetailPage extends GetView<PostDetailController> {
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DetailPostTile(
-              onCommentPressed: () {
-                _scrollToBottom();
-              },
-            ),
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(bottom: 32),
-                itemBuilder: (builderContext, index) {
-                  return Container(
-                    height: 110,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: Resources.color.neutral200,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 22,
-                          backgroundColor: Resources.color.indigo400,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              userNameText('Nama user', 'username'),
-                              TextNunito(
-                                text: 'Cool notes! keep it up!',
-                                size: 14,
-                                fontWeight: Weightenum.REGULAR,
-                              ),
-                              const SizedBox(height: 16),
-                              TextNunito(
-                                text: '19 Sep 2022, 12:48',
-                                size: 14,
-                                fontWeight: Weightenum.REGULAR,
-                                color: Resources.color.neutral500,
-                              ),
-                            ],
+        child: StateHandleWidget(
+          shimmerView: LoadingOverlay(),
+          loadingEnabled: controller.isLoading,
+          onRetryPressed: () {
+            // controller.getDashboard("", "");
+          },
+          errorEnabled: controller.isError,
+          errorText: 'txt_error_general'.tr,
+          emptyTitle: 'txt_note_empty_title'.tr,
+          emptySubtitle: 'txt_note_empty_description'.tr,
+          emptyImage: AssetImage(
+            Assets.lib.theme.resources.images.appLogoMonochrome.path,
+          ),
+          emptyEnabled: controller.isEmptyData,
+          body: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: false,
+            controller: controller.refreshController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DetailPostTile(
+                  onCommentPressed: () {
+                    _scrollToBottom();
+                  },
+                ),
+                SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    itemBuilder: (builderContext, index) {
+                      return Container(
+                        height: 110,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: Resources.color.neutral200,
+                              width: 1,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 3,
-              ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 22,
+                              backgroundColor: Resources.color.indigo400,
+                              backgroundImage: NetworkImage(
+                                controller.mData?.post?.comments?[index]
+                                        .commenter?.avatarUrl ??
+                                    '',
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  userNameText(
+                                      '${controller.mData?.post?.comments?[index].commenter?.name}',
+                                      '${controller.mData?.post?.comments?[index].commenter?.name}'),
+                                  TextNunito(
+                                    text:
+                                        '${controller.mData?.post?.comments?[index].comment}',
+                                    size: 14,
+                                    fontWeight: Weightenum.REGULAR,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  TextNunito(
+                                    text:
+                                        '${controller.mData?.post?.comments?[index].createdAt}',
+                                    size: 14,
+                                    fontWeight: Weightenum.REGULAR,
+                                    color: Resources.color.neutral500,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    itemCount: controller.mData?.post?.comments?.length ?? 0,
+                  ),
+                ),
+                CommentTextField(),
+              ],
             ),
-            CommentTextField(),
-          ],
+          ),
         ),
       ),
     );
