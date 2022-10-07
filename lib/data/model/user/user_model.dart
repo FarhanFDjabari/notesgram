@@ -33,6 +33,8 @@ class UserModel implements ModelFactory {
   final bool? isFollowed;
   @HiveField(12)
   final bool? isAdmin;
+  @HiveField(13)
+  final String? fcmToken;
 
   UserModel({
     this.id,
@@ -48,6 +50,7 @@ class UserModel implements ModelFactory {
     this.cCount,
     this.isFollowed,
     this.isAdmin,
+    this.fcmToken,
   });
 
   UserModel.fromJson(Map<String, dynamic> json)
@@ -65,7 +68,8 @@ class UserModel implements ModelFactory {
             ? UserCountModel.fromJson(json['_count'])
             : null,
         isFollowed = json['is_followed'] as bool?,
-        isAdmin = json['is_admin'] as bool?;
+        isAdmin = json['is_admin'] as bool?,
+        fcmToken = json['fcm_token'] as String?;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -80,6 +84,7 @@ class UserModel implements ModelFactory {
         'updatedAt': updatedAt,
         '_count': cCount != null ? cCount!.toJson() : null,
         'is_followed': isFollowed,
-        'is_admin': isAdmin
+        'is_admin': isAdmin,
+        'fcm_token': fcmToken
       };
 }

@@ -78,6 +78,10 @@ class $LibThemeResourcesImagesGen {
   AssetGenImage get helpCenterFooterImage => const AssetGenImage(
       'lib/theme/resources/images/help_center_footer_image.png');
 
+  /// File path: lib/theme/resources/images/help_center_header_bg_layout.png
+  AssetGenImage get helpCenterHeaderBgLayout => const AssetGenImage(
+      'lib/theme/resources/images/help_center_header_bg_layout.png');
+
   /// File path: lib/theme/resources/images/home.svg
   SvgGenImage get home =>
       const SvgGenImage('lib/theme/resources/images/home.svg');

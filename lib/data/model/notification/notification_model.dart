@@ -1,4 +1,6 @@
-class NotificationModel {
+import 'package:notesgram/data/sources/remote/wrapper/model_factory.dart';
+
+class NotificationModel implements ModelFactory {
   final int? id;
   final String? title;
   final String? body;

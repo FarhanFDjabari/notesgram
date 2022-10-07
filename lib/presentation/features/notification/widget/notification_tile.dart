@@ -11,12 +11,14 @@ class NotificationTile extends StatelessWidget {
     this.title,
     this.content,
     this.date,
+    this.isRead,
     this.onTap,
   }) : super(key: key);
 
   final String? title;
   final String? content;
   final String? date;
+  final bool? isRead;
   final Function()? onTap;
 
   @override
@@ -24,7 +26,9 @@ class NotificationTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        color: Resources.color.indigo50,
+        color: isRead == true
+            ? Resources.color.neutral50
+            : Resources.color.indigo50,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 8.0,

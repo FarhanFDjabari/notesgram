@@ -29,6 +29,7 @@ dependencies:
   get: ^4.1.4
   get_storage: ^2.0.2
   google_fonts: 2.2.0
+  google_sign_in: ^5.4.2
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   lottie: ^1.4.2

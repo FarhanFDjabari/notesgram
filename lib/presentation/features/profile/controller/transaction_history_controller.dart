@@ -19,16 +19,14 @@ class TransactionHistoryController
 
   Future<void> getAllTransactionHistory() async {
     loadingState();
-    await client()
-        .then(
+    await client().then(
       (value) => value.fetchTransactionHistory().validateStatus().then((data) {
         setFinishCallbacks(data.data ?? []);
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
       }),
-    )
-        .handleError((onError) {
-      debugPrint("On Error $onError");
-      finishLoadData(errorMessage: onError.toString());
-    });
+    );
   }
 
   void goBack() {

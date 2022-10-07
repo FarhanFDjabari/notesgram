@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/explore/controller/explore_controller.dart';
+import 'package:notesgram/presentation/features/home/controller/following_post_controller.dart';
+import 'package:notesgram/presentation/features/home/controller/for_you_post_controller.dart';
 import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
 import 'package:notesgram/presentation/features/navigation/controller/navigation_controller.dart';
 import 'package:notesgram/presentation/features/notification/controller/notification_controller.dart';
@@ -16,6 +18,8 @@ class NavigationBinding extends Bindings {
     Get.put<ExploreController>(ExploreController(), permanent: true);
     Get.put<NotificationController>(NotificationController(), permanent: true);
     Get.put<ProfileController>(ProfileController(), permanent: true);
+    Get.lazyPut(() => FollowingPostController());
+    Get.lazyPut(() => ForYouPostController());
     Get.lazyPut(() => ProfilePostController());
     Get.lazyPut(() => ProfilePurchasedController());
     Get.lazyPut(() => ProfileBookmarkController());

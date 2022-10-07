@@ -35,31 +35,35 @@ class NotesgramSnackbar extends GetSnackBar {
                       : Resources.color.indigo700,
           borderRadius: 6,
           margin: const EdgeInsets.all(16),
-          titleText: TextNunito(
-            text: snackbarTitle,
-            size: 15,
-            maxLines: 2,
-            fontWeight: Weightenum.REGULAR,
-            color: snackbarStateEnum == SnackbarStateEnum.ERROR
-                ? Resources.color.stateNegative
-                : snackbarStateEnum == SnackbarStateEnum.WARNING
-                    ? Resources.color.stateWarning
-                    : snackbarStateEnum == SnackbarStateEnum.POSITIVE
-                        ? Resources.color.statePositive
-                        : Resources.color.indigo700,
-          ),
-          messageText: TextNunito(
-            text: snackbarMessage,
-            size: 15,
-            maxLines: 2,
-            fontWeight: Weightenum.REGULAR,
-            color: snackbarStateEnum == SnackbarStateEnum.ERROR
-                ? Resources.color.stateNegative
-                : snackbarStateEnum == SnackbarStateEnum.WARNING
-                    ? Resources.color.stateWarning
-                    : snackbarStateEnum == SnackbarStateEnum.POSITIVE
-                        ? Resources.color.statePositive
-                        : Resources.color.indigo700,
-          ),
+          titleText: snackbarTitle != null
+              ? TextNunito(
+                  text: snackbarTitle,
+                  size: 15,
+                  maxLines: 2,
+                  fontWeight: Weightenum.REGULAR,
+                  color: snackbarStateEnum == SnackbarStateEnum.ERROR
+                      ? Resources.color.stateNegative
+                      : snackbarStateEnum == SnackbarStateEnum.WARNING
+                          ? Resources.color.stateWarning
+                          : snackbarStateEnum == SnackbarStateEnum.POSITIVE
+                              ? Resources.color.statePositive
+                              : Resources.color.indigo700,
+                )
+              : null,
+          messageText: snackbarMessage != null
+              ? TextNunito(
+                  text: snackbarMessage,
+                  size: 15,
+                  maxLines: 4,
+                  fontWeight: Weightenum.REGULAR,
+                  color: snackbarStateEnum == SnackbarStateEnum.ERROR
+                      ? Resources.color.stateNegative
+                      : snackbarStateEnum == SnackbarStateEnum.WARNING
+                          ? Resources.color.stateWarning
+                          : snackbarStateEnum == SnackbarStateEnum.POSITIVE
+                              ? Resources.color.statePositive
+                              : Resources.color.indigo700,
+                )
+              : null,
         );
 }

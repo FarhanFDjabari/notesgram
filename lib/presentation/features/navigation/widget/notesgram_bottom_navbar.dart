@@ -37,7 +37,6 @@ class NotesgramBottomNavbar extends GetView<NavigationController> {
           index: 2,
         ),
         GetX<NavigationController>(
-          init: NavigationController(),
           initState: (_) {},
           builder: (_) {
             return buildNavBarItem(

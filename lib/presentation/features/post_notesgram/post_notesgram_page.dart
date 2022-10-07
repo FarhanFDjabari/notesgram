@@ -13,7 +13,9 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class PostNotesgramPage extends GetView<PostNotesgramController> {
-  const PostNotesgramPage({Key? key}) : super(key: key);
+  PostNotesgramPage({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,11 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
                               ),
                               barrierDismissible: false,
                             );
-                          } else {}
+                          } else {
+                            if (_formKey.currentState!.validate()) {
+                              controller.postNote();
+                            }
+                          }
                         },
                   child: Center(
                     child: controller.isLoading
@@ -96,101 +102,104 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 16),
-            PostImagesCollection(
-              onItemDelete: (image) {
-                controller.removeItemFromList(image);
-              },
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: OutlinedTextfield(
-                controller: controller.titleController,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                label: TextNunito(
-                  text: 'Judul catatan',
-                  size: 14,
-                  fontWeight: Weightenum.REGULAR,
-                  maxLines: 1,
-                ),
-                hintText: 'Masukkan judul catatan anda',
-                maxLines: 1,
-                validator: Validator().notEmpty,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: OutlinedTextfield(
-                controller: controller.captionController,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                label: TextNunito(
-                  text: 'Caption',
-                  size: 14,
-                  fontWeight: Weightenum.REGULAR,
-                ),
-                maxLength: 2000,
-                hintText: 'Tulis caption',
-                validator: Validator().notEmpty,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: OutlinedTextfield(
-                controller: controller.priceController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                label: TextNunito(
-                  text: 'Harga',
-                  size: 14,
-                  fontWeight: Weightenum.REGULAR,
-                  maxLines: 1,
-                ),
-                hintText: 'Harga catatan',
-                validator: (value) {
-                  if (controller.images.length > 10) {
-                    if (int.parse(value ?? "0") < 15000) {
-                      return 'Minimal harga 15.000';
-                    }
-                  } else if (controller.images.length > 4) {
-                    if (int.parse(value ?? "0") < 10000) {
-                      return 'Minimal harga 10.000';
-                    }
-                  }
-                  return '';
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              PostImagesCollection(
+                onItemDelete: (image) {
+                  controller.removeItemFromList(image);
                 },
               ),
-            ),
-            const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () {
-                    // controller.goToResetPassword();
-                    Get.dialog(
-                      PostRulesDialog(),
-                    );
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: OutlinedTextfield(
+                  controller: controller.titleController,
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
+                  label: TextNunito(
+                    text: 'Judul catatan',
+                    size: 14,
+                    fontWeight: Weightenum.REGULAR,
+                    maxLines: 1,
+                  ),
+                  hintText: 'Masukkan judul catatan anda',
+                  maxLines: 1,
+                  validator: Validator().notEmpty,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: OutlinedTextfield(
+                  controller: controller.captionController,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  label: TextNunito(
+                    text: 'Caption',
+                    size: 14,
+                    fontWeight: Weightenum.REGULAR,
+                  ),
+                  maxLength: 2000,
+                  hintText: 'Tulis caption',
+                  validator: Validator().notEmpty,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: OutlinedTextfield(
+                  controller: controller.priceController,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  label: TextNunito(
+                    text: 'Harga',
+                    size: 14,
+                    fontWeight: Weightenum.REGULAR,
+                    maxLines: 1,
+                  ),
+                  hintText: 'Harga catatan',
+                  validator: (value) {
+                    if (controller.images.length > 10) {
+                      if (int.parse(value ?? "0") < 15000) {
+                        return 'Minimal harga 15.000';
+                      }
+                    } else if (controller.images.length > 4) {
+                      if (int.parse(value ?? "0") < 10000) {
+                        return 'Minimal harga 10.000';
+                      }
+                    }
+                    return '';
                   },
-                  child: TextNunito(
-                    text: 'Ketentuan harga',
-                    size: 12.sp,
-                    fontWeight: Weightenum.BOLD,
-                    color: Resources.color.indigo700,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () {
+                      // controller.goToResetPassword();
+                      Get.dialog(
+                        PostRulesDialog(),
+                      );
+                    },
+                    child: TextNunito(
+                      text: 'Ketentuan harga',
+                      size: 12.sp,
+                      fontWeight: Weightenum.BOLD,
+                      color: Resources.color.indigo700,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-          ],
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );

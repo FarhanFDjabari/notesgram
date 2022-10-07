@@ -4,17 +4,20 @@ import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
 import 'package:remixicon/remixicon.dart';
 
 class ProfileCoinTile extends StatelessWidget {
   const ProfileCoinTile({
     this.onTopUp,
     this.onWithdraw,
+    this.coins,
     Key? key,
   }) : super(key: key);
 
   final Function()? onTopUp;
   final Function()? onWithdraw;
+  final int? coins;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,9 @@ class ProfileCoinTile extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: TextNunito(
-                    text: '15000',
+                    text: (coins ?? 0) > 999
+                        ? coinFormat.format(coins.toString())
+                        : coins.toString(),
                     size: 24,
                     fontWeight: Weightenum.BOLD,
                     color: Resources.color.neutral50,

@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 extension DateTimeExtension on DateTime {
   String get dayMonthYear {
-    return DateFormat('dd MMM yyyy').format(this);
+    return DateFormat('dd-MM-yyyy').format(this);
   }
 
   String get hourMinute {

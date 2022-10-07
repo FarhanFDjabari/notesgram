@@ -34,7 +34,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
         ),
         leading: IconButton(
           onPressed: () {
-            // controller.goBack();
+            controller.goBack();
           },
           icon: Icon(
             Remix.arrow_left_s_line,

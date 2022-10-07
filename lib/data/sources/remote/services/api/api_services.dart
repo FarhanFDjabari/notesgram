@@ -11,6 +11,7 @@ import 'package:notesgram/data/model/note_folder/bookmarked_notes_folder_model.d
 import 'package:notesgram/data/model/note_folder/purchased_notes_folder_model.dart';
 import 'package:notesgram/data/model/notification/notification_model.dart';
 import 'package:notesgram/data/model/payment/payment_model.dart';
+import 'package:notesgram/data/model/payment/top_up_response_model.dart';
 import 'package:notesgram/data/model/post/comment_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/model/promo/promo_model.dart';
@@ -40,8 +41,7 @@ abstract class RestClient {
     defHeader["Accept"] = "application/json";
 
     String? token = await SecureStorageManager().getToken();
-    defHeader["Authorization"] =
-        "Bearer " + (token ?? ""); // input auth token here
+    if (token != null) defHeader["Authorization"] = "Bearer $token";
 
     return RestClient(
       await AppDio().getDIO(
@@ -52,8 +52,19 @@ abstract class RestClient {
     );
   }
 
-  @GET('/auth/send-notification')
-  Future<ApiResponse<LoginInfoModel>> sendAuthNotification();
+  @POST('/auth/login')
+  Future<ApiResponse<LoginInfoModel>> login({
+    @Field("emailOrUsername") String? emailOrUsername,
+    @Field("password") String? password,
+    @Field("fcm_token") String? fcmToken,
+  });
+
+  @POST('/auth/register')
+  Future<ApiResponse<UserModel>> register({
+    @Field("email") String? email,
+    @Field("password") String? password,
+    @Field("name") String? name,
+  });
 
   @GET('/profile')
   Future<ApiResponse<UserModel>> fetchMyProfile();
@@ -63,6 +74,7 @@ abstract class RestClient {
   Future<ApiResponse<UserModel>> editProfile({
     @Part(name: "name") String? name,
     @Part(name: "username") String? username,
+    @Part(name: "fcm_token") String? fcmToken,
     @Part(name: "file", contentType: "image/png") File? file,
   });
 
@@ -77,12 +89,12 @@ abstract class RestClient {
   });
 
   @GET('/user/{id}/profile')
-  Future<ApiResponse<dynamic>> fetchUserProfile({
+  Future<ApiResponse<UserModel>> fetchUserProfile({
     @Path("id") required String userId,
   });
 
   @GET('/user/{id}/notes')
-  Future<ApiResponse<dynamic>> fetchUserNote({
+  Future<ApiResponses<NoteModel>> fetchUserNote({
     @Path("id") required String userId,
   });
 
@@ -128,7 +140,7 @@ abstract class RestClient {
   Future<ApiResponses<PostModel>> fetchFollowingUserPosts();
 
   @GET('/post/explore')
-  Future<ApiResponses<ExplorePostModel>> explorePost({
+  Future<ApiResponse<ExplorePostModel>> explorePost({
     @Query("note_title") String? noteTitle,
     @Query("username") String? username,
     @Query("author_name") String? authorName,
@@ -143,7 +155,7 @@ abstract class RestClient {
   Future<ApiResponses<PostModel>> fetchBookmarkedPost();
 
   @POST('/payment/topup-coin')
-  Future<ApiResponse<PaymentModel>> topUpCoins({
+  Future<ApiResponse<TopUpResponseModel>> topUpCoins({
     @Field("amount") String? amount,
   });
 

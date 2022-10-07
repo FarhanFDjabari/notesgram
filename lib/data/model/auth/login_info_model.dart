@@ -1,28 +1,23 @@
-import 'package:notesgram/data/model/auth/login_firebase_response_model.dart';
-import 'package:notesgram/data/model/notification/notification_model.dart';
+import 'package:notesgram/data/model/user/user_model.dart';
+import 'package:notesgram/data/sources/remote/wrapper/model_factory.dart';
 
-class LoginInfoModel {
-  final NotificationModel? notification;
-  final LoginFirebaseResponseModel? firebaseResponse;
+class LoginInfoModel implements ModelFactory {
+  final UserModel? userData;
+  final String? token;
 
   LoginInfoModel({
-    this.notification,
-    this.firebaseResponse,
+    this.userData,
+    this.token,
   });
 
   LoginInfoModel.fromJson(Map<String, dynamic> json)
-      : notification = (json['notification'] as Map<String, dynamic>?) != null
-            ? NotificationModel.fromJson(
-                json['notification'] as Map<String, dynamic>)
+      : userData = (json['user'] as Map<String, dynamic>?) != null
+            ? UserModel.fromJson(json['user'] as Map<String, dynamic>)
             : null,
-        firebaseResponse =
-            (json['firebase_response'] as Map<String, dynamic>?) != null
-                ? LoginFirebaseResponseModel.fromJson(
-                    json['firebase_response'] as Map<String, dynamic>)
-                : null;
+        token = json['token'] as String?;
 
   Map<String, dynamic> toJson() => {
-        'notification': notification?.toJson(),
-        'firebase_response': firebaseResponse?.toJson()
+        'user': userData?.toJson(),
+        'token': token,
       };
 }

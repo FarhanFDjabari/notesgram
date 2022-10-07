@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:notesgram/data/model/user/user_model.dart';
 import 'package:notesgram/data/sources/local/hive/hive_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
 import 'package:notesgram/firebase_options.dart';
+import 'package:notesgram/utils/helpers/secure_storage_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Initializer {
@@ -20,12 +22,18 @@ class Initializer {
       _initScreenPreference();
       await globalLocalData();
       globalController();
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      await initFirebaseService();
     } catch (err) {
       rethrow;
     }
+  }
+
+  static Future<void> initFirebaseService() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    final fcmDeviceId = await FirebaseMessaging.instance.getToken();
+    await SecureStorageManager().setDeviceToken(value: fcmDeviceId);
   }
 
   static globalController() {

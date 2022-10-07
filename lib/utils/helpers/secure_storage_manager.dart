@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class SecureStorageManager {
   static FlutterSecureStorage secureStorage = Get.find<FlutterSecureStorage>();
   final String _tokenKey = "token";
+  final String _deviceKey = "device_id";
 
   // Token
   //
@@ -13,5 +14,15 @@ class SecureStorageManager {
 
   Future setToken({String? value}) async {
     return await secureStorage.write(key: _tokenKey, value: value);
+  }
+
+  // Device Token
+  //
+  Future<String?> getDeviceToken() async {
+    return await secureStorage.read(key: _deviceKey);
+  }
+
+  Future setDeviceToken({String? value}) async {
+    return await secureStorage.write(key: _deviceKey, value: value);
   }
 }

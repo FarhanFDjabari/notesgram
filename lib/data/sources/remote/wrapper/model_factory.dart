@@ -1,4 +1,5 @@
 import 'package:notesgram/data/model/auth/auth_model.dart';
+import 'package:notesgram/data/model/auth/login_info_model.dart';
 import 'package:notesgram/data/model/auth/username_available_model.dart';
 import 'package:notesgram/data/model/explore/explore_post_model.dart';
 import 'package:notesgram/data/model/note/buy_note_model.dart';
@@ -7,7 +8,9 @@ import 'package:notesgram/data/model/note/note_model.dart';
 import 'package:notesgram/data/model/note/purchase_model.dart';
 import 'package:notesgram/data/model/note_folder/bookmarked_notes_folder_model.dart';
 import 'package:notesgram/data/model/note_folder/purchased_notes_folder_model.dart';
+import 'package:notesgram/data/model/notification/notification_model.dart';
 import 'package:notesgram/data/model/payment/payment_model.dart';
+import 'package:notesgram/data/model/payment/top_up_response_model.dart';
 import 'package:notesgram/data/model/payment/withdrawal_model.dart';
 import 'package:notesgram/data/model/post/bookmark_model.dart';
 import 'package:notesgram/data/model/post/comment_model.dart';
@@ -27,6 +30,8 @@ abstract class ModelFactory {
     var strType = type.toString().replaceAll("?", "");
     if (strType == (AuthModel).toString()) {
       return AuthModel.fromJson(json);
+    } else if (strType == (LoginInfoModel).toString()) {
+      return LoginInfoModel.fromJson(json);
     } else if (strType == (UsernameAvailableModel).toString()) {
       return UsernameAvailableModel.fromJson(json);
     } else if (strType == (ExplorePostModel).toString()) {
@@ -43,6 +48,10 @@ abstract class ModelFactory {
       return BookmarkedNotesFolderModel.fromJson(json);
     } else if (strType == (PurchasedNotesFolderModel).toString()) {
       return PurchasedNotesFolderModel.fromJson(json);
+    } else if (strType == (TopUpResponseModel).toString()) {
+      return TopUpResponseModel.fromJson(json);
+    } else if (strType == (TopUpPaymentModel).toString()) {
+      return TopUpPaymentModel.fromJson(json);
     } else if (strType == (PaymentModel).toString()) {
       return PaymentModel.fromJson(json);
     } else if (strType == (WithdrawalModel).toString()) {
@@ -71,6 +80,8 @@ abstract class ModelFactory {
       return TransactionInfoModel.fromJson(json);
     } else if (strType == (ChallengeTransactionModel).toString()) {
       return ChallengeTransactionModel.fromJson(json);
+    } else if (strType == (NotificationModel).toString()) {
+      return NotificationModel.fromJson(json);
     }
     // if not implemented
     else {

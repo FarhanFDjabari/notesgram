@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/presentation/features/home/controller/for_you_post_controller.dart';
+import 'package:notesgram/presentation/features/home/controller/following_post_controller.dart';
 import 'package:notesgram/presentation/features/home/widget/home_post_tile.dart';
 import 'package:notesgram/presentation/widgets/loading_overlay.dart';
 import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
@@ -9,16 +9,15 @@ import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sizer/sizer.dart';
 
-class UserPostFragment extends GetView<ForYouPostController> {
-  const UserPostFragment({Key? key}) : super(key: key);
-
+class UserFollowingPostFragment extends GetView<FollowingPostController> {
+  const UserFollowingPostFragment({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: SizerUtil.width,
-      child: GetBuilder<ForYouPostController>(
+      child: GetBuilder<FollowingPostController>(
         initState: (_) {
-          controller.getForYouPosts();
+          controller.getFollowingPosts();
         },
         builder: (_) {
           return StateHandleWidget(

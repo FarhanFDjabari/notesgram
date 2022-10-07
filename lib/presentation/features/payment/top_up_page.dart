@@ -11,7 +11,9 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class TopUpPage extends GetView<PaymentTopupController> {
-  const TopUpPage({Key? key}) : super(key: key);
+  TopUpPage({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +53,25 @@ class TopUpPage extends GetView<PaymentTopupController> {
             children: [
               PaymentCoinInfoTile(),
               const SizedBox(height: 16),
-              OutlinedTextfield(
-                controller: controller.topUpAmountController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                label: TextNunito(
-                  text: 'Masukkan nominal',
-                  size: 14,
-                  fontWeight: Weightenum.REGULAR,
+              Form(
+                key: _formKey,
+                child: OutlinedTextfield(
+                  controller: controller.topUpAmountController,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                  label: TextNunito(
+                    text: 'Masukkan nominal',
+                    size: 14,
+                    fontWeight: Weightenum.REGULAR,
+                  ),
+                  hintText: 'Minimal top up Rp15.000',
+                  validator: (value) {
+                    if (int.parse(value ?? "0") < 15000) {
+                      return 'Minimal top up 15.000';
+                    }
+                    return null;
+                  },
                 ),
-                hintText: 'Minimal top up Rp15.000',
               ),
               const SizedBox(height: 4),
               Align(
@@ -89,7 +100,11 @@ class TopUpPage extends GetView<PaymentTopupController> {
                 elevation: 0,
                 isLoading: controller.isLoading,
                 label: 'TOP UP',
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    controller.topUpCoin();
+                  }
+                },
               ),
             ],
           ),

@@ -14,6 +14,7 @@ class ProfileHeader extends StatelessWidget {
     this.postCount,
     this.followersCount,
     this.followingCount,
+    this.coins,
     Key? key,
   }) : super(key: key);
 
@@ -24,6 +25,7 @@ class ProfileHeader extends StatelessWidget {
   final String? postCount;
   final String? followersCount;
   final String? followingCount;
+  final int? coins;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +133,7 @@ class ProfileHeader extends StatelessWidget {
           ProfileCoinTile(
             onTopUp: onTopUp,
             onWithdraw: onWithdraw,
+            coins: coins,
           ),
         ],
       ),

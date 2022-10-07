@@ -30,13 +30,14 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       cCount: fields[10] as UserCountModel?,
       isFollowed: fields[11] as bool?,
       isAdmin: fields[12] as bool?,
+      fcmToken: fields[13] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(11)
       ..write(obj.isFollowed)
       ..writeByte(12)
-      ..write(obj.isAdmin);
+      ..write(obj.isAdmin)
+      ..writeByte(13)
+      ..write(obj.fcmToken);
   }
 
   @override

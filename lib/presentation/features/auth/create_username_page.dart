@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/auth/controllers/create_username_controller.dart';
-import 'package:notesgram/presentation/features/auth/controllers/register_controller.dart';
 import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
 import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
@@ -10,9 +11,10 @@ import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:notesgram/utils/helpers/validator.dart';
+import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class CreateUsernamePage extends GetView<RegisterController> {
+class CreateUsernamePage extends GetView<CreateUsernameController> {
   CreateUsernamePage({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
 
@@ -30,7 +32,7 @@ class CreateUsernamePage extends GetView<RegisterController> {
                 SizedBox(height: 20.sp),
                 CustomTextButton(
                   onPressed: () {
-                    controller.goToLogin();
+                    controller.goBack();
                   },
                   label: 'Kembali',
                   labelSize: 14.sp,
@@ -85,26 +87,46 @@ class CreateUsernamePage extends GetView<RegisterController> {
                         color: Resources.color.neutral900,
                       ),
                       hintText: 'Masukkan username yang Anda inginkan',
-                      onChanged: (value) {},
+                      onChanged: controller.onUsernameChange,
+                      suffixIcon: controller.usernameController.text.isNotEmpty
+                          ? controller.isUsernameValid.isTrue
+                              ? IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Remix.checkbox_circle_line,
+                                    color: Resources.color.statePositive,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Remix.close_circle_line,
+                                    color: Resources.color.stateNegative,
+                                  ),
+                                )
+                          : null,
                       validator: Validator().notEmpty,
                     );
                   },
                 ),
                 SizedBox(height: 24.sp),
-                PrimaryButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      controller.register(
-                        username: controller.usernameController.text,
-                        name: controller.nameController.text,
-                        email: controller.emailController.text,
-                        password: controller.passwordController.text,
-                      );
-                    }
+                GetX<CreateUsernameController>(
+                  init: CreateUsernameController(),
+                  builder: (_) {
+                    return PrimaryButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            controller.isUsernameValid.isTrue) {
+                          controller.createUsername(
+                            username: controller.usernameController.text,
+                          );
+                        }
+                      },
+                      label: 'DAFTAR',
+                      isLoading: controller.isLoading,
+                      isEnabled: controller.isUsernameValid.value,
+                    );
                   },
-                  label: 'DAFTAR',
-                  isLoading: controller.isLoading,
-                  isEnabled: controller.isUsernameValid.value,
                 ),
                 SizedBox(height: 24.sp),
               ],

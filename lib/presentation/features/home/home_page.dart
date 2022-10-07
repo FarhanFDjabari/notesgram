@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/presentation/features/home/controller/home_controller.dart';
 import 'package:notesgram/presentation/features/home/controller/home_top_up_controller.dart';
+import 'package:notesgram/presentation/features/home/user_following_post_fragment.dart';
 import 'package:notesgram/presentation/features/home/user_post_fragment.dart';
 import 'package:notesgram/presentation/features/home/widget/colored_tab_bar.dart';
 import 'package:notesgram/presentation/features/home/widget/home_topup_tile.dart';
@@ -10,15 +11,20 @@ import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+    with
+        SingleTickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin<HomePage> {
   late TabController _tabController;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -28,6 +34,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GetBuilder<HomeController>(
       init: HomeController(),
       initState: (_) {},
@@ -84,10 +91,13 @@ class _HomePageState extends State<HomePage>
               ),
               GetX<HomeTopUpController>(
                 init: HomeTopUpController(),
-                initState: (_) {},
+                initState: (state) {
+                  state.controller?.getCurrentUserData();
+                },
                 builder: (controller) {
                   return HomeTopUpTile(
                     coinAmount: controller.totalCoin.value,
+                    isLoading: controller.isLoading,
                     onTopUpPressed: () {
                       controller.goToTopUp();
                     },
@@ -103,12 +113,8 @@ class _HomePageState extends State<HomePage>
                   controller: _tabController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: const [
-                    UserPostFragment(
-                      dataType: 'following',
-                    ),
-                    UserPostFragment(
-                      dataType: 'for_you',
-                    ),
+                    UserFollowingPostFragment(),
+                    UserPostFragment(),
                   ],
                 ),
               ),

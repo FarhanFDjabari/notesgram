@@ -12,10 +12,12 @@ class HomeTopUpTile extends StatelessWidget {
     Key? key,
     this.onTopUpPressed,
     this.coinAmount,
+    this.isLoading,
   }) : super(key: key);
 
   final Function()? onTopUpPressed;
   final String? coinAmount;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,7 @@ class HomeTopUpTile extends StatelessWidget {
             label: 'TOP UP',
             fontSize: 12.sp,
             elevation: 0,
+            isLoading: isLoading ?? false,
             onPressed: onTopUpPressed,
           ),
         ],

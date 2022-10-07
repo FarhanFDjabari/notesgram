@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:notesgram/data/model/user/user_model.dart';
+import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
+import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/secure_storage_manager.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 import 'package:sizer/sizer.dart';
 
@@ -46,10 +49,15 @@ class SplashController extends BaseObjectController {
   }
 
   Future<void> checkUserData() async {
-    if (await GetStorage().read('user_id') == null) {
+    if (await SecureStorageManager().getToken() == null) {
       Get.offNamed(PageName.login);
     } else {
-      Get.offNamed(PageName.home);
+      final user = UserModel.fromJson(StorageManager().get(StorageName.USERS));
+      if (user.username?.isNotEmpty == true) {
+        Get.offNamed(PageName.navigation);
+      } else {
+        Get.offNamed(PageName.login);
+      }
     }
   }
 }

@@ -20,17 +20,15 @@ class PostDetailController extends BaseObjectController<NoteModel> {
 
   Future<void> getNoteById({required String noteId}) async {
     loadingState();
-    await client()
-        .then(
+    await client().then(
       (value) =>
           value.fetchNoteById(noteId: noteId).validateStatus().then((data) {
         setFinishCallbacks(data.result);
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError);
       }),
-    )
-        .handleError((onError) {
-      debugPrint(onError.toString());
-      finishLoadData(errorMessage: onError);
-    });
+    );
   }
 
   void goToPreviewNote({

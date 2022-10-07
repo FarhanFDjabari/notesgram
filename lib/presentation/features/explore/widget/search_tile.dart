@@ -12,6 +12,7 @@ class SearchTile extends StatelessWidget {
     this.subtitle,
     this.thumbnailUrl,
     this.dataType,
+    this.onTap,
   }) : super(key: key);
 
   final int? index;
@@ -19,11 +20,12 @@ class SearchTile extends StatelessWidget {
   final String? subtitle;
   final String? thumbnailUrl;
   final String? dataType;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         margin: (index != 0)
             ? const EdgeInsets.symmetric(vertical: 16.0)
@@ -42,6 +44,25 @@ class SearchTile extends StatelessWidget {
                   shape: dataType == 'users'
                       ? BoxShape.circle
                       : BoxShape.rectangle,
+                ),
+              ),
+            if (thumbnailUrl != null)
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: Resources.color.gradient500to700,
+                  borderRadius:
+                      dataType == 'users' ? null : BorderRadius.circular(6),
+                  shape: dataType == 'users'
+                      ? BoxShape.circle
+                      : BoxShape.rectangle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      '$thumbnailUrl',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             const SizedBox(width: 16),

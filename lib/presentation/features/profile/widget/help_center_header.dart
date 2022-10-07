@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 
 class HelpCenterHeader extends StatelessWidget {
@@ -16,6 +17,12 @@ class HelpCenterHeader extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Resources.color.indigo50,
+        image: DecorationImage(
+          image: AssetImage(
+            Assets.lib.theme.resources.images.helpCenterHeaderBgLayout.path,
+          ),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

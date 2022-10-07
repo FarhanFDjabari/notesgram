@@ -14,18 +14,43 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<LoginInfoModel>> sendAuthNotification() async {
+  Future<ApiResponse<LoginInfoModel>> login(
+      {emailOrUsername, password, fcmToken}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = {
+      'emailOrUsername': emailOrUsername,
+      'password': password,
+      'fcm_token': fcmToken
+    };
+    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<LoginInfoModel>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/auth/send-notification',
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/auth/login',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ApiResponse<LoginInfoModel>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<UserModel>> register({email, password, name}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email, 'password': password, 'name': name};
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<UserModel>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/auth/register',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<UserModel>.fromJson(_result.data!);
     return value;
   }
 
@@ -46,7 +71,8 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<UserModel>> editProfile({name, username, file}) async {
+  Future<ApiResponse<UserModel>> editProfile(
+      {name, username, fcmToken, file}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -57,6 +83,9 @@ class _RestClient implements RestClient {
     }
     if (username != null) {
       _data.fields.add(MapEntry('username', username));
+    }
+    if (fcmToken != null) {
+      _data.fields.add(MapEntry('fcm_token', fcmToken));
     }
     if (file != null) {
       _data.files.add(MapEntry(
@@ -115,34 +144,34 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchUserProfile({required userId}) async {
+  Future<ApiResponse<UserModel>> fetchUserProfile({required userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(
+        _setStreamType<ApiResponse<UserModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/user/${userId}/profile',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse<dynamic>.fromJson(_result.data!);
+    final value = ApiResponse<UserModel>.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<dynamic>> fetchUserNote({required userId}) async {
+  Future<ApiResponses<NoteModel>> fetchUserNote({required userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(
+        _setStreamType<ApiResponses<NoteModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/user/${userId}/notes',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse<dynamic>.fromJson(_result.data!);
+    final value = ApiResponses<NoteModel>.fromJson(_result.data!);
     return value;
   }
 
@@ -305,7 +334,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponses<ExplorePostModel>> explorePost(
+  Future<ApiResponse<ExplorePostModel>> explorePost(
       {noteTitle, username, authorName}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -317,12 +346,12 @@ class _RestClient implements RestClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponses<ExplorePostModel>>(
+        _setStreamType<ApiResponse<ExplorePostModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/post/explore',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponses<ExplorePostModel>.fromJson(_result.data!);
+    final value = ApiResponse<ExplorePostModel>.fromJson(_result.data!);
     return value;
   }
 
@@ -359,7 +388,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<PaymentModel>> topUpCoins({amount}) async {
+  Future<ApiResponse<TopUpResponseModel>> topUpCoins({amount}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -367,12 +396,12 @@ class _RestClient implements RestClient {
     final _data = {'amount': amount};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<PaymentModel>>(
+        _setStreamType<ApiResponse<TopUpResponseModel>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/payment/topup-coin',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse<PaymentModel>.fromJson(_result.data!);
+    final value = ApiResponse<TopUpResponseModel>.fromJson(_result.data!);
     return value;
   }
 

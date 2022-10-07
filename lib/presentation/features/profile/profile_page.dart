@@ -33,8 +33,9 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      initState: (controller) {
-        controller.controller?.getProfile();
+      init: ProfileController(),
+      initState: (state) {
+        state.controller?.getProfile();
       },
       builder: (controller) {
         return Scaffold(
@@ -73,14 +74,6 @@ class _ProfilePageState extends State<ProfilePage>
                 StateHandleWidget(
                   shimmerView: LoadingOverlay(),
                   loadingEnabled: controller.isLoading,
-                  onRetryPressed: () {
-                    // controller.getDashboard("", "");
-                  },
-                  errorEnabled: controller.isError,
-                  errorText: 'txt_error_general'.tr,
-                  emptyTitle: 'txt_profile_not_found_title'.tr,
-                  emptySubtitle: 'txt_profile_not_found_description'.tr,
-                  emptyEnabled: controller.isEmptyData,
                   body: ProfileHeader(
                     onEditProfile: () {},
                     onTopUp: () {
