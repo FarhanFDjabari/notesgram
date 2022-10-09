@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/presentation/features/payment/controller/payment_topup_controller.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -75,11 +76,16 @@ class _PaymentGatewayProcessPageState extends State<PaymentGatewayProcessPage> {
         onWebViewCreated: (webviewController) {
           _webViewController = webviewController;
         },
-        onPageFinished: (result) {},
+        onPageFinished: (result) {
+          debugPrint(result);
+          Get.find<PaymentTopupController>().getNewUserData();
+        },
         javascriptChannels: {
           JavascriptChannel(
             name: 'messageHandler',
-            onMessageReceived: (message) {},
+            onMessageReceived: (message) async {
+              debugPrint(message.message);
+            },
           ),
         },
       ),

@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/data/model/user/note_pictures_model.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -14,6 +13,7 @@ class ViewNotePhotoPreview extends StatefulWidget {
     this.currentIndex = 0,
     this.onImageTap,
     this.onPageChanged,
+    this.images,
     Key? key,
   }) : super(key: key);
 
@@ -21,6 +21,7 @@ class ViewNotePhotoPreview extends StatefulWidget {
   final int currentIndex;
   final Function()? onImageTap;
   final Function(int)? onPageChanged;
+  final List<NotePicturesModel>? images;
 
   @override
   State<ViewNotePhotoPreview> createState() => _ViewNotePhotoPreviewState();
@@ -29,21 +30,12 @@ class ViewNotePhotoPreview extends StatefulWidget {
 class _ViewNotePhotoPreviewState extends State<ViewNotePhotoPreview> {
   int _photoIndex = 0;
 
-  List<Widget> items = [
-    Container(
-      color: Resources.color.indigo200,
-    ),
-    Container(
-      color: Resources.color.indigo600,
-    ),
-    Container(
-      color: Resources.color.indigo600,
-    ),
-  ];
+  List<NotePicturesModel> items = [];
 
   @override
   void initState() {
     _photoIndex = widget.currentIndex;
+    items = widget.images ?? [];
     super.initState();
   }
 
@@ -71,14 +63,18 @@ class _ViewNotePhotoPreviewState extends State<ViewNotePhotoPreview> {
     return Stack(
       children: [
         CarouselSlider.builder(
-          itemCount: 3,
+          itemCount: items.length,
           itemBuilder: (context, index, realIndex) {
             return GestureDetector(
               onTap: widget.onImageTap,
               child: Container(
-                color: index % 2 == 0
-                    ? Resources.color.indigo200
-                    : Resources.color.indigo700,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      items[index].pictureUrl ?? '',
+                    ),
+                  ),
+                ),
               ),
             );
           },
@@ -100,7 +96,7 @@ class _ViewNotePhotoPreviewState extends State<ViewNotePhotoPreview> {
           ),
         ),
         Positioned(
-          top: 8,
+          top: 24,
           right: 8,
           child: Container(
             padding: const EdgeInsets.symmetric(

@@ -34,6 +34,7 @@ class HomePostTile extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
@@ -41,14 +42,28 @@ class HomePostTile extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Resources.color.indigo400,
-                    radius: 25,
+                  GestureDetector(
+                    onTap: () {
+                      if (controller.isCurrentUserData(post) == true) {
+                        controller.changeToCurrentUserProfile();
+                      } else {
+                        if (post?.userId != null) {
+                          controller.goToAnotherUserProfile(
+                              userId: post?.userId ?? 0);
+                        }
+                      }
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Resources.color.indigo400,
+                      radius: 25,
+                      backgroundImage: NetworkImage('${post?.user?.avatarUrl}'),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,21 +76,22 @@ class HomePostTile extends GetView<HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    // controller.goToResetPassword();
-                                  },
-                                  child: TextNunito(
-                                    text: post?.user?.isFollowed == true
-                                        ? 'Followed'
-                                        : '+Follow',
-                                    size: 14,
-                                    fontWeight: Weightenum.BOLD,
-                                    color: post?.user?.isFollowed == true
-                                        ? Resources.color.neutral500
-                                        : Resources.color.indigo700,
+                                if (controller.isCurrentUserData(post) == false)
+                                  InkWell(
+                                    onTap: () {
+                                      // controller.goToResetPassword();
+                                    },
+                                    child: TextNunito(
+                                      text: post?.user?.isFollowed == true
+                                          ? 'Followed'
+                                          : '+Follow',
+                                      size: 14,
+                                      fontWeight: Weightenum.BOLD,
+                                      color: post?.user?.isFollowed == true
+                                          ? Resources.color.neutral500
+                                          : Resources.color.indigo700,
+                                    ),
                                   ),
-                                ),
                                 InkWell(
                                   onTap: () {},
                                   child: Container(
@@ -140,20 +156,28 @@ class HomePostTile extends GetView<HomeController> {
             Expanded(
               child: PostPhotoPreview(
                 images: post?.note?.notePictures,
-                isPurchased: post?.note?.isPurchased,
+                isPurchased: post?.note?.isPurchased == true ||
+                    controller.isCurrentUserData(post),
               ),
             ),
             PostPriceBanner(
               productTitle: '${post?.note?.title}',
               price: '${post?.note?.price}',
-              isPurchased: post?.note?.isPurchased,
+              isPurchased: post?.note?.isPurchased == true ||
+                  controller.isCurrentUserData(post),
               onBuyPressed: () {
                 controller.goToPaymentInfo(
                   noteId: '${post?.note?.id}',
                   note: post,
                 );
               },
-              onViewPressed: () {},
+              onViewPressed: () {
+                controller.goToPreviewNote(
+                  noteId: '${post?.note?.id}',
+                  username: '${post?.user?.username}',
+                  note: post,
+                );
+              },
             ),
             Container(
               padding: const EdgeInsets.symmetric(
@@ -182,7 +206,7 @@ class HomePostTile extends GetView<HomeController> {
                               visualDensity: VisualDensity.compact,
                             ),
                             TextNunito(
-                              text: '${post?.likes?.length}',
+                              text: '${post?.count?.likes}',
                               size: 14,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral400,
@@ -206,7 +230,7 @@ class HomePostTile extends GetView<HomeController> {
                               visualDensity: VisualDensity.compact,
                             ),
                             TextNunito(
-                              text: '${post?.comments?.length}',
+                              text: '${post?.count?.comments}',
                               size: 14,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral400,

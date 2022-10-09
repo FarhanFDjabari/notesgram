@@ -51,7 +51,9 @@ class HelpCenterPage extends GetView<HelpCenterController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              HelpCenterHeader(),
+              HelpCenterHeader(
+                userFullName: controller.mData?.name,
+              ),
               Card(
                 elevation: 8,
                 shadowColor: Resources.color.shadowColor.withOpacity(0.16),

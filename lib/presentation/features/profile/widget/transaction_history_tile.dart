@@ -12,12 +12,14 @@ class TransactionHistoryTile extends StatelessWidget {
     this.icon,
     this.subtitle,
     this.title,
+    this.category,
   }) : super(key: key);
 
   final IconData? icon;
   final String? title;
   final String? subtitle;
   final String? claimedPrize;
+  final String? category;
 
   @override
   Widget build(BuildContext context) {

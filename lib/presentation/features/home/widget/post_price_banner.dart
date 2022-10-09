@@ -26,17 +26,19 @@ class PostPriceBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 82,
       color: Resources.color.indigo50,
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
-        vertical: 8.0,
+        vertical: 9.0,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextNunito(
                   text: productTitle,
@@ -67,18 +69,20 @@ class PostPriceBanner extends StatelessWidget {
           const SizedBox(width: 8),
           PrimaryButton(
             width: 78.sp,
-            height: 40.sp,
+            height: 48,
             label: isPurchased == true ? 'LIHAT' : 'BELI',
             fontSize: 11.sp,
-            isPrefixIcon: true,
-            icon: Container(
-              margin: const EdgeInsets.only(right: 9),
-              child: Icon(
-                Remix.shopping_cart_line,
-                color: Resources.color.neutral50,
-                size: 20,
-              ),
-            ),
+            isPrefixIcon: isPurchased == true ? false : true,
+            icon: isPurchased == true
+                ? null
+                : Container(
+                    margin: const EdgeInsets.only(right: 9),
+                    child: Icon(
+                      Remix.shopping_cart_line,
+                      color: Resources.color.neutral50,
+                      size: 20,
+                    ),
+                  ),
             elevation: 0,
             onPressed: isPurchased == true ? onViewPressed : onBuyPressed,
           ),

@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/data/model/challenge/challenge_item_model.dart';
 import 'package:notesgram/data/sources/remote/base/base_list_controller.dart';
+import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
+import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
 import 'package:notesgram/presentation/widgets/notesgram_snackbar.dart';
 
-class ChallengeController extends BaseListController {
+class ChallengeController extends BaseListController<ChallengeItemModel> {
   @override
   void loadNextPage() {
     // TODO: implement loadNextPage
@@ -10,7 +14,7 @@ class ChallengeController extends BaseListController {
 
   @override
   void refreshPage() {
-    // TODO: implement refreshPage
+    getAllChallenge();
   }
 
   void goBack() {
@@ -23,5 +27,18 @@ class ChallengeController extends BaseListController {
         snackbarMessage: 'Kode voucher berhasil disalin',
       ),
     );
+  }
+
+  Future<void> getAllChallenge() async {
+    loadingState();
+    await client().then((value) {
+      value.fetchAllChallenge().validateStatus().then((data) {
+        dataList.clear();
+        setFinishCallbacks(data.data ?? []);
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
   }
 }

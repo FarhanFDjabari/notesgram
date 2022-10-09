@@ -5,6 +5,10 @@ extension DateTimeExtension on DateTime {
     return DateFormat('dd-MM-yyyy').format(this);
   }
 
+  String get dayFullMonthYear {
+    return DateFormat('dd MMMM yyyy').format(this);
+  }
+
   String get hourMinute {
     return DateFormat('kk:mm').format(this);
   }

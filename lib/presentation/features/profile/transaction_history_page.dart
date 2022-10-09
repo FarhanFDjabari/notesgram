@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notesgram/presentation/features/payment/widget/note_subtotal_info.dart';
 import 'package:notesgram/presentation/features/profile/controller/transaction_history_controller.dart';
 import 'package:notesgram/presentation/features/profile/widget/transaction_history_tile.dart';
 import 'package:notesgram/presentation/widgets/loading_overlay.dart';
@@ -8,7 +9,7 @@ import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
-import 'package:notesgram/utils/helpers/currency_formatter.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
@@ -49,7 +50,7 @@ class TransactionHistoryPage extends GetView<TransactionHistoryController> {
       body: GetBuilder<TransactionHistoryController>(
         init: TransactionHistoryController(),
         initState: (_) {
-          // controller.getAllTransactionHistory();
+          controller.getAllTransactionHistory();
         },
         builder: (_) {
           return StateHandleWidget(
@@ -71,6 +72,9 @@ class TransactionHistoryPage extends GetView<TransactionHistoryController> {
               enablePullUp: false,
               onRefresh: controller.refreshPage,
               onLoading: controller.loadNextPage,
+              header: MaterialClassicHeader(
+                color: Resources.color.indigo700,
+              ),
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
                   vertical: 14,
@@ -81,19 +85,88 @@ class TransactionHistoryPage extends GetView<TransactionHistoryController> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextNunito(
-                        text: '26 september 2022'.toUpperCase(),
-                        size: 14,
-                        fontWeight: Weightenum.REGULAR,
-                        color: Resources.color.neutral500,
-                      ),
-                      const SizedBox(height: 8),
-                      const TransactionHistoryTile(
-                        claimedPrize: '10000',
-                        icon: Remix.gift_line,
-                        subtitle: 'Hadiah diklaim',
-                        title: 'Berikan komentar sebanyak 3 kali',
-                      ),
+                      if (index == 0)
+                        TextNunito(
+                          text: DateTimeExtension(DateTime.parse(
+                                  '${controller.dataList[index].info?.createdAt}'))
+                              .dayFullMonthYear
+                              .toUpperCase(),
+                          size: 14,
+                          fontWeight: Weightenum.REGULAR,
+                          color: Resources.color.neutral500,
+                        ),
+                      if (index > 0 &&
+                          DateTime.parse(
+                                      '${controller.dataList[index].info?.createdAt}')
+                                  .difference(DateTime.parse(
+                                      '${controller.dataList[index - 1].info?.createdAt}'))
+                                  .inDays >
+                              0)
+                        TextNunito(
+                          text: DateTimeExtension(DateTime.parse(
+                                  '${controller.dataList[index].info?.createdAt}'))
+                              .dayFullMonthYear
+                              .toUpperCase(),
+                          size: 14,
+                          fontWeight: Weightenum.REGULAR,
+                          color: Resources.color.neutral500,
+                        ),
+                      if (index > 0 &&
+                          DateTime.parse(
+                                      '${controller.dataList[index].info?.createdAt}')
+                                  .difference(DateTime.parse(
+                                      '${controller.dataList[index - 1].info?.createdAt}'))
+                                  .inDays >
+                              0)
+                        const SizedBox(height: 8),
+                      if (controller.dataList[index].category ==
+                              'NOTE_PURCHASED' ||
+                          controller.dataList[index].category == 'NOTE_SOLD')
+                        NoteSubtotalInfo(
+                          noteTitle:
+                              controller.dataList[index].info?.note?.title,
+                          notePrice: controller
+                              .dataList[index].info?.note?.price
+                              .toString(),
+                          isTransaction: true,
+                          postUser: controller
+                              .dataList[index].info?.note?.post?.user?.name,
+                          postUsername: controller
+                              .dataList[index].info?.note?.post?.user?.username,
+                          noteImageUrl: controller.dataList[index].info?.note
+                              ?.notePictures?.first.pictureUrl,
+                          userProfileUrl: controller.dataList[index].info?.note
+                              ?.post?.user?.avatarUrl,
+                        )
+                      else
+                        TransactionHistoryTile(
+                          claimedPrize: controller.dataList[index].category ==
+                                      'TOPUP' ||
+                                  controller.dataList[index].category ==
+                                      'WITHDRAW'
+                              ? '${controller.dataList[index].info?.amount}'
+                              : '${controller.dataList[index].info?.challenge?.reward}',
+                          icon: controller.dataList[index].category == 'TOPUP'
+                              ? Remix.add_line
+                              : controller.dataList[index].category ==
+                                      'WITHDRAW'
+                                  ? Remix.hand_coin_line
+                                  : Remix.gift_line,
+                          subtitle:
+                              controller.dataList[index].category == 'TOPUP'
+                                  ? 'Top Up'
+                                  : controller.dataList[index].category ==
+                                          'WITHDRAW'
+                                      ? 'Penarikan'
+                                      : 'Hadiah diklaim',
+                          title: controller.dataList[index].category ==
+                                      'TOPUP' ||
+                                  controller.dataList[index].category ==
+                                      'WITHDRAW'
+                              ? controller.dataList[index].info?.paymentMethod
+                              : '${controller.dataList[index].info?.challenge?.title}',
+                          category: controller.dataList[index].category,
+                        ),
                     ],
                   );
                 },

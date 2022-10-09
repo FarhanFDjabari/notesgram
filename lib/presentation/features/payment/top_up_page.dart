@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/payment/controller/payment_topup_controller.dart';
 import 'package:notesgram/presentation/features/payment/widget/payment_coin_info_tile.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
+import 'package:notesgram/presentation/widgets/loading_overlay.dart';
 import 'package:notesgram/presentation/widgets/outlined_textfield.dart';
+import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -46,67 +48,83 @@ class TopUpPage extends GetView<PaymentTopupController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PaymentCoinInfoTile(),
-              const SizedBox(height: 16),
-              Form(
-                key: _formKey,
-                child: OutlinedTextfield(
-                  controller: controller.topUpAmountController,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  label: TextNunito(
-                    text: 'Masukkan nominal',
-                    size: 14,
-                    fontWeight: Weightenum.REGULAR,
-                  ),
-                  hintText: 'Minimal top up Rp15.000',
-                  validator: (value) {
-                    if (int.parse(value ?? "0") < 15000) {
-                      return 'Minimal top up 15.000';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(height: 4),
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () {
-                    controller.showTermsDialog(
-                      title: 'Ketentuan top up',
-                      terms: [
-                        'Setiap top up akan dikenakan biaya layanan sebesar Rp500',
-                        'Jumlah minimal penarikan adalah Rp15.000',
-                        'Besaran konversi penarikan senilai 1:1. Jika Anda melakukan penarikan sebesar Rp15.000 Koin, Anda akan mendapatkan 15.000 koin',
-                      ],
+        child: StateHandleWidget(
+          shimmerView: LoadingOverlay(),
+          loadingEnabled: controller.isLoading,
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GetX<PaymentTopupController>(
+                  init: PaymentTopupController(),
+                  initState: (_) {},
+                  builder: (_) {
+                    return PaymentCoinInfoTile(
+                      coins: controller.coins.value,
                     );
                   },
-                  child: TextNunito(
-                    text: 'Ketentuan top up',
-                    size: 14,
-                    fontWeight: Weightenum.BOLD,
-                    color: Resources.color.indigo700,
+                ),
+                const SizedBox(height: 16),
+                Form(
+                  key: _formKey,
+                  child: OutlinedTextfield(
+                    controller: controller.topUpAmountController,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    label: TextNunito(
+                      text: 'Masukkan nominal',
+                      size: 14,
+                      fontWeight: Weightenum.REGULAR,
+                    ),
+                    hintText: 'Minimal top up Rp15.000',
+                    validator: (value) {
+                      if (value?.isNotEmpty == true) {
+                        if (int.parse(value ?? "0") < 15000) {
+                          return 'Minimal top up 15.000';
+                        }
+                      } else if (value?.isEmpty == true) {
+                        return 'txt_valid_notEmpty'.tr;
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              PrimaryButton(
-                elevation: 0,
-                isLoading: controller.isLoading,
-                label: 'TOP UP',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    controller.topUpCoin();
-                  }
-                },
-              ),
-            ],
+                const SizedBox(height: 4),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () {
+                      controller.showTermsDialog(
+                        title: 'Ketentuan top up',
+                        terms: [
+                          'Setiap top up akan dikenakan biaya layanan sebesar Rp500',
+                          'Jumlah minimal penarikan adalah Rp15.000',
+                          'Besaran konversi penarikan senilai 1:1. Jika Anda melakukan penarikan sebesar Rp15.000 Koin, Anda akan mendapatkan 15.000 koin',
+                        ],
+                      );
+                    },
+                    child: TextNunito(
+                      text: 'Ketentuan top up',
+                      size: 14,
+                      fontWeight: Weightenum.BOLD,
+                      color: Resources.color.indigo700,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                PrimaryButton(
+                  elevation: 0,
+                  isLoading: controller.isLoading,
+                  label: 'TOP UP',
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      controller.topUpCoin();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -17,7 +17,7 @@ class ProfileCoinTile extends StatelessWidget {
 
   final Function()? onTopUp;
   final Function()? onWithdraw;
-  final int? coins;
+  final String? coins;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +56,9 @@ class ProfileCoinTile extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: TextNunito(
-                    text: (coins ?? 0) > 999
-                        ? coinFormat.format(coins.toString())
-                        : coins.toString(),
+                    text: int.parse(coins ?? '0') > 999
+                        ? coinFormat.format(int.parse(coins ?? '0'))
+                        : coins ?? '0',
                     size: 24,
                     fontWeight: Weightenum.BOLD,
                     color: Resources.color.neutral50,

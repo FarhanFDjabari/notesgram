@@ -4,6 +4,7 @@ import 'package:notesgram/presentation/features/profile/controller/profile_post_
 import 'package:notesgram/presentation/widgets/loading_overlay.dart';
 import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/theme/resources.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,9 +17,7 @@ class ProfilePostFragment extends GetView<ProfilePostController> {
   Widget build(BuildContext context) {
     return GetBuilder<ProfilePostController>(
       init: ProfilePostController(),
-      initState: (state) {
-        state.controller?.getProfilePosts();
-      },
+      initState: (state) {},
       builder: (_) {
         return SizedBox(
           width: SizerUtil.width,
@@ -33,11 +32,15 @@ class ProfilePostFragment extends GetView<ProfilePostController> {
             emptyTitle: 'txt_post_empty_title'.tr,
             emptySubtitle: 'txt_post_empty_description'.tr,
             emptyEnabled: controller.isEmptyData,
+            emptyImage: AssetImage(
+              Assets.lib.theme.resources.images.appLogoMonochrome.path,
+            ),
             body: SmartRefresher(
               enablePullDown: true,
               enablePullUp: controller.hasNext,
               controller: controller.refreshController,
               onLoading: controller.loadNextPage,
+              onRefresh: controller.refreshPage,
               header: MaterialClassicHeader(
                 color: Resources.color.indigo700,
               ),
@@ -53,7 +56,6 @@ class ProfilePostFragment extends GetView<ProfilePostController> {
                   return InkWell(
                     onTap: () {
                       controller.goToDetail(
-                        username: '${controller.dataList[index].post?.caption}',
                         noteId: '${controller.dataList[index].postId}',
                       );
                     },

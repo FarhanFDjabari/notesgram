@@ -2,8 +2,6 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:notesgram/presentation/features/home/widget/comment_text_field.dart';
-import 'package:notesgram/presentation/features/home/widget/description_text_widget.dart';
 import 'package:notesgram/presentation/features/notes/controller/view_notes_controller.dart';
 import 'package:notesgram/presentation/features/notes/widget/note_caption_tile.dart';
 import 'package:notesgram/presentation/features/notes/widget/view_note_photo_preview.dart';
@@ -80,135 +78,83 @@ class ViewNotes extends GetView<ViewNotesController> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 82),
-            SizedBox(
-              height: 450,
-              child: ViewNotePhotoPreview(
-                  onImageTap: () {
-                    controller.goToPreview(
-                        noteId: '${controller.mData?.note?.id}');
-                  },
-                  carouselController: _carouselController,
-                  currentIndex: controller.imageIndex.value,
-                  onPageChanged: (index) {
-                    controller.imageIndex(index);
-                  }),
-            ),
-            const SizedBox(height: 82),
-            Container(
-              height: 88,
-              color: Resources.color.neutral50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: List.generate(
-                  3,
-                  (index) {
-                    return InkWell(
-                      onTap: () {
-                        _carouselController.animateToPage(
-                          index,
-                          duration: const Duration(milliseconds: 150),
-                          curve: Curves.decelerate,
-                        );
-                        controller.imageIndex(index);
-                      },
-                      child: GetX<ViewNotesController>(
-                        init: ViewNotesController(),
-                        initState: (_) {},
-                        builder: (_) {
-                          return AnimatedContainer(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 450,
+                child: ViewNotePhotoPreview(
+                    onImageTap: () {
+                      controller.goToPreview(
+                          noteId: '${controller.mData?.note?.id}');
+                    },
+                    images: controller.mData?.note?.notePictures,
+                    carouselController: _carouselController,
+                    currentIndex: controller.imageIndex.value,
+                    onPageChanged: (index) {
+                      controller.imageIndex(index);
+                      controller.photoViewIndex(index);
+                    }),
+              ),
+              Container(
+                height: 88,
+                color: Resources.color.neutral50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: List.generate(
+                    controller.mData?.note?.notePictures?.length ?? 0,
+                    (index) {
+                      return InkWell(
+                        onTap: () {
+                          _carouselController.animateToPage(
+                            index,
                             duration: const Duration(milliseconds: 150),
-                            margin: EdgeInsets.only(left: index > 0 ? 3 : 0),
-                            width:
-                                index == controller.imageIndex.value ? 72 : 64,
-                            height:
-                                index == controller.imageIndex.value ? 72 : 64,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              image: DecorationImage(
-                                // image: NetworkImage(url),
-                                image: AssetImage(
-                                  Assets.lib.theme.resources.images
-                                      .profileCoinLayoutBg.path,
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            curve: Curves.decelerate,
                           );
+                          controller.imageIndex(index);
+                          controller.photoViewIndex(index);
                         },
-                      ),
-                    );
-                  },
+                        child: GetX<ViewNotesController>(
+                          init: ViewNotesController(),
+                          initState: (_) {},
+                          builder: (_) {
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 150),
+                              margin: EdgeInsets.only(left: index > 0 ? 3 : 0),
+                              width: index == controller.imageIndex.value
+                                  ? 72
+                                  : 64,
+                              height: index == controller.imageIndex.value
+                                  ? 72
+                                  : 64,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                image: DecorationImage(
+                                  image: NetworkImage(controller.mData?.note
+                                          ?.notePictures?[index].pictureUrl ??
+                                      ''),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            NoteCaptionTile(
-              post: controller.mData,
-            ),
-            CommentTextField(),
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(bottom: 32),
-                itemBuilder: (builderContext, index) {
-                  return Container(
-                    height: 110,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: Resources.color.neutral200,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 22,
-                          backgroundColor: Resources.color.indigo400,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              userNameText(
-                                  '${controller.mData?.comments?[index].commenter?.name}',
-                                  '${controller.mData?.comments?[index].commenter?.username}'),
-                              TextNunito(
-                                text:
-                                    '${controller.mData?.comments?[index].comment}',
-                                size: 14,
-                                fontWeight: Weightenum.REGULAR,
-                              ),
-                              const SizedBox(height: 16),
-                              TextNunito(
-                                text:
-                                    '${controller.mData?.comments?[index].createdAt}',
-                                size: 14,
-                                fontWeight: Weightenum.REGULAR,
-                                color: Resources.color.neutral500,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: controller.mData?.comments?.length ?? 0,
+              NoteCaptionTile(
+                post: controller.fromPostDetail.isTrue
+                    ? controller.mData?.note?.post
+                    : controller.mData,
+                isCurrentUser: controller.isCurrentUserData(),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

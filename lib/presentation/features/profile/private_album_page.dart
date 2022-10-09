@@ -51,7 +51,6 @@ class PrivateAlbumPage extends GetView<ProfilePurchasedController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: GetX<ProfileController>(
-          init: ProfileController(),
           initState: (_) {
             controller.getAlbumName();
           },

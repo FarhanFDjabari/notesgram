@@ -51,7 +51,6 @@ class SavedAlbumPage extends GetView<ProfileBookmarkController> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: GetX<ProfileController>(
-          init: ProfileController(),
           initState: (_) {
             controller.getAlbumName();
           },

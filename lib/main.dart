@@ -1,7 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/initializer.dart';
 import 'package:notesgram/theme/app_theme.dart';
+import 'package:notesgram/utils/helpers/notifications/fcm_notification_helper.dart';
 import 'package:notesgram/utils/localization/app_translation.dart';
 import 'package:notesgram/utils/routes/app_route.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
@@ -11,6 +13,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Initializer.init();
   await Initializer.initHive();
+  FirebaseMessaging.onBackgroundMessage(handleIncomingMessageOnBackground);
+  FirebaseMessaging.onMessage.listen((message) {
+    debugPrint(message.data.toString());
+    if (message.notification != null) {
+      debugPrint(message.notification.toString());
+    }
+    handleIncomingMessageOnBackground(message);
+  });
 
   runApp(const MyApp());
 }

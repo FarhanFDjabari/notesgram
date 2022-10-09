@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_coin_tile.dart';
+import 'package:notesgram/presentation/widgets/button/primary_button.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -8,20 +9,26 @@ import 'package:sizer/sizer.dart';
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
     this.onEditProfile,
+    this.onAvatarTap,
     this.onTopUp,
     this.onWithdraw,
     this.name,
+    this.avatarUrl,
     this.postCount,
     this.followersCount,
     this.followingCount,
     this.coins,
+    this.isCurrentUser,
     Key? key,
   }) : super(key: key);
 
   final Function()? onEditProfile;
   final Function()? onTopUp;
   final Function()? onWithdraw;
+  final Function()? onAvatarTap;
+  final bool? isCurrentUser;
   final String? name;
+  final String? avatarUrl;
   final String? postCount;
   final String? followersCount;
   final String? followingCount;
@@ -30,7 +37,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: SizerUtil.height * 0.45,
+      height: SizerUtil.height * (isCurrentUser == true ? 0.45 : 0.3),
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,9 +45,15 @@ class ProfileHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: Resources.color.indigo500,
+              InkWell(
+                onTap: onAvatarTap,
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Resources.color.indigo500,
+                  backgroundImage: NetworkImage(
+                    '$avatarUrl',
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -57,16 +70,17 @@ class ProfileHeader extends StatelessWidget {
                             fontWeight: Weightenum.BOLD,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        InkWell(
-                          onTap: onEditProfile,
-                          child: TextNunito(
-                            text: 'Edit Profile',
-                            size: 14,
-                            fontWeight: Weightenum.REGULAR,
-                            color: Resources.color.indigo700,
+                        if (isCurrentUser == true) const SizedBox(width: 8),
+                        if (isCurrentUser == true)
+                          InkWell(
+                            onTap: onEditProfile,
+                            child: TextNunito(
+                              text: 'Edit Profile',
+                              size: 14,
+                              fontWeight: Weightenum.REGULAR,
+                              color: Resources.color.indigo700,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -130,11 +144,17 @@ class ProfileHeader extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          ProfileCoinTile(
-            onTopUp: onTopUp,
-            onWithdraw: onWithdraw,
-            coins: coins,
-          ),
+          if (isCurrentUser == true)
+            ProfileCoinTile(
+              onTopUp: onTopUp,
+              onWithdraw: onWithdraw,
+              coins: coins.toString(),
+            ),
+          if (isCurrentUser == false)
+            PrimaryButton(
+              label: 'FOLLOW',
+              onPressed: () {},
+            ),
         ],
       ),
     );

@@ -36,6 +36,7 @@ class FollowingPostController extends BaseListController<PostModel> {
     await client()
         .then((value) =>
             value.fetchFollowingUserPosts().validateStatus().then((data) {
+              dataList.clear();
               setFinishCallbacks(data.data ?? []);
             }))
         .handleError((onError) {

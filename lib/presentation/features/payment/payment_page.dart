@@ -56,6 +56,9 @@ class PaymentPage extends GetView<PaymentController> {
                 postUsername: controller.mData?.user?.username,
                 noteTitle: controller.mData?.note?.title,
                 notePrice: '${controller.mData?.note?.price}',
+                userProfileUrl: controller.mData?.user?.avatarUrl,
+                noteImageUrl:
+                    controller.mData?.note?.notePictures?.first.pictureUrl,
               ),
               PromoCodeInput(),
               PaymentSummaryTile(
@@ -71,7 +74,7 @@ class PaymentPage extends GetView<PaymentController> {
                 color: Resources.color.neutral50,
                 margin: const EdgeInsets.fromLTRB(0, 8, 0, 16),
                 child: HomeTopUpTile(
-                  coinAmount: '${controller.mData?.user?.coins}',
+                  coinAmount: controller.coins.value,
                   onTopUpPressed: () {
                     controller.goToTopUp();
                   },
@@ -95,7 +98,7 @@ class PaymentPage extends GetView<PaymentController> {
                 Get.back();
               },
               onSuccessPressed: () {
-                controller.goToProcessingPayment();
+                // controller.goToProcessingPayment();
               },
             ),
           );

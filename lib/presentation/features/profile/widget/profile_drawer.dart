@@ -37,6 +37,9 @@ class ProfileDrawer extends GetView<ProfileController> {
                     CircleAvatar(
                       backgroundColor: Resources.color.indigo100,
                       radius: 30,
+                      backgroundImage: NetworkImage(
+                        controller.mData?.avatarUrl ?? '',
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -67,12 +70,11 @@ class ProfileDrawer extends GetView<ProfileController> {
                               const SizedBox(width: 6),
                               Expanded(
                                 child: TextNunito(
-                                  text: int.parse(controller.mData?.username ??
-                                              '0') >
-                                          999
-                                      ? coinFormat.format(int.parse(
-                                          controller.mData?.username ?? '0'))
-                                      : controller.mData?.username ?? '0',
+                                  text: (controller.mData?.coins ?? 0) < 999
+                                      ? coinFormat
+                                          .format(controller.mData?.coins ?? 0)
+                                      : controller.mData?.coins.toString() ??
+                                          '0',
                                   size: 14,
                                   fontWeight: Weightenum.BOLD,
                                   color: Resources.color.stateWarning,
@@ -108,7 +110,9 @@ class ProfileDrawer extends GetView<ProfileController> {
               ),
               const Spacer(),
               ProfileDrawerTile(
-                onTileTap: () {},
+                onTileTap: () {
+                  controller.logout();
+                },
                 iconColor: Resources.color.stateNegative,
                 iconData: Remix.logout_box_line,
                 label: 'Keluar',

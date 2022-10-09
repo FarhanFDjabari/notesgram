@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:notesgram/data/model/auth/login_info_model.dart';
 import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_manager.dart';

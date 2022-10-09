@@ -7,7 +7,7 @@ import 'package:notesgram/presentation/features/home/widget/post_price_banner.da
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
-import 'package:notesgram/utils/helpers/currency_formatter.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,6 +32,7 @@ class DetailPostTile extends GetView<PostDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -50,6 +51,7 @@ class DetailPostTile extends GetView<PostDetailController> {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,25 +64,28 @@ class DetailPostTile extends GetView<PostDetailController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  // controller.goToResetPassword();
-                                },
-                                child: TextNunito(
-                                  text: controller
-                                              .mData?.post?.user?.isFollowed ==
-                                          true
-                                      ? 'Followed'
-                                      : '+Follow',
-                                  size: 14,
-                                  fontWeight: Weightenum.BOLD,
-                                  color: controller
-                                              .mData?.post?.user?.isFollowed ==
-                                          true
-                                      ? Resources.color.neutral500
-                                      : Resources.color.indigo700,
+                              if (controller.isCurrentUserData(
+                                      controller.mData?.post) ==
+                                  false)
+                                InkWell(
+                                  onTap: () {
+                                    // controller.goToResetPassword();
+                                  },
+                                  child: TextNunito(
+                                    text: controller.mData?.post?.user
+                                                ?.isFollowed ==
+                                            true
+                                        ? 'Followed'
+                                        : '+Follow',
+                                    size: 14,
+                                    fontWeight: Weightenum.BOLD,
+                                    color: controller.mData?.post?.user
+                                                ?.isFollowed ==
+                                            true
+                                        ? Resources.color.neutral500
+                                        : Resources.color.indigo700,
+                                  ),
                                 ),
-                              ),
                               InkWell(
                                 onTap: () {},
                                 child: Container(
@@ -119,7 +124,9 @@ class DetailPostTile extends GetView<PostDetailController> {
                             ),
                           ),
                           TextNunito(
-                            text: '${controller.mData?.post?.user?.createdAt}',
+                            text: DateTimeExtension(DateTime.parse(
+                                    '${controller.mData?.post?.createdAt}'))
+                                .postTime,
                             size: 12.sp,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral500,
@@ -141,19 +148,28 @@ class DetailPostTile extends GetView<PostDetailController> {
           ),
           Expanded(
             child: PostPhotoPreview(
-              images: controller.mData?.post?.note?.notePictures,
-              isPurchased: controller.mData?.isPurchased,
+              images: controller.mData?.notePictures,
+              isPurchased: controller.mData?.isPurchased == true ||
+                  controller.isCurrentUserData(controller.mData?.post),
             ),
           ),
           PostPriceBanner(
-            productTitle: '${controller.mData?.post?.note?.title}',
-            price: '${oCcy.parse(controller.mData?.post?.note?.title ?? '0')}',
-            isPurchased: controller.mData?.isPurchased,
+            productTitle: '${controller.mData?.title}',
+            price: '${controller.mData?.price ?? '0'}',
+            isPurchased: controller.mData?.isPurchased == true ||
+                controller.isCurrentUserData(controller.mData?.post),
             onBuyPressed: () {
-              // controller.goToPaymentInfo();
+              controller.goToPaymentInfo(
+                noteId: '${controller.mData?.id}',
+                note: controller.mData?.post,
+              );
             },
             onViewPressed: () {
-              // controller.goToPreviewNote();
+              controller.goToPreviewNote(
+                noteId: '${controller.mData?.id}',
+                username: '${controller.mData?.post?.user?.username}',
+                note: controller.mData,
+              );
             },
           ),
           Container(
@@ -179,10 +195,8 @@ class DetailPostTile extends GetView<PostDetailController> {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: coinFormat
-                                .parse(
-                                    '${controller.mData?.post?.likes?.length}')
-                                .toString(),
+                            text:
+                                '${controller.mData?.post?.count?.likes ?? 0}',
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,
@@ -201,7 +215,8 @@ class DetailPostTile extends GetView<PostDetailController> {
                             visualDensity: VisualDensity.compact,
                           ),
                           TextNunito(
-                            text: '${controller.mData?.post?.comments?.length}',
+                            text:
+                                '${controller.mData?.post?.count?.comments ?? 0}',
                             size: 14,
                             fontWeight: Weightenum.REGULAR,
                             color: Resources.color.neutral400,

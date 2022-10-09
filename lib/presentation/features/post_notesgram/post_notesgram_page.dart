@@ -145,7 +145,12 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
                   ),
                   maxLength: 2000,
                   hintText: 'Tulis caption',
-                  validator: Validator().notEmpty,
+                  validator: (value) {
+                    if (value?.isEmpty == true) {
+                      return 'txt_valid_notEmpty'.tr;
+                    }
+                    return null;
+                  },
                 ),
               ),
               const SizedBox(height: 16),
@@ -171,8 +176,10 @@ class PostNotesgramPage extends GetView<PostNotesgramController> {
                       if (int.parse(value ?? "0") < 10000) {
                         return 'Minimal harga 10.000';
                       }
+                    } else if (value?.isEmpty == true) {
+                      return 'txt_valid_notEmpty'.tr;
                     }
-                    return '';
+                    return null;
                   },
                 ),
               ),

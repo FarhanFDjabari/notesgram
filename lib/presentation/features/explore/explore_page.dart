@@ -66,7 +66,7 @@ class ExplorePage extends GetView<ExploreController> {
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if ((controller.mData?.notes?.length ?? 0) > 0 == true)
+                    if (controller.mData?.notes?.isNotEmpty == true)
                       TextNunito(
                         text: 'Catatan',
                         size: 12.sp,
@@ -88,7 +88,7 @@ class ExplorePage extends GetView<ExploreController> {
                         size: 11.sp,
                         fontWeight: Weightenum.REGULAR,
                       ),
-                    if ((controller.mData?.notes?.length ?? 0) > 0 == true)
+                    if (controller.mData?.notes?.isNotEmpty == true)
                       Expanded(
                         child: ListView.builder(
                           itemCount: controller.mData?.notes?.length,
@@ -99,9 +99,14 @@ class ExplorePage extends GetView<ExploreController> {
                               title: '${controller.mData?.notes?[index].title}',
                               subtitle: '@username',
                               dataType: 'notes',
-                              thumbnailUrl: null,
+                              thumbnailUrl:
+                                  '${controller.mData?.notes?[index].notePictures?.first.pictureUrl}',
                               onTap: () {
-                                controller.goToExploreDetail(type: 'notes');
+                                controller.goToExploreDetail(
+                                  type: 'notes',
+                                  postId:
+                                      controller.mData?.notes?[index].postId,
+                                );
                               },
                             );
                           },
@@ -133,7 +138,9 @@ class ExplorePage extends GetView<ExploreController> {
                               thumbnailUrl:
                                   controller.mData?.users?[index].avatarUrl,
                               onTap: () {
-                                controller.goToExploreDetail(type: 'users');
+                                controller.goToExploreDetail(
+                                    type: 'users',
+                                    user: controller.mData?.users?[index]);
                               },
                             );
                           },

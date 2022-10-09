@@ -9,4 +9,8 @@ const Map<String, String> en = {
   'txt_valid_number': 'Input is not number',
   'txt_valid_notEmpty': 'Input cannot be empty',
   'txt_valid_keyword': 'Keyword is not valid',
+  'txt_challenge_empty_title': 'No Challenge Yet :(',
+  'txt_challenge_empty_description': 'Try Again Later',
+  'txt_post_empty_title': 'Post Empty',
+  'txt_post_empty_description': 'You Can Try Post Some Notes',
 };

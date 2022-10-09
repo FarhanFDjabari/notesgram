@@ -9,6 +9,12 @@ import 'package:notesgram/utils/routes/page_name.dart';
 
 class ProfilePostController extends BaseListController<NoteModel> {
   @override
+  void onInit() {
+    refreshPage();
+    super.onInit();
+  }
+
+  @override
   void loadNextPage() {
     // TODO: implement loadNextPage
   }
@@ -18,8 +24,10 @@ class ProfilePostController extends BaseListController<NoteModel> {
     getProfilePosts();
   }
 
-  void goToDetail({required String username, required String noteId}) {
-    Get.toNamed(PageName.post + '/$username/$noteId');
+  void goToDetail({required String noteId}) {
+    final profileController = Get.find<ProfileController>();
+    Get.toNamed(
+        PageName.post + '/${profileController.mData?.username}/$noteId');
   }
 
   Future<void> getProfilePosts() async {
@@ -27,7 +35,7 @@ class ProfilePostController extends BaseListController<NoteModel> {
     await client().then((value) {
       final profileController = Get.find<ProfileController>();
       value
-          .fetchUserNote(userId: "${profileController.mData?.id}")
+          .fetchUserNote(userId: profileController.mData?.id ?? 0)
           .validateStatus()
           .then((data) {
         setFinishCallbacks(data.data ?? []);

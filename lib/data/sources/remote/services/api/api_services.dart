@@ -14,6 +14,7 @@ import 'package:notesgram/data/model/payment/payment_model.dart';
 import 'package:notesgram/data/model/payment/top_up_response_model.dart';
 import 'package:notesgram/data/model/post/comment_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/model/profile/profile_response_model.dart';
 import 'package:notesgram/data/model/promo/promo_model.dart';
 import 'package:notesgram/data/model/promo/validate_promo_model.dart';
 import 'package:notesgram/data/model/user/transaction_model.dart';
@@ -85,17 +86,17 @@ abstract class RestClient {
 
   @GET('/user/{id}/follow')
   Future<ApiResponse<dynamic>> followUnfollowUser({
-    @Path("id") required String userId,
+    @Path("id") required int userId,
   });
 
   @GET('/user/{id}/profile')
-  Future<ApiResponse<UserModel>> fetchUserProfile({
-    @Path("id") required String userId,
+  Future<ApiResponse<ProfileResponseModel>> fetchUserProfile({
+    @Path("id") required int userId,
   });
 
   @GET('/user/{id}/notes')
   Future<ApiResponses<NoteModel>> fetchUserNote({
-    @Path("id") required String userId,
+    @Path("id") required int userId,
   });
 
   @GET('/user/username/check')
@@ -105,12 +106,12 @@ abstract class RestClient {
 
   @GET('/user/{id}/followers')
   Future<ApiResponses<UserModel>> fetchFollowersByUserId({
-    @Path("id") required String userId,
+    @Path("id") required int userId,
   });
 
   @GET('/user/{id}/followings')
   Future<ApiResponses<UserModel>> fetchFollowingByUserId({
-    @Path("id") required String userId,
+    @Path("id") required int userId,
   });
 
   @POST('/post')
@@ -127,12 +128,12 @@ abstract class RestClient {
 
   @GET('/post/{id}/like')
   Future<ApiResponse<dynamic>> likeDislikePost({
-    @Path("id") required String postId,
+    @Path("id") required int postId,
   });
 
   @POST('/post/{id}/comment')
   Future<ApiResponse<CommentModel>> createComment({
-    @Path("id") required String userId,
+    @Path("id") required int userId,
     @Field("comment") String? comment,
   });
 
@@ -156,12 +157,12 @@ abstract class RestClient {
 
   @POST('/payment/topup-coin')
   Future<ApiResponse<TopUpResponseModel>> topUpCoins({
-    @Field("amount") String? amount,
+    @Field("amount") int? amount,
   });
 
   @POST('/payment/withdraw')
   Future<ApiResponse<PaymentModel>> withdrawAccount({
-    @Field("amount") String? amount,
+    @Field("amount") int? amount,
     @Field("account_number") String? accountNumber,
     @Field("bank_code") String? bankCode,
   });

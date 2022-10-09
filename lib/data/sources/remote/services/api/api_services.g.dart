@@ -144,18 +144,19 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<UserModel>> fetchUserProfile({required userId}) async {
+  Future<ApiResponse<ProfileResponseModel>> fetchUserProfile(
+      {required userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<UserModel>>(
+        _setStreamType<ApiResponse<ProfileResponseModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/user/${userId}/profile',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse<UserModel>.fromJson(_result.data!);
+    final value = ApiResponse<ProfileResponseModel>.fromJson(_result.data!);
     return value;
   }
 

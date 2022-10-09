@@ -9,10 +9,13 @@ class NoteSubtotalInfo extends StatelessWidget {
   const NoteSubtotalInfo({
     Key? key,
     this.isPaymentSuccess = false,
+    this.isTransaction = false,
     this.postUser,
     this.postUsername,
     this.noteTitle,
     this.notePrice,
+    this.userProfileUrl,
+    this.noteImageUrl,
   }) : super(key: key);
 
   final bool? isPaymentSuccess;
@@ -20,6 +23,9 @@ class NoteSubtotalInfo extends StatelessWidget {
   final String? postUsername;
   final String? noteTitle;
   final String? notePrice;
+  final String? userProfileUrl;
+  final String? noteImageUrl;
+  final bool? isTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,9 @@ class NoteSubtotalInfo extends StatelessWidget {
                   CircleAvatar(
                     backgroundColor: Resources.color.indigo100,
                     radius: 16,
+                    backgroundImage: NetworkImage(
+                      userProfileUrl ?? '',
+                    ),
                   ),
                   const SizedBox(width: 8),
                   TextNunito(
@@ -82,6 +91,10 @@ class NoteSubtotalInfo extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: Resources.color.gradient500to700,
                       borderRadius: BorderRadius.circular(6),
+                      image: DecorationImage(
+                        image: NetworkImage(noteImageUrl ?? ''),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -113,7 +126,7 @@ class NoteSubtotalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TextNunito(
-                      text: 'Subtotal',
+                      text: isTransaction == true ? 'Pembayaran' : 'Subtotal',
                       size: 14,
                       fontWeight: Weightenum.BOLD,
                       color: Resources.color.neutral900,

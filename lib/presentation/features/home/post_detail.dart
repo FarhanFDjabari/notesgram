@@ -61,130 +61,132 @@ class PostDetailPage extends GetView<PostDetailController> {
         _scrollToBottom();
       }
     });
-    return Scaffold(
-      backgroundColor: Resources.color.neutral100,
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: Resources.color.gradient600to800,
-          ),
-        ),
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: TextNunito(
-          text: controller.appBarTitle.value,
-          size: 15.sp,
-          fontWeight: Weightenum.BOLD,
-          color: Resources.color.neutral50,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            controller.goBack();
-          },
-          icon: Icon(
-            Remix.arrow_left_s_line,
-            color: Resources.color.neutral50,
-          ),
-          iconSize: 28,
-        ),
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: StateHandleWidget(
-          shimmerView: LoadingOverlay(),
-          loadingEnabled: controller.isLoading,
-          onRetryPressed: () {
-            // controller.getDashboard("", "");
-          },
-          errorEnabled: controller.isError,
-          errorText: 'txt_error_general'.tr,
-          emptyTitle: 'txt_note_empty_title'.tr,
-          emptySubtitle: 'txt_note_empty_description'.tr,
-          emptyImage: AssetImage(
-            Assets.lib.theme.resources.images.appLogoMonochrome.path,
-          ),
-          emptyEnabled: controller.isEmptyData,
-          body: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: false,
-            controller: controller.refreshController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DetailPostTile(
-                  onCommentPressed: () {
-                    _scrollToBottom();
-                  },
-                ),
-                SizedBox(
-                  height: 300,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(bottom: 32),
-                    itemBuilder: (builderContext, index) {
-                      return Container(
-                        height: 110,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              color: Resources.color.neutral200,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              radius: 22,
-                              backgroundColor: Resources.color.indigo400,
-                              backgroundImage: NetworkImage(
-                                controller.mData?.post?.comments?[index]
-                                        .commenter?.avatarUrl ??
-                                    '',
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  userNameText(
-                                      '${controller.mData?.post?.comments?[index].commenter?.name}',
-                                      '${controller.mData?.post?.comments?[index].commenter?.name}'),
-                                  TextNunito(
-                                    text:
-                                        '${controller.mData?.post?.comments?[index].comment}',
-                                    size: 14,
-                                    fontWeight: Weightenum.REGULAR,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextNunito(
-                                    text:
-                                        '${controller.mData?.post?.comments?[index].createdAt}',
-                                    size: 14,
-                                    fontWeight: Weightenum.REGULAR,
-                                    color: Resources.color.neutral500,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount: controller.mData?.post?.comments?.length ?? 0,
-                  ),
-                ),
-                CommentTextField(),
-              ],
+    return GetBuilder<PostDetailController>(
+      init: PostDetailController(),
+      initState: (_) {},
+      builder: (_) {
+        return Scaffold(
+          backgroundColor: Resources.color.neutral100,
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: Resources.color.gradient600to800,
+              ),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: TextNunito(
+              text: controller.appBarTitle.value,
+              size: 15.sp,
+              fontWeight: Weightenum.BOLD,
+              color: Resources.color.neutral50,
+            ),
+            leading: IconButton(
+              onPressed: () {
+                controller.goBack();
+              },
+              icon: Icon(
+                Remix.arrow_left_s_line,
+                color: Resources.color.neutral50,
+              ),
+              iconSize: 28,
             ),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: StateHandleWidget(
+              shimmerView: LoadingOverlay(),
+              loadingEnabled: controller.isLoading,
+              onRetryPressed: () {
+                // controller.getDashboard("", "");
+              },
+              errorEnabled: controller.isError,
+              errorText: 'txt_error_general'.tr,
+              emptyTitle: 'txt_note_empty_title'.tr,
+              emptySubtitle: 'txt_note_empty_description'.tr,
+              emptyImage: AssetImage(
+                Assets.lib.theme.resources.images.appLogoMonochrome.path,
+              ),
+              emptyEnabled: controller.isEmptyData,
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DetailPostTile(
+                    onCommentPressed: () {
+                      _scrollToBottom();
+                    },
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 32),
+                      itemBuilder: (builderContext, index) {
+                        return Container(
+                          height: 110,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                color: Resources.color.neutral200,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Resources.color.indigo400,
+                                backgroundImage: NetworkImage(
+                                  controller.mData?.post?.comments?[index]
+                                          .commenter?.avatarUrl ??
+                                      '',
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    userNameText(
+                                        '${controller.mData?.post?.comments?[index].commenter?.name}',
+                                        '${controller.mData?.post?.comments?[index].commenter?.name}'),
+                                    TextNunito(
+                                      text:
+                                          '${controller.mData?.post?.comments?[index].comment}',
+                                      size: 14,
+                                      fontWeight: Weightenum.REGULAR,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextNunito(
+                                      text:
+                                          '${controller.mData?.post?.comments?[index].createdAt}',
+                                      size: 14,
+                                      fontWeight: Weightenum.REGULAR,
+                                      color: Resources.color.neutral500,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      itemCount: controller.mData?.post?.comments?.length ?? 0,
+                    ),
+                  ),
+                  CommentTextField(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

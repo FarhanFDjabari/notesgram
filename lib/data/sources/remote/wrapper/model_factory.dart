@@ -16,6 +16,7 @@ import 'package:notesgram/data/model/post/bookmark_model.dart';
 import 'package:notesgram/data/model/post/comment_model.dart';
 import 'package:notesgram/data/model/post/like_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/model/profile/profile_response_model.dart';
 import 'package:notesgram/data/model/promo/promo_model.dart';
 import 'package:notesgram/data/model/promo/validate_promo_model.dart';
 import 'package:notesgram/data/model/user/challenge_transaction_model.dart';
@@ -82,6 +83,8 @@ abstract class ModelFactory {
       return ChallengeTransactionModel.fromJson(json);
     } else if (strType == (NotificationModel).toString()) {
       return NotificationModel.fromJson(json);
+    } else if (strType == (ProfileResponseModel).toString()) {
+      return ProfileResponseModel.fromJson(json);
     }
     // if not implemented
     else {

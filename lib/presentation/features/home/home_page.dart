@@ -18,23 +18,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with
-        SingleTickerProviderStateMixin,
-        AutomaticKeepAliveClientMixin<HomePage> {
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(initialIndex: 1, length: 2, vsync: this);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return GetBuilder<HomeController>(
       init: HomeController(),
       initState: (_) {},

@@ -6,8 +6,11 @@ import 'package:notesgram/utils/helpers/constant.dart';
 
 class HelpCenterHeader extends StatelessWidget {
   const HelpCenterHeader({
+    this.userFullName,
     Key? key,
   }) : super(key: key);
+
+  final String? userFullName;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,9 @@ class HelpCenterHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextNunito(
-            text: 'Halo, Mbak IU 👋',
+            text: 'Halo, $userFullName 👋',
             size: 18,
+            maxLines: 2,
             fontWeight: Weightenum.BOLD,
             color: Resources.color.indigo700,
           ),

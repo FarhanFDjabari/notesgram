@@ -35,6 +35,7 @@ class ForYouPostController extends BaseListController<PostModel> {
     loadingState();
     await client()
         .then((value) => value.fetchAllPosts().validateStatus().then((data) {
+              dataList.clear();
               setFinishCallbacks(data.data ?? []);
             }).handleError((onError) {
               debugPrint("On Error $onError");

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/data/model/note/note_model.dart';
 import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
+import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
 import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
 import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
@@ -12,8 +14,9 @@ class PostDetailController extends BaseObjectController<NoteModel> {
   final RxBool isAutoScrollComment = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     appBarTitle(Get.parameters['username']);
+    await getNoteById(noteId: Get.parameters['noteId'].toString());
     isAutoScrollComment(Get.arguments as bool?);
     super.onInit();
   }
@@ -34,12 +37,24 @@ class PostDetailController extends BaseObjectController<NoteModel> {
   void goToPreviewNote({
     required String username,
     required String noteId,
-    PostModel? note,
+    NoteModel? note,
   }) {
-    Get.toNamed(PageName.post + '/$username/$noteId/view', arguments: note);
+    Get.toNamed(PageName.post + '/$username/$noteId/view', arguments: {
+      'note': note,
+    });
+  }
+
+  void goToPaymentInfo({required String noteId, required PostModel? note}) {
+    Get.toNamed(PageName.payment + '/info/$noteId', arguments: note);
   }
 
   void goBack() {
     Get.back();
+  }
+
+  bool isCurrentUserData(PostModel? data) {
+    final userData = StorageManager().get(StorageName.USERS);
+    if (data?.userId == userData['id']) return true;
+    return false;
   }
 }

@@ -8,8 +8,11 @@ import 'package:sizer/sizer.dart';
 
 class PaymentCoinInfoTile extends StatelessWidget {
   const PaymentCoinInfoTile({
+    this.coins,
     Key? key,
   }) : super(key: key);
+
+  final String? coins;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +42,8 @@ class PaymentCoinInfoTile extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: TextNunito(
-                  text: int.parse('0') > 999
-                      ? coinFormat.format(int.parse('0'))
+                  text: int.parse('$coins') > 999
+                      ? coinFormat.format(int.parse('$coins'))
                       : '0',
                   size: 15.sp,
                   maxLines: 2,

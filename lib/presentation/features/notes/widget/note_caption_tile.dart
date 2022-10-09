@@ -4,16 +4,19 @@ import 'package:notesgram/presentation/features/home/widget/description_text_wid
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class NoteCaptionTile extends StatelessWidget {
   const NoteCaptionTile({
     this.post,
+    this.isCurrentUser = true,
     Key? key,
   }) : super(key: key);
 
   final PostModel? post;
+  final bool? isCurrentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,7 @@ class NoteCaptionTile extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: Resources.color.indigo400,
                 radius: 25,
+                backgroundImage: NetworkImage(post?.user?.avatarUrl ?? ''),
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -48,21 +52,22 @@ class NoteCaptionTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                // controller.goToResetPassword();
-                              },
-                              child: TextNunito(
-                                text: post?.user?.isFollowed == true
-                                    ? 'Followed'
-                                    : '+Follow',
-                                size: 14,
-                                fontWeight: Weightenum.BOLD,
-                                color: post?.user?.isFollowed == true
-                                    ? Resources.color.neutral500
-                                    : Resources.color.indigo700,
+                            if (isCurrentUser == false)
+                              InkWell(
+                                onTap: () {
+                                  // controller.goToResetPassword();
+                                },
+                                child: TextNunito(
+                                  text: post?.user?.isFollowed == true
+                                      ? 'Followed'
+                                      : '+Follow',
+                                  size: 14,
+                                  fontWeight: Weightenum.BOLD,
+                                  color: post?.user?.isFollowed == true
+                                      ? Resources.color.neutral500
+                                      : Resources.color.indigo700,
+                                ),
                               ),
-                            ),
                             InkWell(
                               onTap: () {},
                               child: Container(
@@ -101,7 +106,9 @@ class NoteCaptionTile extends StatelessWidget {
                           ),
                         ),
                         TextNunito(
-                          text: '${post?.createdAt}',
+                          text: DateTimeExtension(
+                                  DateTime.parse('${post?.createdAt}'))
+                              .postTime,
                           size: 12.sp,
                           fontWeight: Weightenum.REGULAR,
                           color: Resources.color.neutral500,
@@ -125,61 +132,8 @@ class NoteCaptionTile extends StatelessWidget {
               vertical: 8.0,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Remix.heart_line,
-                              color: Resources.color.neutral400,
-                              size: 24,
-                            ),
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          TextNunito(
-                            text: '${post?.likes?.length}',
-                            size: 14,
-                            fontWeight: Weightenum.REGULAR,
-                            color: Resources.color.neutral400,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Remix.chat_1_line,
-                              color: Resources.color.neutral400,
-                              size: 24,
-                            ),
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          TextNunito(
-                            text: '${post?.comments}',
-                            size: 14,
-                            fontWeight: Weightenum.REGULAR,
-                            color: Resources.color.neutral400,
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Remix.share_forward_line,
-                          color: Resources.color.neutral400,
-                          size: 24,
-                        ),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ],
-                  ),
-                ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(

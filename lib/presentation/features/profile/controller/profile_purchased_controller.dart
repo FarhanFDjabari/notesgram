@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/data/model/post/post_model.dart';
+import 'package:notesgram/data/model/note_folder/purchased_notes_folder_model.dart';
 import 'package:notesgram/data/sources/remote/base/base_list_controller.dart';
+import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
+import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
 import 'package:notesgram/presentation/features/profile/widget/add_album_dialog.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 
-class ProfilePurchasedController extends BaseListController<PostModel> {
+class ProfilePurchasedController
+    extends BaseListController<PurchasedNotesFolderModel> {
   final RxString albumNameArgument = "".obs;
   final albumNameController = TextEditingController();
 
@@ -16,7 +19,7 @@ class ProfilePurchasedController extends BaseListController<PostModel> {
 
   @override
   void refreshPage() {
-    // TODO: implement refreshPage
+    getPurchasedNotes();
   }
 
   void getAlbumName() {
@@ -64,4 +67,16 @@ class ProfilePurchasedController extends BaseListController<PostModel> {
   }
 
   void createNewAlbum() {}
+
+  Future<void> getPurchasedNotes() async {
+    loadingState();
+    await client().then((value) {
+      value.fetchPurchasedNotesFolder().validateStatus().then((data) {
+        setFinishCallbacks(data.data ?? []);
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
 }

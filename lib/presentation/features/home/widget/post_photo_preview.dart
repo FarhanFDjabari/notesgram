@@ -71,6 +71,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
                       color: Resources.color.neutral600,
                       image: DecorationImage(
                         image: NetworkImage(images[index].pictureUrl ?? ""),
+                        fit: BoxFit.cover,
                       ),
                     ),
                     child: BackdropFilter(
@@ -113,6 +114,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
                 color: Resources.color.indigo700,
                 image: DecorationImage(
                   image: NetworkImage(images[index].pictureUrl ?? ""),
+                  fit: BoxFit.cover,
                 ),
               ),
             );
@@ -154,7 +156,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
             ),
           ),
         ),
-        if (_photoIndex < images.length - 1)
+        if (_photoIndex < 2 - 1)
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(

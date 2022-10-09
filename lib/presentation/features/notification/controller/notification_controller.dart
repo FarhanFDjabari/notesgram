@@ -27,8 +27,8 @@ class NotificationController extends BaseListController<NotificationModel> {
             data.data?.where((element) => element.isRead == false).length;
 
         navigationController.badgeNumber(notificationUnreadCount);
-
-        setFinishCallbacks(data.data ?? []);
+        dataList.clear();
+        setFinishCallbacks(data.data?.reversed.toList() ?? []);
       }).handleError((onError) {
         debugPrint(onError.toString());
         finishLoadData(errorMessage: onError.toString());
@@ -50,7 +50,7 @@ class NotificationController extends BaseListController<NotificationModel> {
 
         navigationController.badgeNumber(notificationUnreadCount);
 
-        finishLoadData();
+        refreshPage();
       }).handleError((onError) {
         debugPrint(onError.toString());
         finishLoadData(errorMessage: onError.toString());
