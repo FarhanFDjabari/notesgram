@@ -47,6 +47,7 @@ class UserFollowingPostFragment extends GetView<FollowingPostController> {
                 itemBuilder: (context, index) {
                   return HomePostTile(
                     post: controller.dataList[index],
+                    isFollowingHomePost: true,
                   );
                 },
                 separatorBuilder: (context, index) {

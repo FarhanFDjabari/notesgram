@@ -35,8 +35,8 @@ class HomeController extends BaseObjectController<PostModel> {
     Get.find<NavigationController>().pageIndex(4);
   }
 
-  void goToAnotherUserProfile({required int userId}) {
-    Get.toNamed(PageName.profile, arguments: {'another_user_id': userId});
+  void goToAnotherUserProfile({required String username, required int userId}) {
+    Get.toNamed(PageName.profile + '/$username', arguments: {'id': userId});
   }
 
   bool isCurrentUserData(PostModel? data) {

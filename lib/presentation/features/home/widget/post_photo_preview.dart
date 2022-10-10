@@ -60,7 +60,7 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
     return Stack(
       children: [
         CarouselSlider.builder(
-          itemCount: 2,
+          itemCount: images.length > 2 ? 2 : images.length,
           itemBuilder: (context, index, realIndex) {
             if (index > 0 && !isPurchased) {
               return Stack(
@@ -147,7 +147,8 @@ class _PostPhotoPreviewState extends State<PostPhotoPreview> {
             ),
             child: Center(
               child: TextNunito(
-                text: '${_photoIndex + 1}/2',
+                text:
+                    '${_photoIndex + 1}/${images.length > 2 ? 2 : images.length}',
                 maxLines: 1,
                 size: 14,
                 fontWeight: Weightenum.REGULAR,

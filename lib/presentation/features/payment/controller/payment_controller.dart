@@ -4,6 +4,8 @@ import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
+import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
+import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
 import 'package:notesgram/utils/routes/page_name.dart';
 
 class PaymentController extends BaseObjectController<PostModel> {
@@ -28,12 +30,24 @@ class PaymentController extends BaseObjectController<PostModel> {
   }
 
   void goToProcessingPayment() {
-    Get.offNamed(PageName.paymentProcessing);
+    if (int.parse(coins.value) < (mData?.note?.price ?? 0) == true) {
+      finishLoadData(errorMessage: 'Insufficient Coins');
+    } else {
+      Get.offNamed(PageName.paymentProcessing);
+    }
   }
 
-  void processPayment() {
-    Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(PageName.paymentSuccess);
+  Future<void> processPayment() async {
+    await client().then((value) {
+      value.purchaseNote(noteId: mData?.note?.id).validateStatus().then((data) {
+        Future.delayed(const Duration(seconds: 1), () {
+          Get.offNamed(PageName.paymentSuccess, arguments: data.result);
+        });
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        Get.back();
+        finishLoadData(errorMessage: onError.toString());
+      });
     });
   }
 }

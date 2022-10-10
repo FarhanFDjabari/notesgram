@@ -55,6 +55,22 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<ApiResponse<dynamic>> logout() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/auth/logout',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ApiResponse<UserModel>> fetchMyProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -430,7 +446,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<NoteModel>> purchaseNote({noteId}) async {
+  Future<ApiResponse<PostModel>> purchaseNote({noteId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -438,12 +454,12 @@ class _RestClient implements RestClient {
     final _data = {'note_id': noteId};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<NoteModel>>(
+        _setStreamType<ApiResponse<PostModel>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/note/purchase',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ApiResponse<NoteModel>.fromJson(_result.data!);
+    final value = ApiResponse<PostModel>.fromJson(_result.data!);
     return value;
   }
 

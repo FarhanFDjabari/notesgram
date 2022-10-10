@@ -15,7 +15,7 @@ void main() async {
   await Initializer.initHive();
   FirebaseMessaging.onBackgroundMessage(handleIncomingMessageOnBackground);
   FirebaseMessaging.onMessage.listen((message) {
-    debugPrint(message.data.toString());
+    debugPrint('Foreground notification ${message.toString()}');
     if (message.notification != null) {
       debugPrint(message.notification.toString());
     }

@@ -19,6 +19,7 @@ dependencies:
   firebase_core: ^1.24.0
   firebase_auth: ^3.11.0
   firebase_messaging: ^13.0.4
+  firebase_analytics: ^9.3.8
   floating_draggable_widget: ^2.1.1
   flutter:
     sdk: flutter

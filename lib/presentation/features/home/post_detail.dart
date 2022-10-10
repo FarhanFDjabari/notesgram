@@ -93,31 +93,32 @@ class PostDetailPage extends GetView<PostDetailController> {
               iconSize: 28,
             ),
           ),
-          body: SingleChildScrollView(
-            controller: _scrollController,
-            child: StateHandleWidget(
-              shimmerView: LoadingOverlay(),
-              loadingEnabled: controller.isLoading,
-              onRetryPressed: () {
-                // controller.getDashboard("", "");
-              },
-              errorEnabled: controller.isError,
-              errorText: 'txt_error_general'.tr,
-              emptyTitle: 'txt_note_empty_title'.tr,
-              emptySubtitle: 'txt_note_empty_description'.tr,
-              emptyImage: AssetImage(
-                Assets.lib.theme.resources.images.appLogoMonochrome.path,
-              ),
-              emptyEnabled: controller.isEmptyData,
-              body: Column(
+          body: StateHandleWidget(
+            shimmerView: LoadingOverlay(),
+            loadingEnabled: controller.isLoading,
+            onRetryPressed: () {
+              // controller.getDashboard("", "");
+            },
+            errorEnabled: controller.isError,
+            errorText: 'txt_error_general'.tr,
+            emptyTitle: 'txt_note_empty_title'.tr,
+            emptySubtitle: 'txt_note_empty_description'.tr,
+            emptyImage: AssetImage(
+              Assets.lib.theme.resources.images.appLogoMonochrome.path,
+            ),
+            emptyEnabled: controller.isEmptyData,
+            body: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  DetailPostTile(
-                    onCommentPressed: () {
-                      _scrollToBottom();
-                    },
-                  ),
+                  if (!controller.isLoading)
+                    DetailPostTile(
+                      onCommentPressed: () {
+                        _scrollToBottom();
+                      },
+                    ),
                   SizedBox(
                     height: 300,
                     child: ListView.builder(
@@ -180,7 +181,9 @@ class PostDetailPage extends GetView<PostDetailController> {
                       itemCount: controller.mData?.post?.comments?.length ?? 0,
                     ),
                   ),
-                  CommentTextField(),
+                  CommentTextField(
+                    userAvatar: controller.getCurrentUserAvatar(),
+                  ),
                 ],
               ),
             ),

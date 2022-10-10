@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/data/model/payment/top_up_response_model.dart';
@@ -7,8 +8,10 @@ import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
 import 'package:notesgram/data/sources/remote/errorhandler/error_handler.dart';
 import 'package:notesgram/data/sources/remote/services/api/api_services.dart';
+import 'package:notesgram/presentation/features/notification/controller/notification_controller.dart';
 import 'package:notesgram/presentation/features/payment/payment_gateway_process_page.dart';
 import 'package:notesgram/presentation/features/payment/widget/transaction_condition_dialog.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 
 class PaymentTopupController extends BaseObjectController<TopUpResponseModel> {
   final topUpAmountController = TextEditingController();
@@ -19,7 +22,25 @@ class PaymentTopupController extends BaseObjectController<TopUpResponseModel> {
     final localUserData =
         UserModel.fromJson(StorageManager().get(StorageName.USERS));
     coins(localUserData.coins.toString());
+    paymentNotificationListener();
     super.onInit();
+  }
+
+  void paymentNotificationListener() {
+    FirebaseMessaging.onMessage.listen((message) async {
+      if (message.notification?.body?.contains('berhasil') == true) {
+        goBack();
+        loadingState();
+        final profileController = Get.find<ProfileController>();
+        final notificationController = Get.find<NotificationController>();
+        await profileController.getProfile(
+            userId: StorageManager().get(StorageName.USERS)['id']);
+        await notificationController.getAllNotification().then((value) {
+          coins(StorageManager().get(StorageName.USERS)['coins'].toString());
+          finishLoadData();
+        });
+      }
+    });
   }
 
   void goBack() {
@@ -37,22 +58,6 @@ class PaymentTopupController extends BaseObjectController<TopUpResponseModel> {
       title: title,
       terms: terms,
     ));
-  }
-
-  Future<void> getNewUserData() async {
-    loadingState();
-    await client().then((value) {
-      final userId = StorageManager().get(StorageName.USERS)['id'];
-      value.fetchUserProfile(userId: userId).then((data) {
-        StorageManager()
-            .write(StorageName.USERS, data.result?.userModel?.toJson());
-        coins(data.result?.userModel?.coins.toString());
-        finishLoadData();
-      }).handleError((onError) {
-        debugPrint(onError.toString());
-        finishLoadData(errorMessage: onError.toString());
-      });
-    });
   }
 
   Future<void> topUpCoin() async {

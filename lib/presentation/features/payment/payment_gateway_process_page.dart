@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/payment/controller/payment_topup_controller.dart';
+import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
@@ -25,7 +26,6 @@ class PaymentGatewayProcessPage extends StatefulWidget {
 
 class _PaymentGatewayProcessPageState extends State<PaymentGatewayProcessPage> {
   late String initialUrl;
-  late WebViewController _webViewController;
 
   @override
   void initState() {
@@ -41,53 +41,56 @@ class _PaymentGatewayProcessPageState extends State<PaymentGatewayProcessPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Resources.color.neutral100,
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: Resources.color.gradient600to800,
+    return StateHandleWidget(
+      body: GetBuilder<PaymentTopupController>(
+        builder: (controller) => Scaffold(
+          backgroundColor: Resources.color.neutral100,
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: Resources.color.gradient600to800,
+              ),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: TextNunito(
+              text: 'Top Up',
+              size: 15.sp,
+              fontWeight: Weightenum.BOLD,
+              color: Resources.color.neutral50,
+            ),
+            leading: IconButton(
+              onPressed: () {
+                controller.goBack();
+              },
+              icon: Icon(
+                Remix.arrow_left_s_line,
+                color: Resources.color.neutral50,
+              ),
+              iconSize: 28,
+            ),
           ),
-        ),
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: TextNunito(
-          text: 'Top Up',
-          size: 15.sp,
-          fontWeight: Weightenum.BOLD,
-          color: Resources.color.neutral50,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Remix.arrow_left_s_line,
-            color: Resources.color.neutral50,
-          ),
-          iconSize: 28,
-        ),
-      ),
-      body: WebView(
-        initialUrl: initialUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        gestureNavigationEnabled: true,
-        onWebViewCreated: (webviewController) {
-          _webViewController = webviewController;
-        },
-        onPageFinished: (result) {
-          debugPrint(result);
-          Get.find<PaymentTopupController>().getNewUserData();
-        },
-        javascriptChannels: {
-          JavascriptChannel(
-            name: 'messageHandler',
-            onMessageReceived: (message) async {
-              debugPrint(message.message);
+          body: WebView(
+            initialUrl: initialUrl,
+            javascriptMode: JavascriptMode.unrestricted,
+            gestureNavigationEnabled: true,
+            onWebViewCreated: (webviewController) {},
+            onPageFinished: (result) {
+              debugPrint(result);
+            },
+            javascriptChannels: {
+              JavascriptChannel(
+                name: 'messageHandler',
+                onMessageReceived: (message) async {
+                  debugPrint(
+                      'Message handler payment gateway ${message.message}');
+                  // Get.back(result: true);
+                },
+              ),
             },
           ),
-        },
+        ),
       ),
     );
   }

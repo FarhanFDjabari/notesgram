@@ -13,6 +13,7 @@ class PageName {
   static const explore = '/explore';
   static const post = '/post';
   static const profile = '/profile';
+  static const userProfile = '/profile/:username';
   static const navigation = '/';
   static const notification = '/notification';
   static const routeError = '/route-error';

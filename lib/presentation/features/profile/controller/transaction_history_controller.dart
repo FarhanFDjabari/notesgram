@@ -21,6 +21,7 @@ class TransactionHistoryController
     loadingState();
     await client().then(
       (value) => value.fetchTransactionHistory().validateStatus().then((data) {
+        dataList.clear();
         setFinishCallbacks(data.data ?? []);
       }).handleError((onError) {
         debugPrint("On Error $onError");

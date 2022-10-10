@@ -32,17 +32,12 @@ class ProfileController extends BaseObjectController<UserModel> {
   }
 
   Future<void> setInitialData() async {
-    if (Get.arguments != null) {
-      print((Get.arguments as Map<String, dynamic>)['another_user_id']);
-      getProfile(
-          userId: (Get.arguments as Map<String, dynamic>)['another_user_id']
-              as int);
+    final localUserData =
+        UserModel.fromJson(StorageManager().get(StorageName.USERS));
+    if (localUserData.cCount?.followers == null) {
+      getProfile(userId: StorageManager().get(StorageName.USERS)['id']);
     } else {
-      final localUserData =
-          UserModel.fromJson(StorageManager().get(StorageName.USERS));
-      if (localUserData.cCount == null) {
-        getProfile(userId: StorageManager().get(StorageName.USERS)['id']);
-      }
+      setFinishCallbacks(localUserData);
     }
   }
 
@@ -51,6 +46,8 @@ class ProfileController extends BaseObjectController<UserModel> {
     await client().then(
         (value) => value.fetchUserProfile(userId: userId).validateStatus().then(
               (data) {
+                StorageManager()
+                    .write(StorageName.USERS, data.result?.userModel?.toJson());
                 setFinishCallbacks(data.result?.userModel);
               },
             ).handleError((onError) {
@@ -101,13 +98,17 @@ class ProfileController extends BaseObjectController<UserModel> {
   }
 
   Future<void> logout() async {
-    try {
-      await SecureStorageManager().setToken(value: null);
-      StorageManager().write(StorageName.USERS, null);
-      goToLogin();
-    } catch (e) {
-      debugPrint(e.toString());
-      finishLoadData(errorMessage: e.toString());
-    }
+    loadingState();
+    await client().then((value) {
+      value.logout().validateStatus().then((data) async {
+        await SecureStorageManager().setToken(value: null);
+        StorageManager().write(StorageName.USERS, null);
+        finishLoadData();
+        goToLogin();
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
   }
 }

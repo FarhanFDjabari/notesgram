@@ -97,13 +97,16 @@ class ExplorePage extends GetView<ExploreController> {
                             return SearchTile(
                               index: index,
                               title: '${controller.mData?.notes?[index].title}',
-                              subtitle: '@username',
+                              subtitle:
+                                  '@${controller.mData?.notes?[index].post?.user?.username}',
                               dataType: 'notes',
                               thumbnailUrl:
                                   '${controller.mData?.notes?[index].notePictures?.first.pictureUrl}',
                               onTap: () {
                                 controller.goToExploreDetail(
                                   type: 'notes',
+                                  user: controller
+                                      .mData?.notes?[index].post?.user,
                                   postId:
                                       controller.mData?.notes?[index].postId,
                                 );

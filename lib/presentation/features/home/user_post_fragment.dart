@@ -48,6 +48,14 @@ class UserPostFragment extends GetView<ForYouPostController> {
                 itemBuilder: (context, index) {
                   return HomePostTile(
                     post: controller.dataList[index],
+                    onFollowTap: () {
+                      controller.followUnfollowUser(
+                          userId: controller.dataList[index].userId ?? 0);
+                    },
+                    onBookmarkTap: () {
+                      controller.savePostToBookmark(
+                          postId: controller.dataList[index].id ?? 0);
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {

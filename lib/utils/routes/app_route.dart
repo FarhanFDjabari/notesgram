@@ -36,6 +36,7 @@ import 'package:notesgram/presentation/features/payment/select_payment_page.dart
 import 'package:notesgram/presentation/features/payment/top_up_page.dart';
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
+import 'package:notesgram/presentation/features/profile/another_user_profile_page.dart';
 import 'package:notesgram/presentation/features/profile/binding/help_center_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/transaction_history_binding.dart';
@@ -182,6 +183,11 @@ class AppRoute {
       name: PageName.help,
       page: () => HelpCenterPage(),
       binding: HelpCenterBinding(),
+    ),
+    GetPage(
+      name: PageName.userProfile,
+      page: () => AnotherUserProfilePage(),
+      binding: ProfileBinding(),
     ),
   ];
 }

@@ -33,6 +33,7 @@ if (flutterCompileSdk == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -76,6 +77,8 @@ flutter {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:30.4.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

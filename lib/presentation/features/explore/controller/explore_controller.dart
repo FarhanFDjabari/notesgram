@@ -61,8 +61,8 @@ class ExploreController extends BaseObjectController<ExplorePostModel> {
     Get.toNamed(PageName.post + '/$username/$postId', arguments: arguments);
   }
 
-  void goToAnotherUserProfile({required int userId}) {
-    Get.toNamed(PageName.profile, arguments: {'another_user_id': userId});
+  void goToAnotherUserProfile({required String username, required int userId}) {
+    Get.toNamed(PageName.profile + '/$username', arguments: {'id': userId});
   }
 
   void goToExploreDetail({required String type, UserModel? user, int? postId}) {
@@ -70,10 +70,11 @@ class ExploreController extends BaseObjectController<ExplorePostModel> {
       if (isCurrentUserData(user)) {
         Get.find<NavigationController>().pageIndex(4);
       } else {
-        goToAnotherUserProfile(userId: user?.id ?? 0);
+        goToAnotherUserProfile(
+            username: '${user?.username}', userId: user?.id ?? 0);
       }
     } else {
-      goToDetailNote(username: 'Detail', postId: postId.toString());
+      goToDetailNote(username: '${user?.username}', postId: postId.toString());
     }
   }
 

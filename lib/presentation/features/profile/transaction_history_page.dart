@@ -96,12 +96,10 @@ class TransactionHistoryPage extends GetView<TransactionHistoryController> {
                           color: Resources.color.neutral500,
                         ),
                       if (index > 0 &&
-                          DateTime.parse(
-                                      '${controller.dataList[index].info?.createdAt}')
-                                  .difference(DateTime.parse(
-                                      '${controller.dataList[index - 1].info?.createdAt}'))
-                                  .inDays >
-                              0)
+                          !DateTime.parse(
+                                  '${controller.dataList[index].info?.createdAt}')
+                              .isSameDate(DateTime.parse(
+                                  '${controller.dataList[index - 1].info?.createdAt}')))
                         TextNunito(
                           text: DateTimeExtension(DateTime.parse(
                                   '${controller.dataList[index].info?.createdAt}'))
@@ -163,7 +161,11 @@ class TransactionHistoryPage extends GetView<TransactionHistoryController> {
                                       'TOPUP' ||
                                   controller.dataList[index].category ==
                                       'WITHDRAW'
-                              ? controller.dataList[index].info?.paymentMethod
+                              ? controller.dataList[index].info?.status ==
+                                      'SUCCESS'
+                                  ? controller
+                                      .dataList[index].info?.paymentMethod
+                                  : controller.dataList[index].info?.status
                               : '${controller.dataList[index].info?.challenge?.title}',
                           category: controller.dataList[index].category,
                         ),

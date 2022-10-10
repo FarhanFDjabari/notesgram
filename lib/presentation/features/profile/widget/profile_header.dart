@@ -19,6 +19,8 @@ class ProfileHeader extends StatelessWidget {
     this.followingCount,
     this.coins,
     this.isCurrentUser,
+    this.onFollowTap,
+    this.isUserFollowed,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +28,9 @@ class ProfileHeader extends StatelessWidget {
   final Function()? onTopUp;
   final Function()? onWithdraw;
   final Function()? onAvatarTap;
+  final Function()? onFollowTap;
   final bool? isCurrentUser;
+  final bool? isUserFollowed;
   final String? name;
   final String? avatarUrl;
   final String? postCount;
@@ -152,8 +156,11 @@ class ProfileHeader extends StatelessWidget {
             ),
           if (isCurrentUser == false)
             PrimaryButton(
-              label: 'FOLLOW',
-              onPressed: () {},
+              elevation: 0,
+              label: isUserFollowed == true ? 'FOLLOWED' : 'FOLLOW',
+              onPressed: onFollowTap,
+              primaryColor:
+                  isUserFollowed == true ? Resources.color.neutral300 : null,
             ),
         ],
       ),

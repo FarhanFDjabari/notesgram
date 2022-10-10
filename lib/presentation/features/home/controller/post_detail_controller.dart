@@ -57,4 +57,9 @@ class PostDetailController extends BaseObjectController<NoteModel> {
     if (data?.userId == userData['id']) return true;
     return false;
   }
+
+  String getCurrentUserAvatar() {
+    final userData = StorageManager().get(StorageName.USERS);
+    return userData['avatar_url'];
+  }
 }

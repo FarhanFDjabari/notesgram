@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
-import 'package:notesgram/presentation/features/profile/widget/profile_bookmark_post_fragment.dart';
+import 'package:notesgram/presentation/features/profile/controller/another_user_profile_controller.dart';
+import 'package:notesgram/presentation/features/profile/widget/another_user_post_fragment.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_header.dart';
-import 'package:notesgram/presentation/features/profile/widget/profile_post_fragment.dart';
-import 'package:notesgram/presentation/features/profile/widget/profile_purchased_post_fragment.dart';
 import 'package:notesgram/presentation/widgets/loading_overlay.dart';
 import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
@@ -13,26 +11,26 @@ import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class AnotherUserProfilePage extends StatefulWidget {
+  const AnotherUserProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<AnotherUserProfilePage> createState() => _AnotherUserProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage>
+class _AnotherUserProfilePageState extends State<AnotherUserProfilePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileController>(
+    return GetBuilder<AnotherUserProfileController>(
       initState: (state) {},
       builder: (controller) {
         return Scaffold(
@@ -44,26 +42,14 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             elevation: 0,
             centerTitle: true,
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
             foregroundColor: Resources.color.neutral50,
             title: TextNunito(
-              text: controller.mData?.username,
+              text: controller.mData?.userModel?.username,
               size: 15.sp,
               fontWeight: Weightenum.BOLD,
               color: Resources.color.neutral50,
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: Icon(
-                  Remix.menu_line,
-                  color: Resources.color.neutral50,
-                ),
-                iconSize: 20,
-              ),
-            ],
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -73,23 +59,17 @@ class _ProfilePageState extends State<ProfilePage>
                   shimmerView: LoadingOverlay(),
                   loadingEnabled: controller.isLoading,
                   body: ProfileHeader(
-                    onEditProfile: () {},
-                    isCurrentUser: true,
-                    onAvatarTap: () {
-                      controller.showPostBottomSheet();
-                    },
-                    onTopUp: () {
-                      controller.goToTopUp();
-                    },
-                    onWithdraw: () {
-                      controller.goToWithdraw();
-                    },
-                    name: controller.mData?.name,
-                    postCount: '${controller.mData?.cCount?.posts}',
-                    followersCount: '${controller.mData?.cCount?.followers}',
-                    followingCount: '${controller.mData?.cCount?.followings}',
-                    coins: controller.mData?.coins,
-                    avatarUrl: controller.mData?.avatarUrl,
+                    onFollowTap: () {},
+                    isCurrentUser: false,
+                    isUserFollowed: controller.mData?.isFollowed,
+                    name: controller.mData?.userModel?.name,
+                    postCount: '${controller.mData?.userModel?.cCount?.posts}',
+                    followersCount:
+                        '${controller.mData?.userModel?.cCount?.followers}',
+                    followingCount:
+                        '${controller.mData?.userModel?.cCount?.followings}',
+                    coins: controller.mData?.userModel?.coins,
+                    avatarUrl: controller.mData?.userModel?.avatarUrl,
                   ),
                 ),
                 TabBar(
@@ -99,18 +79,6 @@ class _ProfilePageState extends State<ProfilePage>
                       key: ValueKey('my_post'),
                       icon: Icon(
                         Remix.grid_line,
-                      ),
-                    ),
-                    Tab(
-                      key: ValueKey('purchased_post'),
-                      icon: Icon(
-                        Remix.lock_line,
-                      ),
-                    ),
-                    Tab(
-                      key: ValueKey('bookmarked_post'),
-                      icon: Icon(
-                        Remix.bookmark_line,
                       ),
                     ),
                   ],
@@ -125,9 +93,7 @@ class _ProfilePageState extends State<ProfilePage>
                   child: TabBarView(
                     controller: _tabController,
                     children: const [
-                      ProfilePostFragment(),
-                      ProfilePurchasedPostFragment(),
-                      ProfileBookmarkPostFragment(),
+                      AnotherUserPostFragment(),
                     ],
                   ),
                 ),

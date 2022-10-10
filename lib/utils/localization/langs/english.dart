@@ -13,4 +13,5 @@ const Map<String, String> en = {
   'txt_challenge_empty_description': 'Try Again Later',
   'txt_post_empty_title': 'Post Empty',
   'txt_post_empty_description': 'You Can Try Post Some Notes',
+  'txt_user_post_empty_title': 'This User Post Is Empty',
 };

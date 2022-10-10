@@ -4,13 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/currency_formatter.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentSuccessCoupon extends StatelessWidget {
   const PaymentSuccessCoupon({
+    this.notePrice,
+    this.timestamp,
+    this.currentCoins,
     Key? key,
   }) : super(key: key);
+
+  final String? notePrice;
+  final DateTime? timestamp;
+  final String? currentCoins;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +58,9 @@ class PaymentSuccessCoupon extends StatelessWidget {
                 ),
                 const SizedBox(width: 7),
                 TextNunito(
-                  text: '10.000',
+                  text: int.parse('$notePrice') > 999
+                      ? coinFormat.format(int.parse('$notePrice'))
+                      : '$notePrice',
                   size: 36,
                   fontWeight: Weightenum.BOLD,
                   color: Resources.color.stateWarning,
@@ -92,7 +103,8 @@ class PaymentSuccessCoupon extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextNunito(
-                      text: '1 September 2022, 3:21 PM',
+                      text: DateTimeExtension(timestamp ?? DateTime.now())
+                          .dayMonthYearHourMinuteFull,
                       size: 10.sp,
                       fontWeight: Weightenum.REGULAR,
                       color: Resources.color.neutral700,
@@ -100,7 +112,9 @@ class PaymentSuccessCoupon extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     TextNunito(
-                      text: '90.000',
+                      text: int.parse('$currentCoins') > 999
+                          ? coinFormat.format(int.parse('$currentCoins'))
+                          : '$currentCoins',
                       size: 10.sp,
                       fontWeight: Weightenum.BOLD,
                       color: Resources.color.neutral700,

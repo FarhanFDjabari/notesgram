@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesgram/data/model/user/user_model.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:sizer/sizer.dart';
 
 class CommentTextField extends StatefulWidget {
-  CommentTextField({
+  const CommentTextField({
     this.onSendPressed,
+    this.userAvatar,
     Key? key,
   }) : super(key: key);
 
   final Function(String)? onSendPressed;
+  final String? userAvatar;
 
   @override
   State<CommentTextField> createState() => _CommentTextFieldState();
@@ -33,6 +35,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
           CircleAvatar(
             backgroundColor: Resources.color.indigo400,
             radius: 18,
+            backgroundImage: NetworkImage(widget.userAvatar ?? ''),
           ),
           const SizedBox(width: 8),
           Expanded(

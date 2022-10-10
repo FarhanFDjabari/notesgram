@@ -42,4 +42,28 @@ class ForYouPostController extends BaseListController<PostModel> {
               finishLoadData(errorMessage: onError.toString());
             }));
   }
+
+  Future<void> followUnfollowUser({required int userId}) async {
+    loadingState();
+    await client().then((value) {
+      value.followUnfollowUser(userId: userId).validateStatus().then((data) {
+        getForYouPosts();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
+
+  Future<void> savePostToBookmark({required int postId}) async {
+    loadingState();
+    await client().then((value) {
+      value.bookmarkPost(postId: postId).validateStatus().then((data) {
+        getForYouPosts();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
 }

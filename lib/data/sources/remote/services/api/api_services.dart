@@ -67,6 +67,9 @@ abstract class RestClient {
     @Field("name") String? name,
   });
 
+  @POST('/auth/logout')
+  Future<ApiResponse<dynamic>> logout();
+
   @GET('/profile')
   Future<ApiResponse<UserModel>> fetchMyProfile();
 
@@ -149,7 +152,7 @@ abstract class RestClient {
 
   @GET('/post/{id}/bookmark')
   Future<ApiResponse<dynamic>> bookmarkPost({
-    @Path("id") required String postId,
+    @Path("id") required int postId,
   });
 
   @GET('/post/my/bookmarked')
@@ -168,8 +171,8 @@ abstract class RestClient {
   });
 
   @POST('/note/purchase')
-  Future<ApiResponse<NoteModel>> purchaseNote({
-    @Field("note_id") String? noteId,
+  Future<ApiResponse<PostModel>> purchaseNote({
+    @Field("note_id") int? noteId,
   });
 
   @GET('/note/{id}')

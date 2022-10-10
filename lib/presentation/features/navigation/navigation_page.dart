@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:notesgram/presentation/features/navigation/controller/navigation_controller.dart';
 import 'package:notesgram/presentation/features/navigation/widget/notesgram_bottom_navbar.dart';
 import 'package:notesgram/presentation/features/profile/widget/profile_drawer.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/routes/app_route.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,14 +18,16 @@ class NavigationPage extends GetView<NavigationController> {
       builder: (_) => FloatingDraggableWidget(
         autoAlign: true,
         floatingWidget: controller.pageIndex.value == 0
-            ? FloatingActionButton(
-                onPressed: () {
+            ? GestureDetector(
+                child: Assets.lib.theme.resources.images.challengeFloatingButton
+                    .image(alignment: Alignment.centerRight),
+                onTap: () {
                   controller.goToChallenge();
                 },
               )
             : Container(),
-        floatingWidgetHeight: 56,
-        floatingWidgetWidth: 56,
+        floatingWidgetHeight: 70,
+        floatingWidgetWidth: 70,
         dy: SizerUtil.height * 0.65,
         dx: SizerUtil.width * 0.85,
         mainScreenWidget: Scaffold(
