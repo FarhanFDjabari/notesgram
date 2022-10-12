@@ -13,11 +13,11 @@ import 'package:notesgram/presentation/features/profile/controller/profile_purch
 class NavigationBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<NavigationController>(NavigationController(), permanent: true);
-    Get.put<HomeController>(HomeController(), permanent: true);
-    Get.put<ExploreController>(ExploreController(), permanent: true);
-    Get.put<NotificationController>(NotificationController(), permanent: true);
-    Get.put<ProfileController>(ProfileController(), permanent: true);
+    Get.put<NavigationController>(NavigationController());
+    Get.put<HomeController>(HomeController());
+    Get.put<ExploreController>(ExploreController());
+    Get.put<NotificationController>(NotificationController());
+    Get.put<ProfileController>(ProfileController());
     Get.lazyPut(() => FollowingPostController());
     Get.lazyPut(() => ForYouPostController());
     Get.lazyPut(() => ProfilePostController());

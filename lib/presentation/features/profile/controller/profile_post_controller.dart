@@ -38,6 +38,7 @@ class ProfilePostController extends BaseListController<NoteModel> {
           .fetchUserNote(userId: profileController.mData?.id ?? 0)
           .validateStatus()
           .then((data) {
+        dataList.clear();
         setFinishCallbacks(data.data ?? []);
       }).handleError((onError) {
         debugPrint(onError.toString());

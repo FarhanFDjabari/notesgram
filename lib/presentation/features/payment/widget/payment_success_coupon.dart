@@ -58,7 +58,7 @@ class PaymentSuccessCoupon extends StatelessWidget {
                 ),
                 const SizedBox(width: 7),
                 TextNunito(
-                  text: int.parse('$notePrice') > 999
+                  text: (int.tryParse('$notePrice') ?? 0) > 999 == true
                       ? coinFormat.format(int.parse('$notePrice'))
                       : '$notePrice',
                   size: 36,

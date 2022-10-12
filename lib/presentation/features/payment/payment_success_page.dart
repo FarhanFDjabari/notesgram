@@ -5,6 +5,7 @@ import 'package:notesgram/presentation/features/payment/widget/note_subtotal_inf
 import 'package:notesgram/presentation/features/payment/widget/payment_success_coupon.dart';
 import 'package:notesgram/presentation/widgets/button/custom_text_button.dart';
 import 'package:notesgram/presentation/widgets/button/primary_button.dart';
+import 'package:notesgram/presentation/widgets/loading_overlay.dart';
 import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
@@ -17,6 +18,8 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
   @override
   Widget build(BuildContext context) {
     return StateHandleWidget(
+      shimmerView: LoadingOverlay(),
+      loadingEnabled: controller.isLoading,
       body: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(

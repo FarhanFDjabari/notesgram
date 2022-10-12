@@ -3,18 +3,32 @@ import 'package:notesgram/data/model/post/post_model.dart';
 import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
+import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
 
 class PaymentSuccessController extends BaseObjectController<PostModel> {
   @override
-  void onInit() {
-    setFinishCallbacks(Get.arguments as PostModel?);
+  void onInit() async {
+    initPaymentSuccess();
     super.onInit();
   }
 
   int getCurrentCoins() {
     final localUserDataCoins =
         StorageManager().get(StorageName.USERS)['coins'] as int;
-    return localUserDataCoins - (mData?.note?.price ?? 0);
+    return localUserDataCoins;
+  }
+
+  Future<void> updateProfileData() async {
+    final profileController = Get.find<ProfileController>();
+    await profileController.getProfile(
+        userId: StorageManager().get(StorageName.USERS)['id']);
+  }
+
+  void initPaymentSuccess() async {
+    loadingState();
+    await updateProfileData().then((value) {
+      setFinishCallbacks(Get.arguments as PostModel?);
+    });
   }
 
   void goToHome() {

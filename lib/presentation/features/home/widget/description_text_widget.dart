@@ -51,6 +51,7 @@ class DescriptionTextWidgetState extends State<DescriptionTextWidget> {
               color: widget.color,
               fontWeight: widget.fontWeight,
               text: firstHalf,
+              maxLines: 5,
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,

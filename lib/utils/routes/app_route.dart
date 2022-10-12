@@ -37,8 +37,10 @@ import 'package:notesgram/presentation/features/payment/top_up_page.dart';
 import 'package:notesgram/presentation/features/post_notesgram/binding/post_notesgram_binding.dart';
 import 'package:notesgram/presentation/features/post_notesgram/post_notesgram_page.dart';
 import 'package:notesgram/presentation/features/profile/another_user_profile_page.dart';
+import 'package:notesgram/presentation/features/profile/binding/bookmark_album_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/help_center_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/profile_binding.dart';
+import 'package:notesgram/presentation/features/profile/binding/purchased_album_binding.dart';
 import 'package:notesgram/presentation/features/profile/binding/transaction_history_binding.dart';
 import 'package:notesgram/presentation/features/profile/help_center_page.dart';
 import 'package:notesgram/presentation/features/profile/private_album_page.dart';
@@ -137,12 +139,12 @@ class AppRoute {
     GetPage(
       name: PageName.privateAlbum,
       page: () => PrivateAlbumPage(),
-      binding: ProfileBinding(),
+      binding: PurchaseAlbumBinding(),
     ),
     GetPage(
       name: PageName.savedAlbum,
       page: () => SavedAlbumPage(),
-      binding: ProfileBinding(),
+      binding: BookmarkAlbumBinding(),
     ),
     GetPage(
       name: PageName.noteDetail,

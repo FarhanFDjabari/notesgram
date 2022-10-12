@@ -100,7 +100,8 @@ class PaymentPage extends GetView<PaymentController> {
                   Get.back();
                 },
                 onSuccessPressed: () {
-                  // controller.goToProcessingPayment();
+                  Get.back();
+                  controller.goToProcessingPayment();
                 },
               ),
             );

@@ -137,8 +137,12 @@ class NoteCaptionTile extends StatelessWidget {
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
-                    Remix.bookmark_line,
-                    color: Resources.color.neutral400,
+                    post?.isBookmarked == true
+                        ? Remix.bookmark_fill
+                        : Remix.bookmark_line,
+                    color: post?.isBookmarked == true
+                        ? Resources.color.indigo700
+                        : Resources.color.neutral400,
                     size: 24,
                   ),
                   visualDensity: VisualDensity.compact,

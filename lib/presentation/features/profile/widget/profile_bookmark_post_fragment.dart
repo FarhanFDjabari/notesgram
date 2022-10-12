@@ -87,9 +87,9 @@ class ProfileBookmarkPostFragment extends GetView<ProfileBookmarkController> {
                     onTap: () {
                       controller.goToAlbum(
                         type: 'bookmarked-notes',
-                        username: 'username1',
                         albumId: controller.dataList[index].id.toString(),
                         albumName: '${controller.dataList[index].name}',
+                        album: controller.dataList[index],
                       );
                     },
                     child: Card(

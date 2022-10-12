@@ -17,7 +17,6 @@ class PaymentController extends BaseObjectController<PostModel> {
     setFinishCallbacks(Get.arguments as PostModel?);
     final userData = StorageManager().get(StorageName.USERS);
     coins(userData['coins'].toString());
-
     super.onInit();
   }
 
@@ -33,13 +32,18 @@ class PaymentController extends BaseObjectController<PostModel> {
     if (int.parse(coins.value) < (mData?.note?.price ?? 0) == true) {
       finishLoadData(errorMessage: 'Insufficient Coins');
     } else {
-      Get.offNamed(PageName.paymentProcessing);
+      Get.offNamed(PageName.paymentProcessing, arguments: mData);
     }
   }
 
   Future<void> processPayment() async {
     await client().then((value) {
-      value.purchaseNote(noteId: mData?.note?.id).validateStatus().then((data) {
+      value
+          .purchaseNote(
+            noteId: (Get.arguments as PostModel?)?.note?.id,
+          )
+          .validateStatus()
+          .then((data) {
         Future.delayed(const Duration(seconds: 1), () {
           Get.offNamed(PageName.paymentSuccess, arguments: data.result);
         });

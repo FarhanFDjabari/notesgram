@@ -446,12 +446,12 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<PostModel>> purchaseNote({noteId}) async {
+  Future<ApiResponse<PostModel>> purchaseNote({noteId, fcmToken}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'note_id': noteId};
+    final _data = {'note_id': noteId, 'fcm_token': fcmToken};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<PostModel>>(

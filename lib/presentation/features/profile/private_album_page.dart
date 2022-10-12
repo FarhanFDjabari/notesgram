@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
-import 'package:notesgram/presentation/features/profile/controller/profile_purchased_controller.dart';
+import 'package:notesgram/presentation/features/profile/controller/purchased_album_controller.dart';
+import 'package:notesgram/presentation/widgets/loading_overlay.dart';
+import 'package:notesgram/presentation/widgets/state_handle_widget.dart';
 import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
+import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
-class PrivateAlbumPage extends GetView<ProfilePurchasedController> {
+class PrivateAlbumPage extends GetView<PurchaseAlbumController> {
   const PrivateAlbumPage({Key? key}) : super(key: key);
 
   RichText userNameText(String name, String username) => RichText(
@@ -50,10 +53,8 @@ class PrivateAlbumPage extends GetView<ProfilePurchasedController> {
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: GetX<ProfileController>(
-          initState: (_) {
-            controller.getAlbumName();
-          },
+        title: GetX<PurchaseAlbumController>(
+          initState: (_) {},
           builder: (_) {
             return TextNunito(
               text: controller.albumNameArgument.value,
@@ -74,76 +75,110 @@ class PrivateAlbumPage extends GetView<ProfilePurchasedController> {
           iconSize: 28,
         ),
       ),
-      body: ListView.separated(
-        itemCount: 2,
-        padding: const EdgeInsets.all(16),
-        itemBuilder: (builderContext, index) {
-          return InkWell(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Resources.color.neutral50,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      gradient: Resources.color.gradient500to700,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
+      body: GetBuilder<PurchaseAlbumController>(
+        init: PurchaseAlbumController(),
+        builder: (_) => StateHandleWidget(
+          shimmerView: LoadingOverlay(),
+          loadingEnabled: controller.isLoading,
+          onRetryPressed: () {
+            // controller.getDashboard("", "");
+          },
+          errorEnabled: controller.isError,
+          errorText: 'txt_error_general'.tr,
+          emptyTitle: 'txt_album_empty_title'.tr,
+          emptySubtitle: 'txt_album_empty_description'.tr,
+          emptyEnabled: controller.isEmptyData,
+          emptyImage: AssetImage(
+            Assets.lib.theme.resources.images.appLogoMonochrome.path,
+          ),
+          body: ListView.separated(
+            itemCount: controller.mData?.notes?.length ?? 0,
+            padding: const EdgeInsets.all(16),
+            itemBuilder: (builderContext, index) {
+              return InkWell(
+                onTap: () {
+                  controller.goToView(
+                    username:
+                        '${controller.mData?.notes?[index].note?.post?.user?.username}',
+                    noteId: '${controller.mData?.notes?[index].noteId}',
+                    note: controller.mData?.notes?[index].note,
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Resources.color.neutral50,
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextNunito(
-                                text: 'Logika Dasar Penalaran Umum UTBK 2020',
-                                maxLines: 2,
-                                size: 15,
-                                fontWeight: Weightenum.BOLD,
-                              ),
-                              userNameText('Nama user', 'username1'),
-                              TextNunito(
-                                text: '3 Catatan',
-                                maxLines: 1,
-                                size: 13,
-                                fontWeight: Weightenum.REGULAR,
-                                color: Resources.color.neutral500,
-                              ),
-                            ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: Resources.color.gradient500to700,
+                          borderRadius: BorderRadius.circular(6),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                '${controller.mData?.notes?[index].note?.notePictures?.first.pictureUrl}'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 8),
-                          child: Icon(
-                            Remix.arrow_right_s_line,
-                            color: Resources.color.indigo700,
-                            size: 28,
-                          ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextNunito(
+                                    text:
+                                        '${controller.mData?.notes?[index].note?.title}',
+                                    maxLines: 2,
+                                    size: 15,
+                                    fontWeight: Weightenum.BOLD,
+                                  ),
+                                  userNameText(
+                                      '${controller.mData?.notes?[index].note?.post?.user?.name}',
+                                      '${controller.mData?.notes?[index].note?.post?.user?.username}'),
+                                  TextNunito(
+                                    text:
+                                        '${controller.mData?.notes?[index].note?.notePictures?.length} Halaman',
+                                    maxLines: 1,
+                                    size: 13,
+                                    fontWeight: Weightenum.REGULAR,
+                                    color: Resources.color.neutral500,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 8),
+                              child: Icon(
+                                Remix.arrow_right_s_line,
+                                color: Resources.color.indigo700,
+                                size: 28,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          );
-        },
-        separatorBuilder: (_, index) {
-          return const SizedBox(height: 8);
-        },
+                ),
+              );
+            },
+            separatorBuilder: (_, index) {
+              return const SizedBox(height: 8);
+            },
+          ),
+        ),
       ),
     );
   }

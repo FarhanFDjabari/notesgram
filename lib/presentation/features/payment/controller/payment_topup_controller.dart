@@ -49,7 +49,7 @@ class PaymentTopupController extends BaseObjectController<TopUpResponseModel> {
 
   void goToPaymentGateway(String? initialUrl) {
     if (initialUrl != null) {
-      Get.to(PaymentGatewayProcessPage(initialUrl: initialUrl));
+      Get.to(() => PaymentGatewayProcessPage(initialUrl: initialUrl));
     }
   }
 

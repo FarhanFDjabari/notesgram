@@ -200,13 +200,13 @@ abstract class RestClient {
   @GET('/note-group/my/purchased/{id}')
   Future<ApiResponse<PurchasedNotesFolderModel>>
       fetchPurchasedNotesFolderDetail({
-    @Path("id") required String folderId,
+    @Path("id") required int folderId,
   });
 
   @GET('/note-group/my/bookmarked/{id}')
   Future<ApiResponse<BookmarkedNotesFolderModel>>
       fetchBookmarkedNotesFolderDetail({
-    @Path("id") required String folderId,
+    @Path("id") required int folderId,
   });
 
   @POST('/note-group/purchased')

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:notesgram/data/sources/remote/wrapper/base_response.dart';
 
 import 'network_exception.dart';
@@ -23,7 +24,10 @@ class ErrorHandler {
             case DioErrorType.response:
               switch (error.response?.statusCode) {
                 case 400:
-                  networkExceptions = NetworkExceptions.unauthorisedRequest();
+                  networkExceptions = error.response?.data['message'] != null
+                      ? NetworkExceptions.defaultError(
+                          error.response?.data['message'])
+                      : NetworkExceptions.unauthorisedRequest();
                   break;
                 case 401:
                   networkExceptions = NetworkExceptions.unauthorisedRequest();
@@ -147,7 +151,6 @@ extension FutureAPIResultExt<T extends BaseResponse> on Future<T> {
 extension FutureExt<T> on Future<T> {
   Future<T> summarizeError() {
     return catchError((error) async {
-      print(error);
       throw ErrorHandler.getErrorMessage(ErrorHandler.getDioException(error));
     });
   }

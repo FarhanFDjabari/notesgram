@@ -86,10 +86,10 @@ class ProfilePurchasedPostFragment extends GetView<ProfilePurchasedController> {
                   return InkWell(
                     onTap: () {
                       controller.goToAlbum(
-                        username: 'user',
                         type: 'purchased-notes',
                         albumId: controller.dataList[index].id.toString(),
                         albumName: '${controller.dataList[index].name}',
+                        album: controller.dataList[index],
                       );
                     },
                     child: Card(
