@@ -10,6 +10,7 @@
 .svn/
 .vscode
 .fvm
+.fleet
 
 # IntelliJ related
 *.iml
