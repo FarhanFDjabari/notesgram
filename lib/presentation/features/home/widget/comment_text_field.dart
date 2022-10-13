@@ -81,7 +81,6 @@ class _CommentTextFieldState extends State<CommentTextField> {
           if (_commentController.text.isEmpty == false)
             InkWell(
               onTap: () {
-                // controller.goToResetPassword();
                 if (widget.onSendPressed != null) {
                   widget.onSendPressed!(_commentController.text);
                 }

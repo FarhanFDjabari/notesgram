@@ -317,7 +317,7 @@ class _RestClient implements RestClient {
 
   @override
   Future<ApiResponse<CommentModel>> createComment(
-      {required userId, comment}) async {
+      {required postId, comment}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -327,7 +327,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<CommentModel>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/post/${userId}/comment',
+                .compose(_dio.options, '/post/${postId}/comment',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ApiResponse<CommentModel>.fromJson(_result.data!);
@@ -446,12 +446,12 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ApiResponse<PostModel>> purchaseNote({noteId, fcmToken}) async {
+  Future<ApiResponse<PostModel>> purchaseNote({noteId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = {'note_id': noteId, 'fcm_token': fcmToken};
+    final _data = {'note_id': noteId};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<PostModel>>(

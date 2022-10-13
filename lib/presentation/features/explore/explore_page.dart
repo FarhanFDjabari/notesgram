@@ -54,15 +54,9 @@ class ExplorePage extends GetView<ExploreController> {
               child: StateHandleWidget(
                 shimmerView: LoadingOverlay(),
                 loadingEnabled: controller.isLoading,
-                onRetryPressed: () {
-                  // controller.getDashboard("", "");
-                },
+                onRetryPressed: () {},
                 errorEnabled: controller.isError,
                 errorText: 'txt_error_general'.tr,
-                emptyImage: AssetImage(
-                  Assets.lib.theme.resources.images.appLogoMonochrome.path,
-                ),
-                emptyEnabled: controller.isEmptyData,
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

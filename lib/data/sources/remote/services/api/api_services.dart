@@ -136,7 +136,7 @@ abstract class RestClient {
 
   @POST('/post/{id}/comment')
   Future<ApiResponse<CommentModel>> createComment({
-    @Path("id") required int userId,
+    @Path("id") required int postId,
     @Field("comment") String? comment,
   });
 

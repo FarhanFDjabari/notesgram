@@ -16,7 +16,9 @@ class HomePostTile extends GetView<HomeController> {
   const HomePostTile({
     this.post,
     this.onFollowTap,
+    this.onLikeTap,
     this.onBookmarkTap,
+    this.onShareTap,
     this.isFollowingHomePost = false,
     Key? key,
   }) : super(key: key);
@@ -24,6 +26,8 @@ class HomePostTile extends GetView<HomeController> {
   final PostModel? post;
   final bool? isFollowingHomePost;
   final Function()? onFollowTap;
+  final Function()? onLikeTap;
+  final Function()? onShareTap;
   final Function()? onBookmarkTap;
 
   @override
@@ -202,7 +206,7 @@ class HomePostTile extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: onLikeTap,
                             icon: Icon(
                               post?.isLiked == true
                                   ? Remix.heart_fill
@@ -248,7 +252,7 @@ class HomePostTile extends GetView<HomeController> {
                         ],
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: onShareTap,
                         icon: Icon(
                           Remix.share_forward_line,
                           color: Resources.color.neutral400,

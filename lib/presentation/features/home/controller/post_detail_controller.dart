@@ -34,6 +34,28 @@ class PostDetailController extends BaseObjectController<NoteModel> {
     );
   }
 
+  Future<void> sendComment(
+      {required int postId, required String comment}) async {
+    loadingState();
+    await client().then((value) {
+      value
+          .createComment(
+            postId: postId,
+            comment: comment,
+          )
+          .validateStatus()
+          .then((data) {
+        if (data.result != null) {
+          mData?.post?.comments?.insert(0, data.result!);
+        }
+        finishLoadData();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
+
   void goToPreviewNote({
     required String username,
     required String noteId,

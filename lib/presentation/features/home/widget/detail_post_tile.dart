@@ -196,8 +196,12 @@ class DetailPostTile extends GetView<PostDetailController> {
                         IconButton(
                           onPressed: onLikePressed,
                           icon: Icon(
-                            Remix.heart_line,
-                            color: Resources.color.neutral400,
+                            controller.mData?.post?.isLiked == true
+                                ? Remix.heart_fill
+                                : Remix.heart_line,
+                            color: controller.mData?.post?.isLiked == true
+                                ? Resources.color.indigo700
+                                : Resources.color.neutral400,
                             size: 24,
                           ),
                           visualDensity: VisualDensity.compact,

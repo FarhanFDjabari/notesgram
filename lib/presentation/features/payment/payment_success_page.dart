@@ -86,7 +86,13 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
                 label: 'LIHAT CATATAN',
                 fontSize: 12.sp,
                 elevation: 0,
-                onPressed: () {},
+                onPressed: () {
+                  controller.goToPreviewNote(
+                    username: '${controller.mData?.note?.post?.user?.username}',
+                    noteId: '${controller.mData?.note?.id}',
+                    note: controller.mData,
+                  );
+                },
               ),
             ],
           ),

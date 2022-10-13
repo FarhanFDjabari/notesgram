@@ -66,4 +66,16 @@ class ForYouPostController extends BaseListController<PostModel> {
       });
     });
   }
+
+  Future<void> likeUnlikePost({required int postId}) async {
+    loadingState();
+    await client().then((value) {
+      value.likeDislikePost(postId: postId).validateStatus().then((data) {
+        getForYouPosts();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
 }

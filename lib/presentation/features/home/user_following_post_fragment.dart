@@ -48,12 +48,20 @@ class UserFollowingPostFragment extends GetView<FollowingPostController> {
                   return HomePostTile(
                     post: controller.dataList[index],
                     isFollowingHomePost: true,
+                    onBookmarkTap: () {
+                      controller.savePostToBookmark(
+                          postId: controller.dataList[index].id ?? 0);
+                    },
+                    onLikeTap: () {
+                      controller.likeUnlikePost(
+                          postId: controller.dataList[index].id ?? 0);
+                    },
                   );
                 },
                 separatorBuilder: (context, index) {
                   return Container(
                     height: 8,
-                    color: Resources.color.indigo50,
+                    color: Resources.color.neutral100,
                   );
                 },
                 itemCount: controller.dataList.length,

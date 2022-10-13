@@ -44,4 +44,28 @@ class FollowingPostController extends BaseListController<PostModel> {
       finishLoadData(errorMessage: onError.toString());
     });
   }
+
+  Future<void> savePostToBookmark({required int postId}) async {
+    loadingState();
+    await client().then((value) {
+      value.bookmarkPost(postId: postId).validateStatus().then((data) {
+        getFollowingPosts();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
+
+  Future<void> likeUnlikePost({required int postId}) async {
+    loadingState();
+    await client().then((value) {
+      value.likeDislikePost(postId: postId).validateStatus().then((data) {
+        getFollowingPosts();
+      }).handleError((onError) {
+        debugPrint("On Error $onError");
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
 }

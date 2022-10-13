@@ -11,6 +11,7 @@ import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
@@ -165,8 +166,10 @@ class PostDetailPage extends GetView<PostDetailController> {
                                     ),
                                     const SizedBox(height: 16),
                                     TextNunito(
-                                      text:
-                                          '${controller.mData?.post?.comments?[index].createdAt}',
+                                      text: DateTimeExtension(DateTime.tryParse(
+                                                  '${controller.mData?.post?.comments?[index].createdAt}') ??
+                                              DateTime.now())
+                                          .dayShortMonthYearHourMinute,
                                       size: 14,
                                       fontWeight: Weightenum.REGULAR,
                                       color: Resources.color.neutral500,
@@ -183,6 +186,12 @@ class PostDetailPage extends GetView<PostDetailController> {
                   ),
                   CommentTextField(
                     userAvatar: controller.getCurrentUserAvatar(),
+                    onSendPressed: (value) {
+                      controller.sendComment(
+                        postId: controller.mData?.post?.id ?? 0,
+                        comment: value,
+                      );
+                    },
                   ),
                 ],
               ),

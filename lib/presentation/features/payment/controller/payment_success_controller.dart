@@ -4,6 +4,7 @@ import 'package:notesgram/data/sources/local/storage/storage_constants.dart';
 import 'package:notesgram/data/sources/local/storage/storage_manager.dart';
 import 'package:notesgram/data/sources/remote/base/base_object_controller.dart';
 import 'package:notesgram/presentation/features/profile/controller/profile_controller.dart';
+import 'package:notesgram/utils/routes/page_name.dart';
 
 class PaymentSuccessController extends BaseObjectController<PostModel> {
   @override
@@ -34,5 +35,15 @@ class PaymentSuccessController extends BaseObjectController<PostModel> {
   void goToHome() {
     Get.back(closeOverlays: true);
     Get.back();
+  }
+
+  void goToPreviewNote({
+    required String username,
+    required String noteId,
+    PostModel? note,
+  }) {
+    Get.toNamed(PageName.post + '/$username/$noteId/view', arguments: {
+      'post': note,
+    });
   }
 }

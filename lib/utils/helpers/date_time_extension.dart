@@ -9,17 +9,23 @@ extension DateTimeExtension on DateTime {
     return DateFormat('dd MMMM yyyy').format(this);
   }
 
+  String get dayShortMonthYear {
+    return DateFormat('dd MMM yyyy').format(this);
+  }
+
   String get hourMinute {
     return DateFormat('kk:mm').format(this);
   }
 
   String get hourMinuteAmPm {
-    return DateFormat('kk:mm a').format(this);
+    return DateFormat('KK:MM a').format(this);
   }
 
   String get dayMonthYearHourMinute => '$dayMonthYear $hourMinute';
 
   String get dayMonthYearHourMinuteFull => '$dayFullMonthYear, $hourMinuteAmPm';
+
+  String get dayShortMonthYearHourMinute => '$dayShortMonthYear, $hourMinute';
 
   String get postTime {
     final timeDifference = DateTime.now().difference(this);
