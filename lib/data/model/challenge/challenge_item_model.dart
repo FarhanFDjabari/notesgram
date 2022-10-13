@@ -1,4 +1,6 @@
-class ChallengeItemModel {
+import 'package:notesgram/data/sources/remote/wrapper/model_factory.dart';
+
+class ChallengeItemModel implements ModelFactory {
   final int? id;
   final String? period;
   final String? category;

@@ -8,6 +8,12 @@ import 'package:notesgram/presentation/widgets/notesgram_snackbar.dart';
 
 class ChallengeController extends BaseListController<ChallengeItemModel> {
   @override
+  void onInit() async {
+    super.onInit();
+    await getAllChallenge();
+  }
+
+  @override
   void loadNextPage() {
     // TODO: implement loadNextPage
   }
@@ -35,6 +41,7 @@ class ChallengeController extends BaseListController<ChallengeItemModel> {
       value.fetchAllChallenge().validateStatus().then((data) {
         dataList.clear();
         setFinishCallbacks(data.data ?? []);
+        update();
       }).handleError((onError) {
         debugPrint(onError.toString());
         finishLoadData(errorMessage: onError.toString());

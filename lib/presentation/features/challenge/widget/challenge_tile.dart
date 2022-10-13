@@ -12,6 +12,7 @@ class ChallengeTile extends StatelessWidget {
     this.onTermsAndConditionTap,
     this.challengeIcon,
     this.challengeIconColor,
+    this.isCompleted,
     required this.totalProgress,
     required this.currentProgress,
     required this.title,
@@ -29,6 +30,7 @@ class ChallengeTile extends StatelessWidget {
   final Color? challengeIconColor;
   final int totalProgress;
   final int currentProgress;
+  final bool? isCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -187,9 +189,12 @@ class ChallengeTile extends StatelessWidget {
                     PrimaryButton(
                       elevation: 0,
                       fontSize: 16,
-                      onPressed: onClaimTap,
+                      onPressed: isCompleted == true ? onClaimTap : () {},
                       label: 'KLAIM',
                       width: 103,
+                      primaryColor: isCompleted == true
+                          ? null
+                          : Resources.color.neutral300,
                     ),
                   ],
                 ),

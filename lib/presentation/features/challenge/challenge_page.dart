@@ -8,6 +8,7 @@ import 'package:notesgram/presentation/widgets/text/text_nunito.dart';
 import 'package:notesgram/theme/resources.dart';
 import 'package:notesgram/theme/resources/gen/assets.gen.dart';
 import 'package:notesgram/utils/helpers/constant.dart';
+import 'package:notesgram/utils/helpers/date_time_extension.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
@@ -45,36 +46,34 @@ class ChallengePage extends GetView<ChallengeController> {
           iconSize: 28,
         ),
       ),
-      body: StateHandleWidget(
-        shimmerView: LoadingOverlay(),
-        loadingEnabled: controller.isLoading,
-        onRetryPressed: () {
-          // controller.getDashboard("", "");
-        },
-        errorEnabled: controller.isError,
-        errorText: 'txt_error_general'.tr,
-        emptyTitle: 'txt_challenge_empty_title'.tr,
-        emptySubtitle: 'txt_challenge_empty_description'.tr,
-        emptyImage: AssetImage(
-          Assets.lib.theme.resources.images.appLogoMonochrome.path,
-        ),
-        emptyEnabled: controller.isEmptyData,
-        body: GetBuilder<ChallengeController>(
-          init: ChallengeController(),
-          initState: (_) {
-            controller.getAllChallenge();
-          },
-          builder: (_) {
-            final dailyChallenge = controller.dataList
-                .where((element) => element.period == "DAILY")
-                .toList();
-            final weeklyChallenge = controller.dataList
-                .where((element) => element.period == "WEEKLY")
-                .toList();
-            final monthlyChallenge = controller.dataList
-                .where((element) => element.period == "MONTHLY")
-                .toList();
-            return SmartRefresher(
+      body: GetBuilder<ChallengeController>(
+        init: ChallengeController(),
+        initState: (_) {},
+        builder: (_) {
+          final dailyChallenge = controller.dataList
+              .where((element) => element.period == "DAILY")
+              .toList();
+          final weeklyChallenge = controller.dataList
+              .where((element) => element.period == "WEEKLY")
+              .toList();
+          final monthlyChallenge = controller.dataList
+              .where((element) => element.period == "MONTHLY")
+              .toList();
+          return StateHandleWidget(
+            shimmerView: LoadingOverlay(),
+            loadingEnabled: controller.isLoading,
+            onRetryPressed: () {
+              // controller.getDashboard("", "");
+            },
+            errorEnabled: controller.isError,
+            errorText: 'txt_error_general'.tr,
+            emptyTitle: 'txt_challenge_empty_title'.tr,
+            emptySubtitle: 'txt_challenge_empty_description'.tr,
+            emptyImage: AssetImage(
+              Assets.lib.theme.resources.images.appLogoMonochrome.path,
+            ),
+            emptyEnabled: controller.isEmptyData,
+            body: SmartRefresher(
               enablePullDown: true,
               enablePullUp: false,
               controller: controller.refreshController,
@@ -104,7 +103,10 @@ class ChallengePage extends GetView<ChallengeController> {
                         return ChallengeTile(
                           title: '${dailyChallenge[index].title}',
                           description: '${dailyChallenge[index].description}',
-                          duration: '8 Jam',
+                          duration: DateTimeExtension(DateTime.tryParse(
+                                      '${weeklyChallenge[index].endAt}') ??
+                                  DateTime.now())
+                              .remainingTimeDaily,
                           challengeIcon: Remix.heart_fill,
                           challengeIconColor: Resources.color.stateNegative,
                           totalProgress: dailyChallenge[index].count ?? 0,
@@ -135,14 +137,18 @@ class ChallengePage extends GetView<ChallengeController> {
                       shrinkWrap: true,
                       itemBuilder: (_, index) {
                         return ChallengeTile(
-                          title: '${dailyChallenge[index].title}',
-                          description: '${dailyChallenge[index].description}',
-                          duration: '3 Hari',
-                          challengeIcon: Remix.group_fill,
-                          challengeIconColor: Resources.color.statePositive,
-                          totalProgress: dailyChallenge[index].count ?? 0,
+                          title: '${weeklyChallenge[index].title}',
+                          description: '${weeklyChallenge[index].description}',
+                          duration: DateTimeExtension(DateTime.tryParse(
+                                      '${weeklyChallenge[index].endAt}') ??
+                                  DateTime.now())
+                              .remainingTimeWeekly,
+                          challengeIcon: Remix.heart_fill,
+                          isCompleted: weeklyChallenge[index].canClaim,
+                          challengeIconColor: Resources.color.stateNegative,
+                          totalProgress: weeklyChallenge[index].count ?? 0,
                           currentProgress:
-                              dailyChallenge[index].currentProgress ?? 0,
+                              weeklyChallenge[index].currentProgress ?? 0,
                           onClaimTap: () {
                             controller
                                 .showSnackbar('Kode voucher berhasil disalin');
@@ -164,18 +170,21 @@ class ChallengePage extends GetView<ChallengeController> {
                       ),
                     if (monthlyChallenge.isNotEmpty) const SizedBox(height: 8),
                     ListView.separated(
-                      itemCount: dailyChallenge.length,
+                      itemCount: monthlyChallenge.length,
                       shrinkWrap: true,
                       itemBuilder: (_, index) {
                         return ChallengeTile(
-                          title: '${dailyChallenge[index].title}',
-                          description: '${dailyChallenge[index].description}',
-                          duration: '16 Hari',
+                          title: '${monthlyChallenge[index].title}',
+                          description: '${monthlyChallenge[index].description}',
+                          duration: DateTimeExtension(DateTime.tryParse(
+                                      '${weeklyChallenge[index].endAt}') ??
+                                  DateTime.now())
+                              .remainingTimeMonthly,
                           challengeIcon: Remix.coins_fill,
                           challengeIconColor: Resources.color.stateWarning,
-                          totalProgress: dailyChallenge[index].count ?? 0,
+                          totalProgress: monthlyChallenge[index].count ?? 0,
                           currentProgress:
-                              dailyChallenge[index].currentProgress ?? 0,
+                              monthlyChallenge[index].currentProgress ?? 0,
                           onClaimTap: () {
                             controller
                                 .showSnackbar('Kode voucher berhasil disalin');
@@ -190,9 +199,9 @@ class ChallengePage extends GetView<ChallengeController> {
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

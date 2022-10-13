@@ -47,7 +47,7 @@ class AppColors {
       Color(0xFF59349F),
       Color(0xFF774DC5),
     ],
-    radius: 0.35,
+    radius: 0.8,
     center: Alignment.topCenter,
   );
   Gradient gradient500to700 = const LinearGradient(
