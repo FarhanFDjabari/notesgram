@@ -63,20 +63,19 @@ class ProfilePurchasedController
         isLoading: isLoading,
         onCancel: () {
           goBack();
-        },
-        onSuccess: () {
-          goBack();
           albumNameController.clear();
         },
+        onSuccess: () async {
+          await createNewFolder();
+        },
       ),
+      barrierDismissible: false,
     );
   }
 
   void goBack() {
     Get.back();
   }
-
-  void createNewAlbum() {}
 
   Future<void> getPurchasedNotes() async {
     loadingState();
@@ -115,6 +114,28 @@ class ProfilePurchasedController
           debugPrint(onError.toString());
           finishLoadData(errorMessage: onError.toString());
         });
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
+
+  Future<void> createNewFolder() async {
+    loadingState();
+    await client().then((value) {
+      value
+          .createPurchasedNotesFolder(
+            name: albumNameController.text,
+          )
+          .validateStatus()
+          .then((data) {
+        if (data.result != null) {
+          dataList.add(data.result!);
+        }
+        finishLoadData();
+        albumNameController.clear();
+        goBack();
       }).handleError((onError) {
         debugPrint(onError.toString());
         finishLoadData(errorMessage: onError.toString());

@@ -56,9 +56,8 @@ class ProfileBookmarkController
         onCancel: () {
           goBack();
         },
-        onSuccess: () {
-          goBack();
-          albumNameController.clear();
+        onSuccess: () async {
+          await createNewFolder();
         },
       ),
     );
@@ -67,8 +66,6 @@ class ProfileBookmarkController
   void goBack() {
     Get.back();
   }
-
-  void createNewAlbum() {}
 
   Future<void> getBookmarkedNotes() async {
     loadingState();
@@ -110,6 +107,28 @@ class ProfileBookmarkController
           debugPrint(onError.toString());
           finishLoadData(errorMessage: onError.toString());
         });
+      }).handleError((onError) {
+        debugPrint(onError.toString());
+        finishLoadData(errorMessage: onError.toString());
+      });
+    });
+  }
+
+  Future<void> createNewFolder() async {
+    loadingState();
+    await client().then((value) {
+      value
+          .createBookmarkedNotesFolder(
+            name: albumNameController.text,
+          )
+          .validateStatus()
+          .then((data) {
+        if (data.result != null) {
+          dataList.add(data.result!);
+        }
+        finishLoadData();
+        albumNameController.clear();
+        goBack();
       }).handleError((onError) {
         debugPrint(onError.toString());
         finishLoadData(errorMessage: onError.toString());

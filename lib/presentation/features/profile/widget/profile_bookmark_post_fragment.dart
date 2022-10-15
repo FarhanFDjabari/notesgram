@@ -142,7 +142,7 @@ class ProfileBookmarkPostFragment extends GetView<ProfileBookmarkController> {
                             ),
                             TextNunito(
                               text:
-                                  '${controller.dataList[index].notes?.length} Catatan',
+                                  '${controller.dataList[index].notes?.length ?? 0} Catatan',
                               size: 14,
                               fontWeight: Weightenum.REGULAR,
                               color: Resources.color.neutral500,

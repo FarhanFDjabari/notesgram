@@ -165,18 +165,24 @@ class RegisterPage extends GetView<RegisterController> {
                     () => TermsOfServiceCheckbox(
                       isAgree: controller.isUserAgree.isTrue,
                       onAppPolicyTap: (_) {
+                        // controller.isReadPolicy(true);
+                        // controller.isUserAgree(controller.isReadPolicy.isTrue &&
+                        //     controller.isReadTerms.isTrue);
+                        // controller.update();
+                      },
+                      onTermsAndConditionTap: (_) {
+                        // controller.isReadTerms(true);
+                        // controller.isUserAgree(controller.isReadPolicy.isTrue &&
+                        //     controller.isReadTerms.isTrue);
+                        // controller.update();
+                      },
+                      onChanged: (value) {
+                        controller.isReadTerms(value);
                         controller.isReadPolicy(true);
                         controller.isUserAgree(controller.isReadPolicy.isTrue &&
                             controller.isReadTerms.isTrue);
                         controller.update();
                       },
-                      onTermsAndConditionTap: (_) {
-                        controller.isReadTerms(true);
-                        controller.isUserAgree(controller.isReadPolicy.isTrue &&
-                            controller.isReadTerms.isTrue);
-                        controller.update();
-                      },
-                      onChanged: (_) {},
                     ),
                   ),
                   SizedBox(height: 24.sp),

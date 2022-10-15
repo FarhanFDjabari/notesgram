@@ -237,12 +237,12 @@ abstract class RestClient {
 
   @DELETE('/note-group/purchased/{id}')
   Future<ApiResponse<dynamic>> deletePurchasedNoteFolder({
-    @Path("id") required String folderId,
+    @Path("id") required int folderId,
   });
 
   @DELETE('/note-group/bookmarked/{id}')
   Future<ApiResponse<dynamic>> deleteBookmarkedNotesFolder({
-    @Path("id") required String folderId,
+    @Path("id") required int folderId,
   });
 
   @GET('/transaction/history')

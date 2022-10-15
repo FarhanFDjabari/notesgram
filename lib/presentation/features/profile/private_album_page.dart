@@ -74,6 +74,19 @@ class PrivateAlbumPage extends GetView<PurchaseAlbumController> {
           ),
           iconSize: 28,
         ),
+        actions: [
+          if (controller.albumNameArgument.value != 'Semua')
+            IconButton(
+              onPressed: () {
+                controller.showAlbumMenu();
+              },
+              icon: Icon(
+                Remix.more_line,
+                color: Resources.color.neutral50,
+              ),
+              iconSize: 28,
+            ),
+        ],
       ),
       body: GetBuilder<PurchaseAlbumController>(
         init: PurchaseAlbumController(),

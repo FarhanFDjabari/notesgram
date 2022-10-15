@@ -74,14 +74,17 @@ class SavedAlbumPage extends GetView<BookmarkAlbumController> {
           iconSize: 28,
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Remix.more_line,
-              color: Resources.color.neutral50,
+          if (controller.albumNameArgument.value != 'Semua')
+            IconButton(
+              onPressed: () {
+                controller.showAlbumMenu();
+              },
+              icon: Icon(
+                Remix.more_line,
+                color: Resources.color.neutral50,
+              ),
+              iconSize: 28,
             ),
-            iconSize: 28,
-          ),
         ],
       ),
       body: GetBuilder<BookmarkAlbumController>(

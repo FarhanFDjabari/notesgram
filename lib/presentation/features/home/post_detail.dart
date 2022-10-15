@@ -157,7 +157,7 @@ class PostDetailPage extends GetView<PostDetailController> {
                                   children: [
                                     userNameText(
                                         '${controller.mData?.post?.comments?[index].commenter?.name}',
-                                        '${controller.mData?.post?.comments?[index].commenter?.name}'),
+                                        '${controller.mData?.post?.comments?[index].commenter?.username}'),
                                     TextNunito(
                                       text:
                                           '${controller.mData?.post?.comments?[index].comment}',

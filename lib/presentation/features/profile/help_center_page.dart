@@ -11,7 +11,15 @@ import 'package:remixicon/remixicon.dart';
 import 'package:sizer/sizer.dart';
 
 class HelpCenterPage extends GetView<HelpCenterController> {
-  const HelpCenterPage({Key? key}) : super(key: key);
+  HelpCenterPage({Key? key}) : super(key: key);
+
+  final frequentlyAsked = [
+    'Bagaimana cara mendapatkan kode promo?',
+    'Metode apa saja yang dapat dipakai untuk top up dan penarikan?',
+    'Apakah catatan saya akan terlindung dari pembajakan?',
+    'Belum menerima uang setelah melakukan penarikan',
+    'Tidak bisa menggunakan promo',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +93,7 @@ class HelpCenterPage extends GetView<HelpCenterController> {
                             ),
                             onTap: () {},
                             title: TextNunito(
-                              text: 'Bagaimana cara mendapatkan kode promo?',
+                              text: frequentlyAsked[index],
                               maxLines: 4,
                               size: 16,
                               fontWeight: Weightenum.REGULAR,
