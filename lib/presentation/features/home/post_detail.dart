@@ -55,17 +55,15 @@ class PostDetailPage extends GetView<PostDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (controller.isAutoScrollComment.isTrue &&
-          controller.isLoading == false) {
-        controller.isAutoScrollComment(false);
-        _scrollToBottom();
-      }
-    });
     return GetBuilder<PostDetailController>(
-      init: PostDetailController(),
-      initState: (_) {},
       builder: (_) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (controller.isAutoScrollComment.isTrue &&
+              controller.isLoading == false) {
+            controller.isAutoScrollComment(false);
+            _scrollToBottom();
+          }
+        });
         return Scaffold(
           backgroundColor: Resources.color.neutral100,
           appBar: AppBar(

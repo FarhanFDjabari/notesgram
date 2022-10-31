@@ -158,12 +158,20 @@ class ChallengeTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextNunito(
-                      text: '$currentProgress/$totalProgress',
-                      size: 12,
-                      fontWeight: Weightenum.REGULAR,
-                      color: Resources.color.neutral500,
-                    ),
+                    if (currentProgress <= totalProgress)
+                      TextNunito(
+                        text: '$currentProgress/$totalProgress',
+                        size: 12,
+                        fontWeight: Weightenum.REGULAR,
+                        color: Resources.color.neutral500,
+                      ),
+                    if (currentProgress > totalProgress)
+                      TextNunito(
+                        text: '$totalProgress/$totalProgress',
+                        size: 12,
+                        fontWeight: Weightenum.REGULAR,
+                        color: Resources.color.neutral500,
+                      ),
                     LinearProgressIndicator(
                       backgroundColor: Resources.color.indigo10,
                       minHeight: 8,

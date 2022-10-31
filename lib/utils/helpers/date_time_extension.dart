@@ -53,7 +53,7 @@ extension DateTimeExtension on DateTime {
     final timeDifference = DateTime.now().difference(this);
     int hourTime = timeDifference.inHours;
     if (hourTime.abs() > 0) {
-      return '${(hourTime / 23).round()} Hari';
+      return '${(hourTime / 23).round().abs()} Hari';
     } else {
       return 'Expired';
     }
@@ -63,7 +63,7 @@ extension DateTimeExtension on DateTime {
     final timeDifference = DateTime.now().difference(this);
     int hourTime = timeDifference.inHours;
     if (hourTime.abs() > 0) {
-      return '${hourTime.round()} Jam';
+      return '${hourTime.round().abs()} Jam';
     } else {
       return 'Expired';
     }
@@ -73,7 +73,7 @@ extension DateTimeExtension on DateTime {
     final timeDifference = DateTime.now().difference(this);
     int hourTime = timeDifference.inHours;
     if (hourTime.abs() > 0) {
-      return '${(hourTime / 730).round()} Bulan';
+      return '${(hourTime / 730).round().abs()} Bulan';
     } else {
       return 'Expired';
     }

@@ -17,84 +17,87 @@ class PaymentSuccessPage extends GetView<PaymentSuccessController> {
 
   @override
   Widget build(BuildContext context) {
-    return StateHandleWidget(
-      shimmerView: LoadingOverlay(),
-      loadingEnabled: controller.isLoading,
-      body: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: Resources.color.gradient600to800,
+    return GetBuilder<PaymentSuccessController>(
+      builder: (_) => StateHandleWidget(
+        shimmerView: LoadingOverlay(),
+        loadingEnabled: controller.isLoading,
+        body: Scaffold(
+          appBar: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: Resources.color.gradient600to800,
+              ),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: Assets.lib.theme.resources.images.appLogoMonochrome.image(
+              width: 32,
+              height: 32,
             ),
           ),
-          elevation: 0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          title: Assets.lib.theme.resources.images.appLogoMonochrome.image(
-            width: 32,
-            height: 32,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  PaymentSuccessCoupon(
+                    notePrice: '${controller.mData?.note?.price}',
+                    timestamp:
+                        DateTime.tryParse('${controller.mData?.createdAt}'),
+                    currentCoins: '${controller.getCurrentCoins()}',
+                  ),
+                  const SizedBox(height: 24),
+                  NoteSubtotalInfo(
+                    isPaymentSuccess: true,
+                    noteTitle: controller.mData?.note?.title,
+                    notePrice: '${controller.mData?.note?.price}',
+                    noteImageUrl:
+                        '${controller.mData?.note?.notePictures?.first.pictureUrl}',
+                    postUser: '${controller.mData?.note?.post?.user?.name}',
+                    postUsername:
+                        '${controller.mData?.note?.post?.user?.username}',
+                    userProfileUrl:
+                        '${controller.mData?.note?.post?.user?.avatarUrl}',
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
+          bottomNavigationBar: Container(
+            height: 80,
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                PaymentSuccessCoupon(
-                  notePrice: '${controller.mData?.note?.price}',
-                  timestamp:
-                      DateTime.tryParse('${controller.mData?.createdAt}'),
-                  currentCoins: '${controller.getCurrentCoins()}',
+                CustomTextButton(
+                  width: 110,
+                  height: 48,
+                  label: 'KEMBALI',
+                  labelWeight: Weightenum.BOLD,
+                  labelSize: 16,
+                  onPressed: () {
+                    controller.goToHome();
+                  },
                 ),
-                const SizedBox(height: 24),
-                NoteSubtotalInfo(
-                  isPaymentSuccess: true,
-                  noteTitle: controller.mData?.note?.title,
-                  notePrice: '${controller.mData?.note?.price}',
-                  noteImageUrl:
-                      '${controller.mData?.note?.notePictures?.first.pictureUrl}',
-                  postUser: '${controller.mData?.note?.post?.user?.name}',
-                  postUsername:
-                      '${controller.mData?.note?.post?.user?.username}',
-                  userProfileUrl:
-                      '${controller.mData?.note?.post?.user?.avatarUrl}',
+                const SizedBox(width: 16),
+                PrimaryButton(
+                  width: 130.sp,
+                  height: 35.sp,
+                  label: 'LIHAT CATATAN',
+                  fontSize: 12.sp,
+                  elevation: 0,
+                  onPressed: () {
+                    controller.goToPreviewNote(
+                      username:
+                          '${controller.mData?.note?.post?.user?.username}',
+                      noteId: '${controller.mData?.note?.id}',
+                      note: controller.mData,
+                    );
+                  },
                 ),
               ],
             ),
-          ),
-        ),
-        bottomNavigationBar: Container(
-          height: 80,
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomTextButton(
-                width: 110,
-                height: 48,
-                label: 'KEMBALI',
-                labelWeight: Weightenum.BOLD,
-                labelSize: 16,
-                onPressed: () {
-                  controller.goToHome();
-                },
-              ),
-              const SizedBox(width: 16),
-              PrimaryButton(
-                width: 130.sp,
-                height: 35.sp,
-                label: 'LIHAT CATATAN',
-                fontSize: 12.sp,
-                elevation: 0,
-                onPressed: () {
-                  controller.goToPreviewNote(
-                    username: '${controller.mData?.note?.post?.user?.username}',
-                    noteId: '${controller.mData?.note?.id}',
-                    note: controller.mData,
-                  );
-                },
-              ),
-            ],
           ),
         ),
       ),

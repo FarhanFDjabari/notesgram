@@ -82,6 +82,6 @@ class PostDetailController extends BaseObjectController<NoteModel> {
 
   String getCurrentUserAvatar() {
     final userData = StorageManager().get(StorageName.USERS);
-    return userData['avatar_url'];
+    return userData['avatar_url'] ?? '';
   }
 }
